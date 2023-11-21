@@ -10,8 +10,12 @@
 {% block twitter %}
 <meta name="twitter:title" content="{{relative.relativename}}" />
 <meta name="twitter:description" content="{{relative.biography|truncatechars:157}}" />
-
+{% if relative.profile_image %}
 <meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{{relative.profile_image.url}}" />
+{% else %}
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/global/image-no.jpg' %}" />
+{% endif %}
+
 {% endblock twitter %}
 
 
@@ -20,7 +24,12 @@
 <meta property="og:type" content="business.business">
 <meta property="og:title" content="{{relative.relativename|truncatechars:157}}">
 <meta property="og:url" content="https://ndwandwafam.org">
+{% if relative.profile_image %}
 <meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{{relative.profile_image.url}}">
+{% else %}
+<meta name="og:image"
+    content="{{request.scheme}}://{{request.get_host}}{% static 'images/global/image-no.jpg' %}" />
+{% endif %}
 {% endblock OG %}
 
 {% block content %}
