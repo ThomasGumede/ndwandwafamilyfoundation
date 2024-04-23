@@ -81,7 +81,7 @@ def ticket_orders(request, event_id = None):
     event_model = None
     if event_id:
         event_model = get_object_or_404(EventModel, id=event_id, organiser=request.user)
-        ticketorders = TicketOrderModel.objects.filter(event = event)
+        ticketorders = TicketOrderModel.objects.filter(event = event_model)
     else:
         events = EventModel.objects.prefetch_related("ticket_orders").filter(organiser=request.user).order_by("-created")
         
