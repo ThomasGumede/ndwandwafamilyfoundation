@@ -1,0 +1,450 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% include "includes/messages.html" %}
+<section class="w-full font-sans relative py-20 block bg-custom-bg">
+    <div class="container">
+        <div class="relative block  max-h- h-full w-full">
+
+            <div class="font-sans mx-auto md:w-7/12  w-fit z-40">
+                <div class="w-full space-y-9 mx-auto">
+                    <div class="space-y-4 text-center w-full">
+                        <h4 class="text-3xl md:text-5xl text-gray-800 font-bold">
+                            A Foundation for a More Secure Tomorrow
+                        </h4>
+                        <p class="text-gray-500 text-base font-normal">
+                            We are your partner in building a stronger, more connected community. We embrace the
+                            principles
+                            of family, support, and respect, working tirelessly to make a difference in the lives of
+                            those we serve.
+                        </p>
+                    </div>
+
+                    <div class=" w-full mx-auto">
+                        <div class="relative block w-full">
+                            <form method="get" action="{% url 'home:search' %}">
+                                <label for="default-search"
+                                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+                                <div class="relative w-full">
+                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <input type="search" id="default-search" name="query"
+                                        class="block p-4 pl-10 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Search Campaigns, Events..." required>
+                                    <button type="submit"
+                                        class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full font-sans relative py-20 block">
+    <div class="container">
+        <div class="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between">
+        
+            <div class="text-center">
+                <p class="mt-4 text-sm leading-7 text-gray-500 font-regular">
+                    CREATE EFFECTIVE CAMPAIGN
+                </p>
+                <h3 class="text-xl sm:text-3xl leading-normal font-extrabold tracking-tight text-gray-900">
+                    How it <span class="text-indigo-600">Works?</span>
+                </h3>
+            </div>
+        
+            <div class="mt-20">
+                <ul class="md:grid md:grid-cols-3 md:col-gap-10 md:row-gap-10">
+                    <li class=" bg-gray-100 p-5 pb-10 text-center">
+                        <div class="flex flex-col items-center">
+                            <div class="flex-shrink-0 relative top-0 -mt-16">
+                                <div
+                                    class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-500 text-white border-4 border-white text-xl font-semibold">
+                                    1
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="text-lg leading-6 font-semibold text-gray-900">Start Your Campaign</h4>
+                                <p class="mt-2 text-base leading-6 text-gray-500">
+                                    Tell a story that everyone will want to read, Add image or video to make your
+                                    story more interesting
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class=" bg-gray-100 p-5 pb-10 text-center">
+                        <div class="flex flex-col items-center">
+                            <div class="flex-shrink-0 relative top-0 -mt-16">
+                                <div
+                                    class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-500 text-white border-4 border-white text-xl font-semibold">
+                                    2
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="text-lg leading-6 font-semibold text-gray-900">Share your campaign</h4>
+                                <p class="mt-2 text-base leading-6 text-gray-500">
+                                    To get more attention to your campaign, share link to your campaign with your friends or family anywhere you like.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class=" bg-gray-100 p-5 pb-10 text-center">
+                        <div class="flex flex-col items-center">
+                            <div class="flex-shrink-0 relative top-0 -mt-16">
+                                <div
+                                    class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-500 text-white border-4 border-white text-xl font-semibold">
+                                    3
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="text-lg leading-6 font-semibold text-gray-900">Manage campaign</h4>
+                                <p class="mt-2 text-base leading-6 text-gray-500">
+                                    Now your campaign is active and getting more donations, thank the contributers through their email or give them a
+                                    shoutout on social media.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        
+        </div>
+    </div>
+</section>
+<section class="w-full font-sans relative block py-20 bg-custom-bg">
+    <div class="container">
+        <div class="w-full mx-auto space-y-9">
+            <div class="relative block">
+                <div class="w-full text-center">
+                    <h3 class="text-xl lg:text-3xl mb-4 text-gray-800 font-bold">
+                        Our Feactured Campaigns
+                    </h3>
+                    <p class="text-sm lg:text-base text-gray-500 font-normal">
+                        From educational initiatives to healthcare support, our campaigns are a testament to the
+                        transformative impact of unity.
+                    </p>
+                </div>
+            </div>
+            <div class="relative block">
+                <div class="flex flex-wrap -mx-4">
+                    {% for campaign in campaigns %}
+                    <div
+                        class="max-w-full w-full group rounded-md flex-shrink-0 px-[calc(30px_/_2)] lg:w-1/3 lg:flex-[0_0_auto] sm:w-1/2 sm:flex-[0_0_auto]">
+                        <div class="relative mb-7 block">
+                            <div class="img_box relative overflow-hidden block">
+                                <div
+                                    class="overflow-hidden h-64 bg-custom-h relative block transition-all duration-500 ease-in">
+                                    {% if campaign.image %}
+                                    <img src="{{campaign.image.url}}" alt="{{campaign.title}} image" loading="lazy"
+                                        class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
+                                    {% else %}
+                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image"
+                                        srcset="" loading="lazy"
+                                        class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div
+                                class="block text-center bg-white p-[26px_30px_20px] shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)]">
+                                <div class="inline-block relative text-center bg-custom-primary p-[7px_19px_8px]">
+                                    <p class="font-bold text-white text-xs leading-3">
+                                        {{campaign.category.label}}
+                                    </p>
+                                </div>
+                                <h3
+                                    class="text-custom-h m-0 transition-all duration-500 text-xl md:text-2xl font-bold mt-4 mb-2">
+                                    <a href="{{campaign.get_absolute_url}}"
+                                        class="text-custom-h transition-all duration-500 ease-in group-hover:text-custom-primary">{{campaign.title|truncatewords:3}}</a>
+                                </h3>
+                                <div class="relative flex justify-center items-center">
+                                    <div class="text-sm text-custom-primary">
+                                        <i class="fa-solid fa-clock font-bold"></i>
+                                    </div>
+                                    <div class="ml-1">
+                                        <p class="text-xs font-normal">{{campaign.get_days}} remaining</p>
+                                    </div>
+                                </div>
+                                <div class="relative block mt-4 mb-1">
+                                    <div class="relative bg-[#f2f7f7] py-3 px-2 block w-full">
+                                        <div class="relative flex items-center justify-between space-x-2 w-full">
+                                            <div class="text-sm font-bold text-custom-h leading-4">
+                                                Raised</div>
+                                            <div class="relative block w-full">
+                                                <div class="w-full relative h-[3px] bg-white rounded-none">
+                                                    <div data-style="{{campaign.get_percentage_of_donated_fund}}" id=""
+                                                        class=" bg-custom-primary campaign_percentage_w h-[3px] rounded-none relative before:absolute before:content-[''] before:h-3 before:w-3 before:right-0 before:-top-1 before:bg-custom-primary before:rounded-full">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center p-0 w-10 h-5 flex items-center">
+                                                <span
+                                                    class="text-gray-500 relative leading-3 font-medium float-none inline-block text-sm">{{campaign.get_percentage_of_donated_fund}}</span>
+                                                <span
+                                                    class="text-sm ml-[-2px] float-none font-medium text-gray-500 leading-3">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative flex items-center justify-between">
+                                    <p class="text-xs text-gray-500 font-semibold">Achieved: <span
+                                            class="font-bold text-custom-h">R{{campaign.target}}</span></p>
+                                    <p class="text-xs text-gray-500 font-semibold">Goal: <span
+                                            class="font-bold text-custom-h">R{{campaign.current_amount}}</span></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div
+                class="w-36 lg:w-40 h-12 border-2 border-custom-h mx-auto bg-white hover:bg-custom-h group duration-500 rounded-md">
+                <a href="{% url 'campaigns:campaigns' %}"
+                    class="w-full h-full grid items-center justify-center duration-500 group-hover:text-white text-custom-h font-medium text-sm lg:text-base">view
+                    more</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class=" bg-white dark:bg-gray-900 pt-16">
+    <div class="container max-w-8xl mx-auto">
+        <div role="contentinfo" class="flex items-center flex-col px-4">
+            <p tabindex="0"
+                class="focus:outline-none uppercase text-sm text-center text-gray-600 dark:text-gray-200 leading-4">Why
+                Ndwandwa Family Foundation?</p>
+            <h1 tabindex="0"
+                class="focus:outline-none text-xl lg:text-3xl font-extrabold text-center leading-10 text-gray-800 dark:text-white lg:w-5/12 md:w-9/12 pt-4">
+                Secured, Easy To Use and Family-Focused Atmosphere</h1>
+        </div>
+        <div tabindex="0" aria-label="group of cards"
+            class="focus:outline-none mt-20 flex flex-wrap justify-center gap-10 px-4">
+            <div tabindex="0" aria-label="card 1" class="focus:outline-none flex sm:w-full md:w-5/12 pb-20">
+                <div class="w-20 h-20 relative mr-5">
+                    <div class="absolute top-0 right-0 bg-indigo-100 rounded w-16 h-16 mt-2 mr-1"></div>
+                    <div
+                        class="absolute text-white bottom-0 left-0 bg-indigo-700 rounded w-16 h-16 flex items-center justify-center mt-2 mr-3">
+                        <i class="fa-solid fa-user-shield text-3xl"></i>
+                    </div>
+                </div>
+                <div class="w-10/12">
+                    <h2 tabindex="0"
+                        class="focus:outline-none text-lg font-bold leading-tight text-gray-800 dark:text-white">Secure
+                        and Transparent Transactions</h2>
+                    <p tabindex="0"
+                        class="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2">Trust in ticketing is paramount. Our platform ensures secure transactions for confident attendee ticket purchases and
+                        provides organizers with transparent financial tracking for event success.</p>
+                </div>
+            </div>
+            <div tabindex="0" aria-label="card 2" class="focus:outline-none flex sm:w-full md:w-5/12 pb-20">
+                <div class="w-20 h-20 relative mr-5">
+                    <div class="absolute top-0 right-0 bg-indigo-100 rounded w-16 h-16 mt-2 mr-1"></div>
+                    <div
+                        class="absolute text-white bottom-0 left-0 bg-indigo-700 rounded w-16 h-16 flex items-center justify-center mt-2 mr-3">
+                        <i class="fa-solid fa-people-group text-3xl"></i>
+                    </div>
+                </div>
+                <div class="w-10/12">
+                    <h2 tabindex="0"
+                        class="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white">
+                        Community-Centric Platform</h2>
+                    <p tabindex="0"
+                        class="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2">Ndwandwa Family Foundation: Your event, a part of our community-centric space fostering connections and positive impact.</p>
+                </div>
+            </div>
+            <div tabindex="0" aria-label="card 3" class="focus:outline-none flex sm:w-full md:w-5/12 pb-20">
+                <div class="w-20 h-20 relative mr-5">
+                    <div class="absolute top-0 right-0 bg-indigo-100 rounded w-16 h-16 mt-2 mr-1"></div>
+                    <div
+                        class="absolute text-white bottom-0 left-0 bg-indigo-700 rounded w-16 h-16 flex items-center justify-center mt-2 mr-3">
+                        <i class="fa-solid fa-scale-balanced text-3xl"></i>
+                    </div>
+                </div>
+                <div class="w-10/12">
+                    <h2 tabindex="0"
+                        class="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white">
+                        Hassle-Free Ticket Sales</h2>
+                    <p tabindex="0"
+                        class="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2">
+                        Sell tickets effortlessly with our streamlined process and user-friendly interface. From event creation to sales
+                        tracking, we ensure a seamless experience for organizers and attendees alike.</p>
+                </div>
+            </div>
+            <div tabindex="0" aria-label="card 4" class="focus:outline-none flex sm:w-full md:w-5/12 pb-20">
+                <div class="w-20 h-20 relative mr-5">
+                    <div class="absolute top-0 right-0 bg-indigo-100 rounded w-16 h-16 mt-2 mr-1"></div>
+                    <div
+                        class="absolute text-white bottom-0 left-0 bg-indigo-700 rounded w-16 h-16 flex items-center justify-center mt-2 mr-3">
+                        <i class="fa-solid fa-user-lock text-3xl"></i>
+                    </div>
+                </div>
+                <div class="w-10/12">
+                    <h2 tabindex="0"
+                        class="focus:outline-none text-lg font-semibold leading-tight text-gray-800 dark:text-white">Identity Verification for Added Security</h2>
+                    <p tabindex="0"
+                        class="focus:outline-none text-base text-gray-600 dark:text-gray-200 leading-normal pt-2">We take event security seriously. Our identity verification process ensures a safe environment for all attendees.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full font-sans relative block py-20 bg-custom-bg">
+    <div class="container">
+        <div class="w-full mx-auto space-y-9">
+            <div class="relative block">
+                <div class="w-full text-center">
+                    <h3 class="text-xl lg:text-3xl text-gray-800 mb-4 font-bold">
+                        Latest Events.
+                    </h3>
+                    <p class="text-sm lg:text-base text-gray-500 font-normal">
+                        By choosing our platform, you align your event with a community-centric space that fosters
+                        connections and meaningful
+                        relationships.
+                    </p>
+                </div>
+            </div>
+            <div class="relative block">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {% for event in events %}
+                    <div class="relative  overflow-hidden">
+                        <div class="relative block bg-custom-h w-full h-80 group overflow-hidden">
+                            <div
+                                class="bg-custom-primary  z-20  absolute top-4 left-4 py-1 md:py-2 px-2 md:px-4 text-center">
+                                <p class="text-xs text-white">{{event.category}}</p>
+                            </div>
+
+                            {% if event.image %}
+                            <img src="{{event.image.url}}" alt="{{event.title}} image" srcset="" lazyload
+                                class="object-cover block h-full w-full duration-500 group-hover:scale-105">
+                            {% else %}
+                            <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image" srcset=""
+                                class="object-cover block h-full w-full">
+                            {% endif %}
+
+
+                            <div
+                                class="w-full h-full bg-[linear-gradient(0deg,_rgba(6,2,75,1)_33%,_rgba(13,9,79,0.3127626050420168)_84%,_rgba(69,79,145,0.6965161064425771)_100%)] absolute top-0 left-0">
+                            </div>
+                            <div class="absolute group text-white duration-500 bottom-0 left-0 w-full h-fit p-4">
+                                <div class="font-sans space-y-3">
+
+                                    <div class="flex w-full items-center justify-between">
+                                        <p class="duration-500 space-x-1 flex items-center text-sm font-normal">
+                                            <i class="fa-solid fa-clock text-xs md:text-sm"></i>
+                                            <span class="m-0 p-0">
+                                                {{event.sales_days_left}} left
+                                            </span>
+                                        </p>
+                                        <div class="duration-500 space-x-1 flex items-center text-sm font-normal">
+                                            <div class="w-4 h-4 rounded-full bg-white overflow-hidden relative">
+                                                {% if event.organiser.profile_image %}
+                                                <img class="w-full h-full rounded-full object-fill"
+                                                    alt="{{event.organiser.get_full_name}}"
+                                                    src="{{event.organiser.profile_image.url}}" />
+                                                {% else %}
+                                                <img src="{% static 'images/global/no-image-available.webp' %}"
+                                                    alt="no image" srcset="" class="object-cover block h-full w-full">
+                                                {% endif %}
+                                            </div>
+                                            <p class="">
+                                                By <a href=""
+                                                    class="text-sm font-normal hover:text-custom-primary">{{event.organiser.get_full_name}}</a>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <a href="{{event.get_absolute_url}}"
+                                        class="block  duration-500 font-bold text-white text-lg md:text-2xl">
+                                        {{event.title|truncatewords:3}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div
+                class="w-36 lg:w-40 h-12 border-2 border-custom-h mx-auto bg-white hover:bg-custom-h group duration-500 rounded-md">
+                <a href="{% url 'events:events' %}"
+                    class="w-full h-full grid items-center justify-center duration-500 group-hover:text-white text-custom-h font-medium text-sm lg:text-base">view
+                    more</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="relative font-sans block bg-custom-bg py-20">
+    <div class="container">
+
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        
+            <div
+                class="relative isolate overflow-hidden bg-white px-6 py-20 text-center sm:rounded-3xl sm:border sm:border-gray-100 sm:px-16 sm:shadow-sm">
+        
+                <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    {% if request.user.is_authenticated %}Host your event today!{% else %}Join our families today!{% endif %}
+                </h2>
+        
+                <h3 class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-500">
+                    {% if request.user.is_authenticated %}Host your event and start selling tickets{% else %}Sign up for exclusive access to events, resources, and more{% endif %}
+                </h3>
+        
+                <div class="mt-8 flex items-center justify-center gap-x-6">
+                    <a class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        href="{% if request.user.is_authenticated %}{% url 'events:create-event' %}{% else %}{% url 'accounts:register' %}{% endif %}">
+                        {% if request.user.is_authenticated %}Add event {% else %}Sign up {% endif %}now
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+        
+                <!-- gradient svg -->
+                <svg viewBox="0 0 1024 1024"
+                    class="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
+                    aria-hidden="true">
+                    <circle cx="512" cy="512" r="512" fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)" fill-opacity="0.7">
+                    </circle>
+                    <defs>
+                        <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
+                            <stop stop-color="#3b82f6"></stop>
+                            <stop offset="1" stop-color="#1d4ed8"></stop>
+                        </radialGradient>
+                    </defs>
+                </svg>
+        
+            </div>
+        
+        </div>
+
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    var campaign_percentage_w = document.getElementsByClassName("campaign_percentage_w");
+
+    window.onload = () => {
+        for (let index = 0; index < campaign_percentage_w.length; index++) {
+            const element = campaign_percentage_w[index];
+            element.style.width = `${element.getAttribute("data-style")}%`
+
+        }
+    }
+
+</script>
+{% endblock js %}

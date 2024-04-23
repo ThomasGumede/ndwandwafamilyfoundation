@@ -1,0 +1,13 @@
+logs
+node_modules
+env
+__pycache__
+/__pycache__
+/migrations
+migrations
+.env
+a.py
+data.json
+s.js
+/media
+/static_root

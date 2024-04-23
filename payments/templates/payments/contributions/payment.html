@@ -1,0 +1,49 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Contribution added successfully{% endblock title %}
+
+{% block content %}
+
+<section class="py-16 h-full bg-white font-sans">
+    {% include "includes/messages.html" %}
+    <div class="container">
+        <div
+            class="w-full max-w-full rounded-xl my-auto bg-gray-50 mx-auto md:w-1/2 lg:w-5/12 relative shadow-xl text-center">
+            <div class="p-5 md:p-7">
+                <div class="space-y-6">
+                    <h3 class="text-custom-h text-2xl md:text-4xl font-extrabold">A Big Thank You</h3>
+                    <div>
+                        <i class="fa-regular fa-check-circle text-8xl font-extralight text-custom-h"></i>
+                    </div>
+                    <p class="text-custom-h text-lg font-medium">
+                        R{{donation.total_amount}} to be paid
+                    </p>
+                    <p class="text-gray-500 text-lg font-medium">
+                        Your contribution was declared and ready for futher process! Use this contribution number <span
+                            class="text-custom-h">{{donation.order_number}}</span> for future references.
+                    </p>
+                    <div class="flex w-full items-center justify-between">
+                        <div class="w-36 lg:w-40 h-12 border-2 border-custom-h bg-white hover:bg-custom-h group duration-500 rounded-md">
+                            <a href="{% url 'campaigns:cancel-contribution' contribution_id=donation.id %}"
+                                class="w-full h-full grid items-center justify-center duration-500 group-hover:text-white text-custom-h font-medium text-sm lg:text-base">cancel</a>
+                        </div>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" value="submit"
+                                class="w-36 lg:w-40 h-12 border-2 border-custom-h bg-custom-h hover:bg-white hover:text-custom-h text-white font-medium text-sm focus-within:outline-none focus:outline-none lg:text-base duration-500 rounded-md">
+                                pay now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
+{% block js %}
+
+
+{% endblock js %}

@@ -1,0 +1,441 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}Update event{% endblock title %}
+
+{% block content %}
+
+<section class="w-full pb-20 overflow-hidden">
+    {% include "includes/messages.html" %}
+    <div class="">
+        <div class="relative block">
+            <div class="space-y-4 bg-white w-full relative">
+                {% include "includes/errors.html" %}
+                <div class="px-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="w-full">
+                            <div class="bg-white w-full relative">
+                                <h6 class="text-custom-h text-base mt-3 mb-6 font-bold uppercase">
+                                    Event Details
+                                </h6>
+                                <div class="flex flex-wrap gap-4">
+                                    <div class="w-full lg:w-12/12 md:px-4">
+                                        <div class="relative w-full mb-3">
+                                            <label for="id_title">
+                                                Title*
+                                            </label>
+                                            {{form.title}}
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.title.help_text}}</span>
+                                            {% if form.title.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.title.errors.as_text}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="w-full lg:w-12/12 md:px-4">
+                                        <div class="relative font-sans w-full mb-3">
+                                            <label for="id_content">
+                                                event details*
+                                            </label>
+
+                                            {{form.content|safe}}
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.content.help_text}}</span>
+                                            {% if form.content.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.content.errors.as_text}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr class="mt-6 border-b-1 border-gray-300">
+                            <div class="bg-white w-full">
+                                <h6 class="text-custom-h text-base mt-3 mb-6 font-bold uppercase">
+                                    Event Information
+                                </h6>
+                                <div class="flex flex-wrap gap-4">
+                                    <div class="w-full md:px-4">
+                                        <div class="relative w-full mb-3">
+                                            <label for="id_image">
+                                                event picture*
+                                            </label>
+                                            {{form.image}}
+                                            <div class="w-full border rounded-md bg-white border-dotted p-6">
+                                                <div
+                                                    class="flex items-center flex-col md:flex-row gap-4 w-full justify-between">
+                                                    <div class="flex items-center space-x-4">
+                                                        <div id="img_container" data-image="{{form.image.value.url}}"
+                                                            class="h-16 w-20 overflow-hidden rounded bg-gray-300">
+                                                            <div id="no_image"></div>
+                                                        </div>
+                                                        <div class="space-y-1">
+                                                            <p class="text-xs font-bold text-gray-500">Upload image
+                                                                to illustrate your event</p>
+                                                            <p class="text-xs font-light text-gray-500">SVG, PNG,
+                                                                JPG, JPEG or GIF</p>
+                                                        </div>
+                                                    </div>
+                                                    <div id="pick_image"
+                                                        class="border p-2 cursor-pointer text-center text-black">
+                                                        <p class="text-sm">Browser</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.image.help_text}}</span>
+                                            {% if form.image.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.image.errors.as_text}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="w-full lg:w-1/3 md:px-4">
+                                        <div class="relative w-full mb-3">
+                                            <label for="id_event_startdate">
+                                                start date*
+                                            </label>
+                                            {{form.event_startdate}}
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.event_startdate.help_text}}</span>
+                                            {% if form.event_startdate.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.event_startdate.errors.as_text}}</span>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <div class="w-full lg:w-1/3 md:px-4">
+                                        <div class="relative w-full mb-3">
+                                            <label for="id_event_enddate">
+                                                End date*
+                                            </label>
+                                            {{form.event_enddate}}
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.event_enddate.help_text}}</span>
+                                            {% if form.event_enddate.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.event_enddate.errors.as_text}}</span>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <div class="w-full lg:w-1/4 md:px-4">
+                                        <div class="relative w-full mb-3">
+                                            <label for="id_total_seats">
+                                                total seats*
+                                            </label>
+                                            {{form.total_seats}}
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.total_seats.help_text}}</span>
+                                            {% if form.total_seats.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.total_seats.errors.as_text}}</span>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 p-4 bg-gray-50 w-full flex flex-col gap-2">
+                                        <label for="id_tip" class="text-lg">Please, select your tip choice:</label>
+                                        {{form.tip}}
+                                        <div class="self-end w-fit justify-self-end">
+                                            <p id="tip_amount" class="font-normal text-black">
+                                                This tip will apply for every ticket sold
+                                            </p>
+                                        </div>
+                                        <div class="w-full flex items-center justify-between">
+                                            <p class="font-normal text-base text-gray-500">
+                                                Ndwandwa Family Foundation does not receive any fees from the tickets
+                                                buyers. We only receive a
+                                                transaction fee from the buyers. To keep the website running, we collect
+                                                tips from event organisers. Thank you very much for understanding.
+                                            </p>
+                                            <div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr class="mt-6 border-b-1 border-gray-300">
+                                <h6 class="text-base mt-3 mb-6 font-bold uppercase">
+                                    Event Address
+                                </h6>
+                                <div class="w-full">
+                                    <div class="flex w-full flex-wrap mb-4 gap-7">
+                                        <div class="address_input w-full lg:w-5/12">
+                                            <div class="w-full relative mb-2">
+                                                <div class="relative w-full  mb-3">
+                                                    <label for="id_event_address">
+                                                        address*
+                                                    </label>
+                                                    {{form.event_address}}
+                                                    <span
+                                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.event_address.help_text}}</span>
+                                                    {% if form.event_address.errors %}
+                                                    <span
+                                                        class="text-[11px] text-red-500 block font-normal lowercase">{{form.event_address.errors.as_text}}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="w-full relative mb-2">
+                                                <div class="relative w-fullmb-3">
+                                                    <label for="id_venue_name">
+                                                        venue name*
+                                                    </label>
+                                                    {{form.venue_name}}
+                                                    <span
+                                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.venue_name.help_text}}</span>
+                                                    {% if form.venue_name.errors %}
+                                                    <span
+                                                        class="text-[11px] text-red-500 block font-normal lowercase">{{form.venue_name.errors.as_text}}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {{form.map_coordinates}}
+                                            <div class="w-full  relative mb-2">
+                                                <div class="relative w-full mb-3">
+                                                    <label for="id_event_link">
+                                                        event link*
+                                                    </label>
+                                                    {{form.event_link}}
+                                                    <span
+                                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.event_link.help_text}}</span>
+                                                    {% if form.event_link.errors %}
+                                                    <span
+                                                        class="text-[11px] text-red-500 block font-normal lowercase">{{form.event_link.errors.as_text}}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="map w-full lg:w-6/12 h-96" id="gmp-map"></div>
+                                    </div>
+
+                                    <div class="w-full relative md:px-4">
+                                        <div class="relative w-full  mb-3">
+                                            <label for="id_category">
+                                                event category*
+                                            </label>
+                                            {{form.category}}
+                                            <span
+                                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.category.help_text}}</span>
+                                            {% if form.category.errors %}
+                                            <span
+                                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.category.errors.as_text}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <hr class="mt-6 border-b-1 border-gray-300">
+                        <p class="text-sm text-custom-h font-medium mt-4">
+                            By clicking submit, you are agreeing to our event <span class="text-custom-primary">terms
+                                and conditions</span>
+                        </p>
+
+                        <div class="space-x-7 mt-3">
+                            <div
+                                class="text-center inline-block h-12 bg-custom-primary w-[150px] rounded-md cursor-pointer">
+                                <input type="submit" value="submit"
+                                    class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+{% block js %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1vMyd0KzU7mTn_AkMW3zd2V4cJC9w31I&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cAC"
+    async defer></script>
+<script>
+
+
+    window.onload = () => {
+        const file_picker = document.querySelector("#id_image"),
+            pick_image = document.querySelector("#pick_image")
+        const no_image = document.querySelector("#no_image");
+        const img_container = document.querySelector("#img_container")
+        const img = document.querySelector("#img")
+
+        if (img_container.getAttribute("data-image")) {
+
+            img_container.removeChild(no_image);
+            img_container.innerHTML += `
+                    <img
+                        src="${img_container.getAttribute("data-image")}"
+                        alt="{{request.user.first_name}}"
+                        class="w-full h-full object-cover"
+                        id="img"
+                    />
+                `
+        }
+        pick_image.addEventListener('click', () => {
+            file_picker.click()
+        })
+
+        file_picker.onchange = ({target}) => {
+
+            var file = target.files[0]
+            if (file) {
+                // console.log(no_image)
+                if (no_image) {
+
+                    img_container.removeChild(no_image);
+                    img_container.innerHTML += `
+                    <img
+                        src="${window.URL.createObjectURL(file)}"
+                        alt="{{request.user.first_name}}"
+                        class="w-full h-full object-cover"
+                        id="img"
+                    />
+                `
+                } else {
+                    img.src = window.URL.createObjectURL(file)
+                }
+
+            } else {
+                alert("no file selected")
+            }
+
+        };
+
+    }
+
+</script>
+<script>
+    "use strict";
+
+    function initMap() {
+
+        // bring back old map
+        const coordinatesInput = document.getElementById('id_map_coordinates');
+        const coordinates = coordinatesInput.value.split(',');
+        const latitude = parseFloat(coordinates[0]) || -33.918861;
+        const longitude = parseFloat(coordinates[1]) || 18.423300;
+
+
+
+        const CONFIGURATION = {
+            "ctaTitle": "Checkout",
+            "mapOptions": {"center": {"lat":latitude, "lng": longitude}, "fullscreenControl": true, "mapTypeControl": false, "streetViewControl": true, "zoom": 11, "zoomControl": true, "maxZoom": 22, "mapId": ""},
+            
+            "capabilities": {"addressAutocompleteControl": true, "mapDisplayControl": true, "ctaControl": true}
+        };
+
+
+        const map = new google.maps.Map(document.getElementById("gmp-map"), {
+            zoom: CONFIGURATION.mapOptions.zoom,
+            center: CONFIGURATION.mapOptions.center,
+            mapTypeControl: true,
+            fullscreenControl: CONFIGURATION.mapOptions.fullscreenControl,
+            zoomControl: CONFIGURATION.mapOptions.zoomControl,
+            streetViewControl: CONFIGURATION.mapOptions.streetViewControl
+        });
+        
+        const marker = new google.maps.Marker({map: map, draggable: false});
+
+        google.maps.event.addListener(map, 'click', (event) => {
+            marker.setPosition(event.latLng);
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({location: event.latLng}, (results, status) => {
+                if (status === 'OK') {
+                    console.log(results)
+                    fillInAddress(results[0]);
+                } else {
+                    alert("Sorry, we couldn't find address suggestions for your location")
+                }
+            })
+        })
+
+
+        const autocompleteInput = document.getElementById('id_event_address');
+        const provinceInput = document.getElementById('id_province');
+
+        const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+            fields: ["place_id", "address_components", "geometry", "name"],
+            types: ["address"],
+        });
+
+        autocomplete.setComponentRestrictions(
+            {'country': ['za']});
+        autocomplete.addListener('place_changed', function () {
+
+            const place = autocomplete.getPlace();
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert('No details available for input: \'' + place.name + '\'');
+                return;
+            }
+            // console.log(place)
+            const new_latitude = place.geometry.location.lat();
+            const new_longitude = place.geometry.location.lng();
+            document.getElementById('id_map_coordinates').value = new_latitude + ',' + new_longitude;
+            renderAddress(place)
+            fillInAddress(place);
+        });
+
+        function fillInAddress(place) {  // optional parameter
+            const addressNameFormat = {
+                'street_number': 'short_name',
+                'route': 'long_name',
+                'locality': 'long_name',
+                'administrative_area_level_1': 'short_name',
+                'country': 'long_name',
+                'postal_code': 'short_name',
+            };
+            const getAddressComp = function (type) {
+                for (const component of place.address_components) {
+                    if (component.types[0] === type) {
+                        return component[addressNameFormat[type]];
+                    }
+                }
+                return '';
+            };
+
+            autocompleteInput.value = `${getAddressComp('route')}, ${getAddressComp('locality')}, ${getAddressComp('administrative_area_level_1')}, ${getAddressComp('postal_code')}, South Africa`
+        }
+
+        function renderAddress(place) {
+            map.setCenter(place.geometry.location);
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+        }
+    }
+</script>
+<script>
+
+    $(document).ready(function () {
+        // Initialize DateTimePicker for startDatetime
+        $('#id_event_startdate').datetimepicker({
+            format: 'Y-m-d H:i:s',
+            minDate: 0,  // Set minimum date to the current date
+            step: 15,   // Set the time step to 15 minutes (optional)
+        });
+
+        // Initialize DateTimePicker for endDatetime
+        $('#id_event_enddate').datetimepicker({
+            format: 'Y-m-d H:i:s',
+            minDate: 0,  // Set minimum date to the current date
+            step: 15,   // Set the time step to 15 minutes (optional)
+        });
+    });
+</script>
+
+{% endblock js %}

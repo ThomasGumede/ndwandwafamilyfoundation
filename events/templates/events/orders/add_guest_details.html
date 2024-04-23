@@ -1,0 +1,255 @@
+{% extends '_ticket_order.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    select {
+        border: 0px;
+        outline: 0px;
+        padding: 0px;
+        --tw-bg-opacity: 1;
+        background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+        user-select: none;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background-image: none !important;
+        overflow: hidden;
+        text-indent: 1px;
+        text-overflow: '';
+        -ms-progress-appearance: none;
+        -webkit-user-select: none;
+    }
+    select::-ms-expand {
+        display: none;
+    }
+</style>
+{% endblock styles %}
+
+{% block ticketsordercontent %}
+        <div class="flex bg-blue-100 rounded-lg p-4 w-full mb-4 text-sm text-blue-700" role="alert">
+            <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <div>
+                You have <b>25 minutes</b> to complete this order. This is to allow other people buy the tickets if you
+                don't complete your order.
+            </div>
+        </div>
+        <div class="justify-center w-full mx-auto bg-white">
+            <div class="mb-8 text-center">
+                <h1 class="mb-4 text-3xl font-semibold leading-7 tracking-wide">GUESTS</h1>
+                <p class="text-sm text-gray-500">
+                    Please add guests details
+                </p>
+            </div>
+            <div class="mb-4 w-full">
+                <div class="mb-2">
+                    <h4 class="text-lg">
+                        Order summary
+                    </h4>
+                </div>
+                <div class="w-full mb-2">
+                    <div class="relative block bg-gray-50 p-4 border rounded-md">
+                        <div class="flex w-full items-center justify-between mb-2">
+                
+                            <div id="ticket_title">
+                
+                                <h6 class="text-base">
+                                    Email
+                                </h6>
+                            </div>
+                            <div class=" rounded-md w-fit">
+                                <p class="text-base font-normarl">
+                                    {{order.email}}
+                                </p>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <div class="w-full mb-2">
+                    <div class="relative block bg-gray-50 p-4 border rounded-md">
+                        <div class="flex w-full items-center justify-between mb-2">
+                
+                            <div id="ticket_title">
+                                <h6 class="text-base">
+                                    Ticket quantity
+                                </h6>
+                            </div>
+                            <div class="bg-white border rounded-md w-fit p-3">
+                                <div class="flex items-center space-x-4">
+                                    <div id="quantity_container">
+                                        <p id="total_seats" class="text-custom-h text-xl">{{order.quantity}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex w-full items-center justify-between">
+                
+                            <div id="ticket_title">
+                                <h6 class="text-base">
+                                    Total price <span class="text-gray-500 text-sm font-normal">(incl.
+                                        VAT)</span>
+                                </h6>
+                            </div>
+                            <div class="bg-white border rounded-md w-fit p-3">
+                                <div class="flex items-center space-x-4">
+                                    <div id="quantity_container">
+                                        <p class="text-custom-h text-xl">R<span id="total_price">{{order.total_price}}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                {% if forms.errors %}
+                <div class="w-full mx-auto">
+                    <div class="bg-red-50 border-l-8 border-red-900">
+                        <div class="flex items-center">
+                            <div class="p-2">
+                                <div class="flex items-center">
+                                    <div class="ml-2">
+                                        <svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <p class="px-6 py-4 text-red-900 font-semibold text-lg">Please fix the
+                                        following
+                                        errors.</p>
+                                </div>
+
+                                <ul class="px-16 mb-4">
+                                    
+                                    {% for error in forms.errors %}
+                                    <li class="text-md font-bold p-1 list-none text-red-500 text-sm">{{error.as_text}}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <form method="post" class="mt-4 md:mt-6" id="tickets_form">
+                    {% csrf_token %}
+                    <div>
+                        <input type="number" class="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-[1]"
+                            name="{{order_form.quantity.html_name}}" value="0" min="0" max="{{event.total_seats}}"
+                            id="{{order_form.quantity.id_for_label}}">
+                        <input type="number" class="w-[0.1px] h-[0.1px]  opacity-0 overflow-hidden absolute -z-[1]"
+                            name="{{order_form.total_price.html_name}}" value="0.00" step="0.01" min="0.00"
+                            id="{{order_form.total_price.id_for_label}}">
+                    </div>
+                    <div>
+                        <input type="hidden" name="form-TOTAL_FORMS" value="{{order.tickets.count}}"
+                            id="id_form-TOTAL_FORMS">
+                        <input type="hidden" name="form-INITIAL_FORMS" value="1" id="id_form-INITIAL_FORMS">
+                        <input type="hidden" name="form-MIN_NUM_FORMS" value="1" id="id_form-MIN_NUM_FORMS">
+                        <input type="hidden" name="form-MAX_NUM_FORMS" value="{{order.tickets.count}}"
+                            id="id_form-MAX_NUM_FORMS">
+                    </div>
+                    <div data-tickets="{{data}}" class="w-full relative block" id="ticket_types_container">
+                        <div class="grid gap-5" id="ticket_types_inner_container">
+                            {% for form in forms %}
+                                
+                                <div class="relative block bg-gray-50 p-4 border rounded-md">
+                                    <div class="space-y-4">
+                                        <div class="flex flex-wrap w-full md:items-center justify-between">
+                                            <div id="ticket_title" class="pointer-events-none">
+                                                <h6 class="text-base">
+                                                    {{form.ticket_type}}
+                                                </h6>
+                                            </div>
+                                            <div class="bg-white border rounded-md w-fit p-2">
+                                                <div>
+                                                    <input type="number" value="{{form.quantity.value}}" class="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-[1]"
+                                                        name="{{form.quantity.html_name}}" min="0" max="{{form.quantity.value}}"
+                                                        id="id_{{form.quantity.html_name}}" />
+                                                    <div id="quantity_container">
+                                                        <p class="text-custom-h text-xl">{{form.quantity.value}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-wrap lg:flex-nowrap gap-4 w-full">
+                                            <div class="w-full lg:w-6/12 relative md:px-4">
+                                                <div class="relative w-ful lmb-3">
+                                                    <label for="{{form.guest_full_name.id_for_label}}">
+                                                        Full name*
+                                                    </label>
+                                                    <input id="{{form.guest_full_name.id_for_label}}" required name="{{form.guest_full_name.html_name}}" type="text" placeholder="e.g Venue hall"
+                                                        class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                                                        value="{% if form.guest_full_name.value %}{{form.guest_full_name.value}}{% else %}{{request.user.get_full_name}}{% endif %}">
+                                                    <span class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.guest_full_name.help_text}}</span>
+                                                    {% if form.guest_full_name.errors %}
+                                                    <span class="text-[11px] text-red-500 block font-normal lowercase">{{form.guest_full_name.errors.as_text}}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="w-full lg:w-6/12 relative md:px-4">
+                                                <div class="relative w-fullmb-3">
+                                                    <label for="{{form.guest_email.id_for_label}}">
+                                                        Email*
+                                                    </label>
+                                                    <input id="{{form.guest_email.id_for_label}}" required name="{{form.guest_email.html_name}}" type="email"
+                                                        placeholder="e.g Venue hall"
+                                                        class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                                                        value="{% if form.guest_email.value %}{{form.guest_email.value}}{% else %}{{request.user.email}}{% endif %}">
+                                                    <span
+                                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.guest_email.help_text}}</span>
+                                                    {% if form.guest_email.errors %}
+                                                    <span
+                                                        class="text-[11px] text-red-500 block font-normal lowercase">{{form.guest_email.errors.as_text}}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            {% endfor %}
+                            
+                        </div>
+                        
+                    </div>
+
+                    <div class="bg-white w-full space-y-3 mt-6 rounded">
+                        <div class="">
+                            <label class="font-normal text-sm text-gray-500" for="id_accepted_laws">
+                                By clicking confirm order, I understand and agree to Ndwandwa Family Foundation's <a
+                                    href="{% url 'home:terms' %}" target="_blank" rel="noopener noreferrer"
+                                    class="text-custom-primary">terms and conditions</a></label>
+                            <p class="font-normal text-sm text-gray-500">*Please note that the guest(s) will not receive the tickets copies from us.</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-4 mt-6 ">
+                            
+                                <button type="submit" value="submit" id="submit_form"
+                                    class="w-full px-4 py-2 bg-custom-primary rounded-md text-gray-50 md:w-auto hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-600">
+                                    Confirm order
+                                </button>
+                            
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+{% endblock ticketsordercontent %}
+{% block js %}
+<script>
+
+    
+</script>
+
+{% endblock js %}

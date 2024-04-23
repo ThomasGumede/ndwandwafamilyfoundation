@@ -1,0 +1,81 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}Edit Email notifications{% endblock title %}
+
+{% block text_title %}first name, last name{% endblock text_title %}
+
+{% block accountblock %}
+<div class='w-full h-full'>
+
+    <form method='post'>
+        {% csrf_token %}
+        <div class="w-full mx-auto bg-white">
+            <div class="space-y-4 border-0 bg-white  w-full relative">
+                {% if form.errors.non_form_errors %}
+
+                <div class="w-fit space-y-1 mx-auto text-sm text-red-500 font-normal">
+
+                    <p>{{form.errors.non_form_errors.as_text}}</p>
+                </div>
+                {% endif %}
+                <div class="space-y-5">
+                    <div class="w-full flex items-center border-b border-b-gray-500 justify-between py-3">
+                        <p class="text-custom-h text-base font-bold">
+                            Alerts & Notifications
+                        </p>
+                        <p onclick="mark_all()" class="border-none outline-none text-custom-h cursor-pointer text-base font-normal">
+                            Toggle all
+                        </p>
+                    </div>
+                    
+                    <div class="w-full space-y-2">
+                        {% for group in mailinggroups %}
+                        <div class="border-b border-b-gray-500 py-3 space-y-3">
+                            <label class="flex text-custom-h text-base font-medium items-center space-x-2">
+                                <input {% if request.user in group.subscribers.all %}checked{% endif %} type="checkbox"
+                                    value="{{group.id}}" name="mailinggroups"
+                                    class="text-base mailinggroups w-5 select_mail mr-3 h-5 flex items-center relative checked:bg-custom-primary checked:text-white text-white bg-custom-primary border-custom-primary">
+                                {{group.title}}
+                            </label>
+                            <p class="text-custom-h text-sm font-normal">
+                                {{group.description}}
+                            </p>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="w-full relative block">
+                    <div class="flex items-center flex-wrap w-full gap-7">
+                        <div class="text-center inline-block h-12 bg-custom-primary w-fit px-3 rounded-md cursor-pointer">
+                            <input type="submit" value="update email notifications"
+                                class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                        </div>
+                        
+                        <div class="text-center inline-block h-12 bg-custom-primary w-fit px-3 rounded-md cursor-pointer">
+                            <a href="{% url 'accounts:unsubscribe' %}"
+                                class="text-white w-full h-full grid items-center justify-center cursor-pointer text-sm font-semibold">unsubscribe</a>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock accountblock %}
+
+{% block js %}
+<script>
+    function mark_all() {
+        let checkboxes = document.querySelectorAll(".mailinggroups")
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = true;
+        }
+    }
+</script>
+
+{% endblock js %}

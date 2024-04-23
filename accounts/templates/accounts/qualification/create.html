@@ -1,0 +1,97 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}Add Qualification{% endblock title %}
+
+{% block accountblock %}
+<div class='w-full h-full'>
+
+    <div class="w-full mx-auto bg-white">
+        <div class="space-y-4">
+            {% include "includes/errors.html" %}
+            <div class="md:px-4">
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h6 class="text-custom-h text-base mt-3 mb-6 font-bold uppercase">
+                        Qualifications Information
+                    </h6>
+                    <div class="flex flex-wrap space-y-3 md:space-y-0">
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_title"
+                                    class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    Title*
+                                </label>
+                                <input id="id_title" name="title" required maxlength="300" type="text"
+                                    class="block p-3 md:text-base w-full text-sm text-custom-h outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.title.help_text}}</span>
+
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_year"
+                                    class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    Year range*
+                                </label>
+                                <input id="id_year" name="year" maxlength="300" type="text"
+                                    class="block p-3 md:text-base w-full text-sm text-custom-h outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.year.help_text}}</span>
+
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_institution"
+                                    class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    institution*
+                                </label>
+                                <input id="id_institution" name="institution" maxlength="300" type="text"
+                                    class="block p-3 md:text-base w-full text-sm text-custom-h outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.institution.help_text}}</span>
+
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_qualification_type"
+                                    class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    Describe your qualification*
+                                </label>
+                                {{form.qualification_type}}
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.qualification_type.help_text}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-6 inline-block h-12 bg-custom-primary w-[150px] rounded-md cursor-pointer">
+                        <input type="submit" value="submit"
+                            class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock accountblock %}
+
+{% block javascript %}
+<script>
+
+</script>
+
+{% endblock javascript %}

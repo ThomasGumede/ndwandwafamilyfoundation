@@ -1,0 +1,296 @@
+{% extends '_account.html' %}
+{% load static %}
+
+{% block title %}Edit Profile{% endblock title %}
+
+{% block accountblock %}
+<div class='relative block'>
+    <div class="bg-white">
+        <div class="space-y-4 md:px-4">
+            {% include "includes/errors.html" %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h6 class="text-custom-h text-base mt-3 mb-6 font-bold uppercase">
+                    User Information
+                </h6>
+                <div class="flex flex-wrap space-y-3 md:space-y-0">
+                    <div class="w-full md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_profile_image">
+                                profile picture*
+                            </label>
+                            <input type="file" name="profile_image" accept="image/*" id="id_profile_image"
+                                class="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-[1]" />
+
+
+                            <div class="w-full border rounded-md bg-white border-dotted p-6">
+                                <div class="flex items-center flex-col md:flex-row gap-4 w-full justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div id="img_container" class="h-16 w-20 overflow-hidden rounded bg-gray-300">
+                                            {% if form.profile_image.value %}
+                                            <img src="{{form.profile_image.value.url}}"
+                                                alt="{{form.title.value}} campaign" class="w-full h-full object-cover"
+                                                id="img" />
+                                            {% else %}
+                                            <div id="no_image"></div>
+                                            {% endif %}
+
+                                        </div>
+                                        <div class="space-y-1">
+                                            <p class="text-xs font-bold text-gray-500">Upload photo
+                                                to illustrate you</p>
+                                            <p class="text-xs font-light text-gray-500">SVG, PNG,
+                                                JPG, JPEG or GIF</p>
+                                        </div>
+                                    </div>
+                                    <div id="pick_image" class="border p-2 cursor-pointer text-center text-black">
+                                        <p class="text-sm">Browser</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.photo.help_text}}</span>
+                            {% if form.photo.errors %}
+                            <span
+                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.photo.errors.as_text}}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_title">
+                                Title*
+                            </label>
+                            {{form.title}}
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_maiden_name">
+                                Maiden name*
+                            </label>
+                            <input value="{{form.maiden_name.value}}" id="id_maiden_name" name="maiden_name"
+                                maxlength="300" type="text"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.maiden_name.help_text}}</span>
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_first_name">
+                                First name*
+                            </label>
+                            <input value="{{form.first_name.value}}" id="id_first_name" name="first_name" required
+                                maxlength="300" type="text"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150">
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_last_name">
+                                Surname*
+                            </label>
+                            <input value="{{form.last_name.value}}" id="id_last_name" name="last_name" required
+                                maxlength="300" type="text"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.last_name.help_text}}</span>
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                <h6 class="text-custom-h text-base mt-3 mb-6 font-bold uppercase">
+                    Identity
+                </h6>
+                {% if request.user.identity_number != none %}
+                <div class="w-full md:px-4">
+                    <!-- {{form.identity_choices}} -->
+                    <div class="mb-5">
+                        <label for="email">Identity
+                            type</label>
+                        <div class="flex">
+                            <label for="id_identity_choices_0">
+                                <div class="text-teal-600 mr-3">
+                                    <input type="radio" name="identity_choices" {% if request.user.identity_choice == 'ID_NUMBER' %}checked{% endif %} required
+                                        id="id_identity_choices_0" value="ID_NUMBER"
+                                        class="form-radio focus:outline-none focus:shadow-outline" />
+                                </div>
+                                <div class="select-none text-gray-700">ID number</div>
+                            </label>
+
+                            <label for="id_identity_choices_1"
+                                class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
+                                <div class="text-teal-600 mr-3">
+                                    <input type="radio" {% if request.user.identity_choice == 'PASSPORT' %}checked{% endif %} name="identity_choices" required id="id_identity_choices_1" value="PASSPORT"
+                                        class="form-radio focus:outline-none focus:shadow-outline" />
+                                </div>
+                                <div class="select-none text-gray-700">Passport</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="id_identity_number">ID / Passport</label>
+                        <input type="text" value="{{request.user.identity_number}}" name="identity_number"
+                            id="id_identity_number"
+                            class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                            placeholder="">
+                    </div>
+                </div>
+                {% else %}
+                <div class="w-full md:px-4">
+                    <!-- {{form.identity_choices}} -->
+                    <div class="mb-5">
+                        <label for="email">Identity
+                            type</label>
+                        <div class="flex">
+                            <label for="id_identity_choices_0"
+                                class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
+                                <div class="text-teal-600 mr-3">
+                                    <input type="radio" name="identity_choices" checked required
+                                        id="id_identity_choices_0" value="ID_NUMBER"
+                                        class="form-radio focus:outline-none focus:shadow-outline" />
+                                </div>
+                                <div class="select-none text-gray-700">ID number</div>
+                            </label>
+
+                            <label for="id_identity_choices_1"
+                                class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
+                                <div class="text-teal-600 mr-3">
+                                    <input type="radio" name="identity_choices" required id="id_identity_choices_1"
+                                        value="PASSPORT" class="form-radio focus:outline-none focus:shadow-outline" />
+                                </div>
+                                <div class="select-none text-gray-700">Passport</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="profession">ID /
+                            Passport</label>
+                        <input type="text" name="identity_number" id="id_identity_number" required
+                            class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                            placeholder="">
+                    </div>
+                </div>
+                {% endif %}
+
+                <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                <h6 class="text-custom-h text-base mt-3 mb-6 font-bold uppercase">
+                    About Me
+                </h6>
+                <div class="flex flex-wrap space-y-3 md:space-y-0">
+
+                    <div class="w-full lg:w-12/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_biography">
+                                About me*
+                            </label>
+                            <textarea name="biography" id="id_biography"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                                rows="6"> {{form.biography.value}}</textarea>
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.biography.help_text}}</span>
+
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_occupation">
+                                Occupation
+                            </label>
+                            <input value="{{form.occupation.value}}" id="id_occupation" name="occupation"
+                                maxlength="300" type="text" placeholder="e.g Accountant at Zululand"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                                value="">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.occupation.help_text}}</span>
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_professional_affiliations">
+                                professional affiliations
+                            </label>
+                            <input value="{{form.professional_affiliations.value}}" id="id_professional_affiliations"
+                                name="professional_affiliations" maxlength="300" type="text"
+                                placeholder="e.g ABASA member"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.professional_affiliations.help_text}}</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6 inline-block h-12 bg-custom-h w-[150px] rounded-md cursor-pointer">
+                    <input type="submit" value="submit"
+                        class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock accountblock %}
+
+{% block js %}
+<script>
+    let file_picker = document.querySelector("#id_profile_image"),
+        pick_image = document.querySelector("#pick_image")
+
+    pick_image.addEventListener('click', () => {
+        file_picker.click()
+    })
+
+    file_picker.onchange = ({target}) => {
+        var no_image = document.querySelector("#no_image");
+        var img_container = document.querySelector("#img_container")
+        var img = document.querySelector("#img")
+        var file = target.files[0]
+        if (file) {
+            // console.log(no_image)
+            if (no_image) {
+                // console.log(img_container)
+
+                img_container.removeChild(no_image);
+                img_container.innerHTML += `
+                   <img
+                       src="${window.URL.createObjectURL(file)}"
+                       alt="{{request.user.first_name}}"
+                       class="w-full h-full object-cover"
+                       id="img"
+                   />
+               `
+            } else {
+                img.src = window.URL.createObjectURL(file)
+            }
+
+        } else {
+            alert("no file selected")
+        }
+
+    }
+
+    var max_words = 150;
+
+    $("textarea[name=biography]").on("keyup", function () {
+        var str = $(this).val();
+        if (str.split(/[\s]+/).length > max_words) {
+            alert("You cannot put more than" + max_words + " words in this text area.")
+            var new_str = str.split(/[\s]+/).splice(0, max_words).join(' ');
+            $(this).val(new_str);
+        }
+    })
+</script>
+{% endblock js %}

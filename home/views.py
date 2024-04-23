@@ -1,0 +1,109 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from home.models import PostModel, CategoryModel, PrivacyModel, FAQ
+from home.forms import CommentForm, SearchForm, EmailForm
+from django.utils import timezone
+from campaigns.models import CampaignModel
+from events.models import EventModel
+from accounts.utils import StatusChoices
+from datetime import timedelta
+from home.tasks import send_email_to_admin
+from django.db.models import Q
+
+from django.db.models import Q
+from django.contrib import messages
+
+def home(request):
+    in_five_days = timezone.now() - timedelta(days=5)
+    template = "home/home.html"
+    campaigns = CampaignModel.objects.filter(Q(status = StatusChoices.APPROVED) | Q(status = StatusChoices.COMPLETED))[:3]
+    events = EventModel.objects.filter(Q(status = StatusChoices.APPROVED) | Q(status = StatusChoices.COMPLETED))[:3]
+
+    posts = PostModel.objects.filter(created__gte=in_five_days)[:3]
+    return render(request, template, {"campaigns": campaigns, "events": events, "posts": posts})
+
+def terms_and_conditions(request, terms_slug=None):
+    legals = PrivacyModel.objects.all().only("slug", "title")
+    if terms_slug:
+        term = get_object_or_404(PrivacyModel, slug=terms_slug)
+    else:
+        term = get_object_or_404(PrivacyModel, slug="website-terms-and-community-guidlines")
+
+    return render(request, "home/privacy/terms_and_conditions.html", {"legals": legals, "term": term})
+
+def help(request):
+    return render(request, "home/help/FAQ.html", {"questions": FAQ.objects.all()})
+
+def contact(request):
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            form.save()
+            send_email_to_admin.delay(form.cleaned_data["subject"], form.cleaned_data["message"], form.cleaned_data["from_email"], form.cleaned_data["name"])
+            messages.success(request, "We have successfully receive your email, will be in touch shortly")
+            return redirect("home:contact")
+        else:
+            messages.error(request, "Something went wrong, please fix errors below")
+            for err in form.errors:
+                messages.error(request, f"{err}")
+                return render(request, "home/contact.html", {"form": form})
+            
+    form = EmailForm()
+    return render(request, "home/contact.html", {"form": form})
+
+
+def search(request):
+
+    form = SearchForm()
+    query = request.GET.get("query", None)
+    query_by = request.GET.get("search_by", "campaigns")
+    results_dic = {
+        "campaigns" : CampaignModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
+        "events": EventModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
+        "news": PostModel.objects.filter(Q(title__icontains=query)),
+    }
+    context = {}
+    if query and query_by:
+        context["results"] = results_dic[query_by]
+        context["results_type"] = query_by
+        context["query"] = query
+        
+    
+    context["form"] = form
+    template = "home/search.html"
+    return render(request, template, context=context)
+
+def news(request, category_slug=None):
+    template = "home/news/news.html"
+    model = PostModel
+    news = model.objects.all().only("title", "description", "image", "author")
+    category = "all"
+    if category_slug:
+        category = get_object_or_404(CategoryModel, slug=category_slug)
+        news = model.objects.filter(category=category).only("title", "description", "image", "author")
+
+    context = {"posts": news, "category": category}
+
+    return render(request, template, context)
+
+
+def post_details(request, post_slug, category_slug):
+    post = get_object_or_404(PostModel.objects.select_related("category").prefetch_related("comments"), slug=post_slug)
+    recent_posts = PostModel.objects.order_by("-created")[:5]
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.commenter = request.user
+            instance.post = post
+            instance.save()
+            messages.success(request, "Comment added successfully")
+            return redirect('home:news-details', category_slug=post.category.slug, post_slug=post.slug)
+        else:
+            messages.error(request, "Comment not added, fix errors below")
+            return redirect('home:news-details', category_slug=post.category.slug, post_slug=post.slug)
+        
+    form = CommentForm()
+        
+    return render(request, "home/news/details.html", {"post": post, "recent_posts": recent_posts, "form": form})
+    

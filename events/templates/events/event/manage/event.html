@@ -1,0 +1,242 @@
+{% extends '_manage.html' %}
+{% load static %}
+{{form.media}}
+{% block title %}{{event.title}}{% endblock title %}
+{% block accountblock %}
+<section class="w-full bg-custom-bg py-10 relative block">
+    <div class="">
+        <div class="relative overflow-hidden block">
+            <div class="grid items-center gap-7 mb-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{event.ticket_orders.count}}</span>
+                        <span class="block text-gray-500">Orders</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">R{{sale}}</span>
+                        <span class="block text-gray-500">Sales</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">R{{sale}}</span>
+                        <span class="block text-gray-500">Balance</span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full">
+                <div class="py-7 mb-4">
+                    <div class="flex flex-col w-full gap-4 lg:flex-row lg:gap-7 h-full lg:h-60">
+                        <div id="image_container" class="w-full lg:w-4/12 h-full rounded-md overflow-hidden">
+                            <img src="{{event.image.url}}" class="w-full h-full object-cover object-center" />
+                        </div>
+                        <div id="order_content" class="w-full lg:w-8/12 h-full grid">
+                            <div class="mb-4">
+                                <h2 class="text-xl lg:text-3xl mb-1 font-normal">{{event.title}}</h2>
+                                <div class="flex flex-wrap lg:items-center mb-1 gap-2 lg:gap-4">
+                                    <p class="text-sm text-gray-600"><i
+                                            class="fa-solid fa-clock text-sm lg:text-base mr-1"></i>{{event.date_time_formatter}}</p>
+                                    <p class="text-sm text-gray-600"><i class="fa-solid fa-user text-sm lg:text-base mr-1"></i>By
+                                        {{event.organiser.get_full_name}}</p>
+                                </div>
+                                <div>
+                                    {{event.content|safe|truncatewords:40}}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 flex-wrap self-end">
+                                <div class="bg-custom-primary  py-1 px-4 rounded-md duration-300 group hover:bg-white border-2 border-custom-primary text-center">
+                                    <a href="{% url 'events:update-event' event.slug %}" class="text-base p-0 group-hover:text-custom-primary text-white">update</a>
+                                </div>
+                                <div class="bg-red-600  py-1 px-4 rounded-md duration-300 group hover:bg-white border-2 border-red-600 text-center">
+                                    <a href="{% url 'events:delete-event' event_slug=event.slug %}" class="text-base p-0 group-hover:text-red-600 text-white">delete</a>
+                                </div>
+                                
+                                <div class="bg-custom-h  py-1 px-4 rounded-md duration-300 group hover:bg-white border-2 border-custom-h text-center">
+                                    <a href="{% url 'events:create-ticket-types' event_id=event.id %}" class="text-sm lg:text-base p-0 group-hover:text-custom-h text-white">add tickets</a>
+                                </div>
+                                <div class="bg-custom-h  py-1 px-4 rounded-md duration-300 group hover:bg-white border-2 border-custom-h text-center">
+                                    <a href="{% url 'events:generate-guest-list' event_id=event.id %}"
+                                        class="text-sm lg:text-base p-0 group-hover:text-custom-h text-white">generate guest list</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white w-full">
+                    <div class="w-full px-4 flex bg-white items-center justify-between">
+                        <h3 class="mb-4 text-xl lg:text-3xl font-semibold">
+                            Orders
+                        </h3>
+                        <div
+                            class="bg-custom-primary  py-1 px-4 rounded-md duration-300 group hover:bg-white border-2 border-custom-primary text-center">
+                            <a href="{% url 'events:ticket-orders' event_id=event.id %}"
+                                class="text-base p-0 group-hover:text-custom-primary text-white">view all</a>
+                        </div>
+                    </div>
+                    <div class="mb-4 overflow-x-auto w-full">
+                        <div class="align-middle inline-block min-w-full overflow-hidden bg-white px-4 pt-3 rounded-bl-lg rounded-br-lg">
+                            <table class="border-collapse w-full">
+                                <thead>
+                                    <tr>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Client</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Order no</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Quantity</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                Total</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                    Status</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Actions</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for order in event.ticket_orders.all %}
+                                    <tr
+                                        class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Client</span>
+                                            {{order.buyer.get_full_name}}
+                                        </td>
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span
+                                                class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Order no</span>
+                                            {{order.order_number}}
+                                        </td>
+                                        <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Quantity</span>
+                                            {{order.quantity}}
+                                        </td>
+                                        <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Total</span>
+                                            R{{order.total_price}}
+                                        </td>
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800  border border-b text-center block lg:table-cell relative lg:static">
+                                            <span
+                                                class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status</span>
+                                            <span class="rounded {% if order.paid == 'PAID' %} bg-green-400{% elif order.paid == 'PENDING' %}bg-yellow-400 {% else %}bg-red-400{% endif %} py-1 px-3 text-xs font-bold">{{order.paid}}</span>
+                                        </td>
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span
+                                                class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
+                                            <a href="{{order.get_absolute_url}}" class="text-blue-400 hover:text-blue-600 underline">View</a>
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 w-full bg-white">
+                    <h3 class="mb-4 text-xl lg:text-3xl font-semibold">
+                        Ticket types
+                    </h3>
+                    <div class="mb-4 overflow-x-auto w-full">
+                        <div
+                            class="align-middle inline-block min-w-full overflow-hidden bg-white px-4 pt-3 rounded-bl-lg rounded-br-lg">
+                            <table class="border-collapse w-full">
+                                <thead>
+                                    <tr>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Type</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Seats</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Price</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                Trans costs</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                    Sold</th>
+                                        <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                            Actions</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for ticket in event.tickettypes.all %}
+                                    <tr
+                                        class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Type</span>
+                                            {{ticket.title}}
+                                        </td>
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span
+                                                class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Seats</span>
+                                            {{ticket.available_seats}}
+                                        </td>
+                                        <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Price</span>
+                                            R{{ticket.total_price}}
+                                        </td>
+                                        <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Trans Cost</span>
+                                            R{{ticket.transaction_cost}}
+                                        </td>
+                                        <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Sold</span>
+                                            {{ticket.tickets.count}}
+                                        </td>
+                                        
+                                        <td
+                                            class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                            <span
+                                                class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
+                                            <a href="{% url 'events:update-ticket-type' event_slug=event.slug ticket_type_id=ticket.id %}" class="text-blue-400 hover:text-blue-600 underline">Edit</a>
+                                            <a href="{% url 'events:delete-ticket-type' event_slug=event.slug ticket_type_id=ticket.id %}" class="text-blue-400 hover:text-blue-600 underline  pl-6">Delete</a>
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock accountblock %}

@@ -1,0 +1,212 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Events{% endblock title %}
+
+{% block description %}
+<meta name="description"
+    content="Whether it's a community picnic, a cultural celebration, or a charitable initiative, we strive to provide moments that resonate with the spirit of together..." />
+{% endblock description %}
+
+<meta name="keywords"
+    content="Ndwandwa Family Foundation &dash; Ndwandwa Family Foundation south africa &dash; Ndwandwa Family Foundation kwazulu natal &dash; Crowdfunding &dash; School donations &dash; donations &dash; sell event tickets &dash; event tickets &dash; Ndwandwa Africa events &dash; Who is Ndwandwa &dash; Sazi Ndwandwa &dash; Ndwandwa Family Foundation around Durban &dash; Crowdfunding around Durban &dash; Ndwandwa Family Foundation (Pty) Ltd Durban &dash; Ndwandwa family foundation consulting &dash; Orange Free State &dash; Gauteng &dash; Cape Regions &dash; Durban &dash; Ballito &dash; Margate &dash; South Coast &dash; Tongaat &dash; Musgrave &dash; Gateway &dash;  Ramsgate &dash; Shelly Beach &dash; Stanger &dash; Melmoth &dash; Ulundi &dash; Pietermaritzburg &dash; Ladysmith &dash; Estcourt &dash; Newcastle &dash; Volksrust &dash;  Dundee &dash; Midlands &dash; Harrismith &dash; QwaQwa &dash; Drakensberg &dash; Clarens &dash; Bethlehem &dash; Warden &dash;  Kestel &dash; Reitz &dash; Vereeniging &dash; Welkom &dash; Villiers &dash; Umtata &dash; Johannesburg &dash; Pretoria &dash; Bloemfontein" />
+
+<!-- ==================================== SCHEMA =================================== -->
+<script type="application/ld+json">
+          {
+            "@context": "http://schema.org/",
+            "@type": "LocalBusiness",
+            "name": "Ndwandwa Family Foundation (Pty) Ltd",
+            "image": "{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' %}",
+            "telephone": "+27765591525",
+            "url": "http://ndwandwa.africa",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "{{company.address.address_one}}",
+              "addressLocality": "{{company.address.address_two}}, {{company.addresss.city}}",
+              "addressRegion": "{{request.scheme}}://{{request.get_host}}",
+              "postalCode": "{{company.address.zipcode}}",
+              "addressCountry": "South Africa"
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              }
+            ]
+          }
+        </script>
+
+<!-- ==================================== TWITTER =================================== -->
+{% block twitter %}
+<meta name="twitter:title" content="Ndwandwa Family Foundation South Africa" />
+<meta name="twitter:description"
+    content="Whether it's a community picnic, a cultural celebration, or a charitable initiative, we strive to provide moments that resonate with the spirit of together..." />
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' %}" />
+{% endblock twitter %}
+
+<!-- ==================================== OG =================================== -->
+{% block OG %}
+<meta property="og:type" content="business.business" />
+<meta property="og:title" content="Whether it's a community picnic, a cultural celebration, or a charitable initiative, we strive to provide moments that resonate with the spirit of together..." />
+<meta property="og:url" content="https://ndwandwa.africa" />
+<meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' %}" />
+
+{% endblock OG %}
+
+{% block content %}
+
+<section class="w-full bg-gray-50 py-20">
+    {% include "includes/messages.html" %}
+    <div class="container font-sans">
+        <div class="space-y-8 w-full">
+            <div class="w-full flex flex-col items-center justify-center md:flex-row gap-5 self-center justify-self-center">
+                <div class="relative block w-full md:w-6/12">
+                    <form method="get" action="{% url 'events:events' %}">
+                        <div class="relative w-full">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search" name="query"
+                                class="block p-3 pl-10 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Search e.g Party" required>
+                            <button type="submit"
+                                class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="relative block rounded-md">
+                    <div class="md:hidden w-11/12 md:w-fit overflow-auto flex items-center gap-5 p-2">
+                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
+                            <a href="{% url 'events:events' %}" role="menuitem" tabindex="-1"
+                                class="text-gray-700 block text-sm">All</a>
+                        </div>
+                        {% for category in categories %}
+                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
+                            <a href="{% url 'events:events-by-category' category_slug=category.slug %}" role="menuitem"
+                                tabindex="-1" class="text-gray-700 block text-sm">{{category.label}}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="rounded-md hidden md:block">
+                        <div class="relative mb-2 rounded-md flex items-center justify-between">
+                            <div id class="relative self-end bg-custom-primary z-40 py-3 px-3">
+            
+                                <p id="category_button" aria-haspopup="true" aria-expanded="true"
+                                    class="text-white text-sm cursor-pointer">
+                                    {% if category != none %}{{category.label}}{% else %}Category{% endif %}</p>
+                                <div id="category_menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                    class="absolute  hidden right-0 z-20 mt-2 duration-500 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div class="py-1 z-40">
+                                        <a href="{% url 'events:events' %}" role="menuitem" tabindex="-1"
+                                            class="text-gray-700 block px-4 py-2 text-sm">All</a>
+                                        {% for category in categories %}
+                                        <a href="{% url 'events:events-by-category' category_slug=category.slug %}"
+                                            role="menuitem" tabindex="-1"
+                                            class="text-gray-700 block px-4 py-2 text-sm">{{category.label}}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-7">
+                {% if events.count != 0 %}
+                    {% for event in events %}
+                    <div class="relative  overflow-hidden">
+                        <div class="relative block bg-custom-h w-full h-80 group overflow-hidden">
+                            <div class="bg-custom-primary  z-20  absolute top-4 left-4 py-1 md:py-2 px-2 md:px-4 text-center">
+                                <p class="text-xs text-white">{{event.category}}</p>
+                            </div>
+                    
+                            {% if event.image %}
+                            <img src="{{event.image.url}}" alt="{{event.title}} image" srcset="" lazyload
+                                class="object-cover block h-full w-full duration-500 group-hover:scale-105">
+                            {% else %}
+                            <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image" srcset=""
+                                class="object-cover block h-full w-full">
+                            {% endif %}
+                    
+                    
+                            <div
+                                class="w-full h-full bg-[linear-gradient(0deg,_rgba(6,2,75,1)_33%,_rgba(13,9,79,0.3127626050420168)_84%,_rgba(69,79,145,0.6965161064425771)_100%)] absolute top-0 left-0">
+                            </div>
+                            <div class="absolute group text-white duration-500 bottom-0 left-0 w-full h-fit p-4">
+                                <div class="font-sans space-y-3">
+                    
+                                    <div class="flex w-full items-center justify-between">
+                                        <p class="duration-500 space-x-1 flex items-center text-sm font-normal">
+                                            <i class="fa-solid fa-clock text-xs md:text-sm"></i>
+                                            <span class="m-0 p-0">
+                                                {{event.sales_days_left}} left
+                                            </span>
+                                        </p>
+                                        <div class="duration-500 space-x-1 flex items-center text-sm font-normal">
+                                            <div class="w-4 h-4 rounded-full bg-white overflow-hidden relative">
+                                                {% if event.organiser.profile_image %}
+                                                <img class="w-full h-full rounded-full object-fill" alt="{{event.organiser.get_full_name}}"
+                                                    src="{{event.organiser.profile_image.url}}" />
+                                                {% else %}
+                                                <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image" srcset=""
+                                                    class="object-cover block h-full w-full">
+                                                {% endif %}
+                                            </div>
+                                            <p class="">
+                                                By <a href=""
+                                                    class="text-sm font-normal hover:text-custom-primary">{{event.organiser.get_full_name}}</a>
+                                            </p>
+                    
+                                        </div>
+                                    </div>
+                                    <a href="{{event.get_absolute_url}}"
+                                        class="block  duration-500 font-bold text-white text-lg md:text-2xl">
+                                        {{event.title|truncatewords:3}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="self-center justify-self-center w-full mx-auto">
+                    <p class="text-custom-h text-3xl">Not events available on this category</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
+
+{% block js %}
+<script>
+
+    const categoryBtn = document.getElementById("category_button");
+    const categoryMenu = document.getElementById("category_menu");
+
+    categoryBtn.addEventListener("click", function () {
+        if (categoryMenu.classList.contains("hidden")) {
+            categoryMenu.classList.remove("hidden")
+            categoryMenu.classList.add("block")
+        } else {
+            categoryMenu.classList.remove("block")
+            categoryMenu.classList.add("hidden")
+        }
+    })
+</script>
+{% endblock js %}

@@ -1,0 +1,77 @@
+{% extends '_account.html' %}
+{% load static %}
+
+{% block title %}Change social links{% endblock title %}
+
+{% block accountblock %}
+<div class='relative block'>
+    <div class="bg-custom-bg">
+        <div class="space-y-4">
+            {% include "includes/errors.html" %}
+            <div class="md:px-4">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h6 class="text-custom-h text-sm mt-3 mb-6 font-bold uppercase">
+                        Social Links
+                    </h6>
+                    <div class="flex flex-wrap space-y-3 md:space-y-0">
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_facebook">
+                                   Facebook
+                                </label>
+                                
+                                <input id="id_facebook" name="facebook" type="url" value="{% if form.facebook.value %}{{form.facebook.value}}{% endif %}"
+                                    class="block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.facebook.help_text}}</span>
+
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_twitter">
+                                    Twitter
+                                </label>
+                                <input id="id_twitter" name="twitter" type="url" value="{% if form.twitter.value %}{{form.twitter.value}}{% endif %}"
+                                    class="block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.twitter.help_text}}</span>
+
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_instagram">
+                                    Instagram
+                                </label>
+                                <input id="id_instagram" name="instagram" type="url" value="{% if form.instagram.value %}{{form.instagram.value}}{% endif %}"
+                                    class="block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.instagram.help_text}}</span>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_linkedIn">
+                                    Linkedln
+                                </label>
+                                <input id="id_linkedIn" name="linkedIn" type="url"  value="{% if form.linkedIn.value %}{{form.linkedIn.value}}{% endif %}"
+                                    class="block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.linkedIn.help_text}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-center mt-6 inline-block h-12 bg-custom-h w-[150px] rounded-md cursor-pointer">
+                        <input type="submit" value="submit"
+                            class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock accountblock %}

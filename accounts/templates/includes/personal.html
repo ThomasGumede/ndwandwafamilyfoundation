@@ -1,0 +1,84 @@
+<h6 class="text-gray-900 text-base mt-6 mb-6 font-bold uppercase">
+    Your Information
+</h6>
+<div class="flex flex-wrap">
+    <div class="w-full md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_profile_image">
+                Profile picture
+            </label>
+            <input type="file" name="profile_image" accept="image/*" id="id_profile_image"
+                class="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-[1]" />
+            <div class="w-full border rounded-md bg-white border-dotted p-6">
+                <div class="flex items-center flex-col md:flex-row gap-4 w-full justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div id="img_container" class="h-16 w-20 overflow-hidden rounded bg-gray-300">
+                            <div id="no_image"></div>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-xs font-bold text-gray-500">Upload your profile
+                                picture</p>
+                            <p class="text-xs font-light text-gray-500">SVG, PNG,
+                                JPG, JPEG or GIF</p>
+                        </div>
+                    </div>
+                    <div id="pick_image" class="border p-2 cursor-pointer text-center text-black">
+                        <p class="text-sm">Browser</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full lg:w-12/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_username">
+                Username*
+            </label>
+            {{form.username}}
+
+        </div>
+    </div>
+    <div class="w-full lg:w-6/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_email">
+                Email address*
+            </label>
+            {{form.email}}
+
+        </div>
+    </div>
+    <div class="w-full lg:w-6/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_email">
+                Retype Email address*
+            </label>
+            {{form.confirm_email}}
+            <span class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.confirm_email.help_text}}</span>
+            <span id="confirm_email_error" class="text-[11px] hidden text-red-500 font-normal lowercase">Confirm Email does not match with email one</span>
+    
+        </div>
+    </div>
+    <div class="w-full lg:w-6/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_first_name">
+                First name* <span class="text-[11px] text-custom-tertiary font-normal lowercase">(Registered
+                    name(s))</span>
+            </label>
+            {{form.first_name}}
+            <span
+                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.first_name.help_text}}</span>
+
+        </div>
+    </div>
+    <div class="w-full lg:w-6/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_last_name">
+                Surname* <span class="text-[11px] text-custom-tertiary font-normal lowercase">(Registered
+                    surname)</span>
+            </label>
+            {{form.last_name}}<span
+                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.last_name.help_text}}</span>
+
+        </div>
+    </div>
+</div>

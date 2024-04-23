@@ -1,0 +1,103 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% tailwind_preload_css %}
+    {% tailwind_css %}
+    {{form.media}}
+    {% block styles %}
+    {% endblock styles %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/fonts/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'fonts/icon-fonts/icons-fonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'fonts/typography/typography-fonts.css' %}" />
+    <title>
+        {% block title %} Ndwandwa Family Foundation {% endblock title %}
+    </title>
+
+    {% block description %}
+        <meta name="description" content="Ndwandwa Family Foundation is your partner in building a stronger, more connected community. We embrace the principles of family, support, and respect, w..." />
+    {% endblock description %}
+   
+    <meta name="keywords" content="Ndwandwa Family Foundation &dash; Ndwandwa Family Foundation south africa &dash; Ndwandwa Family Foundation kwazulu natal &dash; Crowdfunding &dash; School donations &dash; donations &dash; sell event tickets &dash; event tickets &dash; Ndwandwa Africa events &dash; Who is Ndwandwa &dash; Sazi Ndwandwa &dash; Ndwandwa Family Foundation around Durban &dash; Crowdfunding around Durban &dash; Ndwandwa Family Foundation (Pty) Ltd Durban &dash; Ndwandwa family foundation consulting &dash; Orange Free State &dash; Gauteng &dash; Cape Regions &dash; Durban &dash; Ballito &dash; Margate &dash; South Coast &dash; Tongaat &dash; Musgrave &dash; Gateway &dash;  Ramsgate &dash; Shelly Beach &dash; Stanger &dash; Melmoth &dash; Ulundi &dash; Pietermaritzburg &dash; Ladysmith &dash; Estcourt &dash; Newcastle &dash; Volksrust &dash;  Dundee &dash; Midlands &dash; Harrismith &dash; QwaQwa &dash; Drakensberg &dash; Clarens &dash; Bethlehem &dash; Warden &dash;  Kestel &dash; Reitz &dash; Vereeniging &dash; Welkom &dash; Villiers &dash; Umtata &dash; Johannesburg &dash; Pretoria &dash; Bloemfontein" />
+    
+    <!-- ==================================== SCHEMA =================================== -->
+    <script type="application/ld+json">
+          {
+            "@context": "http://schema.org/",
+            "@type": "LocalBusiness",
+            "name": "Ndwandwa Family Foundation (Pty) Ltd",
+            "image": "{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' %}",
+            "telephone": "+27765591525",
+            "url": "http://ndwandwa.africa",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "{{company.address.address_one}}",
+              "addressLocality": "{{company.address.address_two}}, {{company.addresss.city}}",
+              "addressRegion": "{{request.scheme}}://{{request.get_host}}",
+              "postalCode": "{{company.address.zipcode}}",
+              "addressCountry": "South Africa"
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              }
+            ]
+          }
+    </script>
+    
+    <!-- ==================================== TWITTER =================================== -->
+    {% block twitter %}
+        <meta name="twitter:title" content="Ndwandwa Family Foundation South Africa" />
+        <meta name="twitter:description" content="Ndwandwa Family Foundation is a South African non-profit organization headquartered in Cape Town, Western Cape, dedicated to making a positive impact in..." />
+        <meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' %}" />
+    {% endblock twitter %}
+    
+    <!-- ==================================== OG =================================== -->
+    {% block OG %}
+        <meta property="og:type" content="business.business" />
+        <meta property="og:title" content="Ndwandwa Family Foundation South Africa" />
+        <meta property="og:url" content="https://ndwandwa.africa" />
+        <meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' %}" />
+
+    {% endblock OG %}
+        <meta property="business:contact_data:street_address" content="{{company.address.address_one}}" />
+        <meta property="business:contact_data:locality" content="{{company.address.city}}" />
+        <meta property="business:contact_data:region" content="{{request.scheme}}://{{request.get_host}}" />
+        <meta property="business:contact_data:postal_code" content="{{company.address.zipcode}}" />
+        <meta property="business:contact_data:country_name" content="South Africa" />
+    <style>
+        [x-cloak] {
+            visibility: hidden;
+            overflow: hidden;
+            display: none;
+        }
+    </style>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <script defer src="{% static 'js/alpinejs.min.js' %}"></script>
+</head>
+<body>
+
+    {% include "includes/header.html" %}
+    <main>
+        {% block content %} {% endblock content %}
+    </main>
+    {% include "includes/footer.html" %}
+    <script src="{% static 'js/all.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    
+    {% block js %}{% endblock js %}
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+{% extends '_manage.html' %} 
+{% load static %} 
+{% block title %}Create event{% endblock title %} 
+{% block content %}
+
+<section class="w-full pb-20 overflow-hidden">
+  {% include "includes/messages.html" %}
+  <div class="bg-gray-50">
+    <div class="relative block p-4">
+      <div class="bg-white w-full p-2 pb-2">
+        <div class="mb-2">
+          <h4 class="text-lg">
+            Event summary
+          </h4>
+        </div>
+        <div class="w-full">
+          <div class="relative block  p-4 border rounded-md">
+            <div class="flex w-full items-center justify-between mb-2">
+      
+              <div id="ticket_title">
+      
+                <h6 class="text-base">
+                  Event title
+                </h6>
+              </div>
+              <div class=" rounded-md w-fit">
+                <p class="text-base font-normarl">
+                  {{event.title}}
+                </p>
+              </div>
+            </div>
+            <div class="flex w-full items-center justify-between mb-2">
+            
+              <div id="ticket_title">
+            
+                <h6 class="text-base">
+                  Event Date and time
+                </h6>
+              </div>
+              <div class=" rounded-md w-fit">
+                <p class="text-base font-normarl">
+                  {{event.event_startdate}} - {{event.event_enddate}}
+                </p>
+              </div>
+            </div>
+            <div class="flex w-full items-center justify-between mb-2">
+            
+              <div id="ticket_title">
+            
+                <h6 class="text-base">
+                  Event location
+                </h6>
+              </div>
+              <div class=" rounded-md w-fit">
+                <p class="text-base font-normarl">
+                  {{event.event_address}}
+                </p>
+              </div>
+            </div>
+            
+      
+          </div>
+        </div>
+      </div>
+      <div class="space-y-4 p-2 bg-white w-full relative">
+        {% include "includes/errors.html" %}
+        <div class="px-4">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div>
+              <input
+                type="hidden"
+                name="form-TOTAL_FORMS"
+                id="id_form-TOTAL_FORMS" value="1"
+              /><input
+                type="hidden"
+                name="form-INITIAL_FORMS"
+                id="id_form-INITIAL_FORMS" value='1'
+              /><input
+                type="hidden"
+                name="form-MIN_NUM_FORMS"
+                id="id_form-MIN_NUM_FORMS" value="1"
+              /><input
+                type="hidden"
+                name="form-MAX_NUM_FORMS"
+                id="id_form-MAX_NUM_FORMS" value="5"
+              />
+            </div>
+            <div class="w-full grid bg-white gap-5">
+                <div class="flex w-full items-center justify-between">
+                    <h6 class="text-custom-h w-fit text-base mt-3 mb-6 font-bold uppercase">
+                        Add Ticket types
+                    </h6>
+                    <div class="w-fit">
+                        <p id="add_ticket_type"
+                            class="border cursor-pointer py-3 px-5 rounded-md duration-500 hover:bg-white hover:text-custom-h border-custom-h outline-none text-white bg-custom-h">
+                            Add ticket type
+                        </p>
+                    </div>
+                </div>
+             
+              <div id="forms_container" data-max-forms="{{max_forms}}" class="grid bg-white gap-5 w-full">
+                {% for form in forms %}
+
+                <div id="form_content_0" class="w-full mb-2 p-4 relative block">
+                    <div class="flex flex-wrap gap-4">
+                        <div class="w-full lg:w-4/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                            <label for="{{form.title.id_for_label}}">
+                                ticket name*
+                            </label>
+                            {{form.title}}
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase"
+                                >{{form.title.help_text}}</span
+                            >
+                            {% if form.title.errors %}
+                            <span
+                                class="text-[11px] text-red-500 block font-normal lowercase"
+                                >{{form.title.errors.as_text}}</span
+                            >
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-4/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                            <label for="{{form.price.id_for_label}}"> Price* </label>
+                            <input
+                                value=""
+                                id="{{form.price.id_for_label}}"
+                                name="{{form.price.html_name}}"
+                                type="number"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                            />
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase"
+                                >{{form.price.help_text}}</span
+                            >
+                            {% if form.price.errors %}
+                            <span
+                                class="text-[11px] text-red-500 block font-normal lowercase"
+                                >{{form.price.errors.as_text}}</span
+                            >
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-3/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                            <label for="{{form.available_seats.id_for_label}}">
+                                total seats*
+                            </label>
+                            <input
+                                id="{{form.available_seats.id_for_label}}"
+                                name="{{form.available_seats.html_name}}"
+                                type="number"
+                                min="0"
+                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                            />
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase"
+                                >{{form.available_seats.help_text}}</span
+                            >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <div data-formid="form_content_0" onclick="delete_ticket_form('form_content_0')" class="grid items-center delete_current_form group justify-center cursor-pointer">
+                            <i class="fa-solid fa-trash group-hover:scale-105 text-2xl text-custom-h"></i>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4 border-b-1 border-gray-300" />
+                {% endfor %}
+                
+                </div>
+            </div>
+            <div class="mt-3">
+              <div
+                class="text-center duration-500 group hover:bg-white border-2 border-custom-primary inline-block h-12 bg-custom-primary w-[150px] rounded-md cursor-pointer"
+              >
+                <input
+                  type="submit"
+                  value="submit"
+                  class="text-white group-hover:text-custom-primary duration-500 w-full h-full cursor-pointer text-sm font-semibold"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %} 
+{% block js %} 
+<script src="{% static 'js/scripts.js' %}">
+
+</script>
+<script>
+  
+</script>
+{% endblock js %}

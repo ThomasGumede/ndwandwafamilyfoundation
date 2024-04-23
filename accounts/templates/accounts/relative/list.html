@@ -1,0 +1,85 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}Relatives{% endblock title %}
+
+{% block accountblock %}
+<div class="relative block bg-white">
+    <div class=" py-2 overflow-x-auto">
+        <div
+            class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white px-12">
+            <div class="flex justify-between">
+                
+                <div>
+                    <a href="{% url 'accounts:create-relative' %}"
+                            class="px-5 py-2 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Add relative</a>
+                </div>
+            </div>
+        </div>
+        <div
+            class="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
+            <table class="min-w-full">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            </th>
+                        <th
+                            class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Full name</th>
+                        <th
+                            class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Relation</th>
+
+                        
+                        <th
+                            class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Created At</th>
+                        <th class="px-6 py-3 border-b-2 border-gray-300"></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+
+                    {% for relative in relatives %}
+                    <tr>
+                        <td class="px-4 py-3 w-fit font-normal text-gray-900">
+                            <a href="{% url 'accounts:relative' relative.id %}" class=" font-normal text-gray-900">
+                                <div class="relative h-10 w-10">
+                                    {% if relative.profile_image %}
+                                    <img class="h-full w-full rounded-full object-cover object-center" src="{{relative.profile_image.url}}"
+                                        alt="" />
+                                    {% else %}
+                                    <img class="h-full w-full rounded-full object-cover object-center" src="{{relative.profile_image.url}}"
+                                        alt="" />
+                                    {% endif %}
+                                </div>
+                        
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap ">
+                            <a href="{{relative.get_absolute_url}}" class="text-sm leading-5 text-custom-primary">{{relative.get_full_names}}</a>
+                        </td>
+                        <td
+                            class="px-6 py-4 whitespace-no-wrap text-custom-primary border-gray-500 text-sm leading-5">
+                            {{relative.relationship}}</td>
+                        
+
+                        <td
+                            class="px-6 py-4 whitespace-no-wrap  text-custom-primary text-sm leading-5">
+                            {{relative.created}}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap flex gap-2 text-right  text-sm leading-5">
+                            <a href="{% url 'accounts:update-relative' relative.id %}"
+                                class="grid items-center justify-center w-fit py-2 px-3 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Update</a>
+                            <a href="{% url 'accounts:delete-relative' relative.id %}"
+                                class="grid items-center justify-center w-fit py-2 px-3 border-red-500 border text-red rounded transition duration-300 hover:bg-red-500 hover:text-white focus:outline-none">
+                                Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock accountblock %}

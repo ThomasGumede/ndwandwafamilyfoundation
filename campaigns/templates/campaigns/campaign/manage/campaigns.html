@@ -1,0 +1,94 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}Campaigns{% endblock title %}
+
+{% block accountblock %}
+<div class="relative block bg-white">
+    <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white px-12">
+        <div class="flex justify-between">
+    
+            <div>
+                <a href="{% url 'campaigns:create-campaign' %}"
+                    class="px-5 py-2 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Add
+                    campaign</a>
+            </div>
+        </div>
+    </div>
+    <div class=" py-2 overflow-x-auto">
+        
+        <div
+            class="align-middle inline-block min-w-full overflow-hidden bg-white px-4 pt-3 rounded-bl-lg rounded-br-lg">
+            <table id="myDataTable" class="min-w-full">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Title</th>
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Category</th>
+
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Target</th>
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Current</th>
+                        
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Status</th>
+                        <th class="px-2 py-3 border-b-2 border-gray-300"></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+
+                    {% for campaign in campaigns %}
+                    <tr>
+
+                        <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-500">
+                            <a href="{{campaign.get_absolute_url}}" class="text-sm leading-5 text-gray-500">{{campaign.title|truncatewords:4}}</a>
+                        </td>
+                        <td
+                            class="px-2 py-4 whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            {{campaign.category.label}}</td>
+                        <td
+                            class="px-2 py-4 whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            R{{campaign.target}}</td>
+                        <td
+                            class="px-2 py-4 whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            R{{campaign.current_amount}}</td>
+                        <td
+                            class="px-2 py-4 {{campaign.status}} whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            {{campaign.status}}</td>
+                        <td class="px-2 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                            <div class="flex items-center space-x-2">
+                                <a href="{% url 'campaigns:manage-campaign' campaign_id=campaign.id %}" class="text-base font-normal text-custom-h">manage</a>
+                                
+                            </div>
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock accountblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('#myDataTable').DataTable({
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "searching": true,
+            scrollX: true,
+            scrollY: 600,
+            // Add other options as needed
+        });
+    });
+</script>
+{% endblock js %}

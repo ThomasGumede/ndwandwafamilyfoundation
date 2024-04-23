@@ -1,0 +1,267 @@
+{% load static %} 
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% tailwind_preload_css %}
+    {% tailwind_css %}
+    {{form.media}}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="{% static 'css/jquery.datetimepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'fonts/icon-fonts/icons-fonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'fonts/typography/typography-fonts.css' %}" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <script defer src="{% static 'js/alpinejs.min.js' %}"></script>
+    
+    {% block cloak %}
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
+    {% endblock cloak %}
+
+
+    <title>{% block title %}User dashboard{% endblock title%} | Ndwandwa Family</title>
+</head>
+
+<body>
+    <main>
+        <div class="relative block font-sans">
+            <div x-data="{dashboard : false}" class="w-full h-full bg-white">
+                <div :class="dashboard ? 'left-0' : '-left-full' "
+                    class="fixed lg:left-0 top-0 z-50 bg-custom-h h-screen w-full lg:w-2/12">
+                    <div class="relative block overflow-auto">
+                        <div @click="dashboard = false" class="absolute top-4 right-4 lg:hidden">
+                            <i class="fa-solid fa-bars text-xl text-white"></i>
+                        </div>
+                        <div class="p-4 grid gap-y-10">
+                            <div class="grid gap-y-6 sm:gap-y-7">
+                                <h3 class="duration-300 text-xl uppercase tracking-widest text-white font-semibold">
+                                    dashboard</h3>
+
+                                <a href="{% url 'accounts:me' %}"
+                                    class="px-4 py-2 duration-500 hover:bg-gray-50 hover:text-custom-h rounded flex items-center text-white font-normal text-base">
+                                    <span class="text-base font-normal whitespace-nowrap">Home</span>
+                                </a>
+
+                                <div
+                                    class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
+                                    <div
+                                        class="duration-500  group-hover:text-custom-h rounded flex justify-between w-full items-center text-white font-normal text-sm">
+                                        <div>
+                                            <span class="text-base font-normal whitespace-nowrap">Organisor</span>
+                                        </div>
+                                        <div>
+                                            <i
+                                                class="fa-solid fa-chevron-down text-base group-hover:rotate-180  mr-auto"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded mt-2">
+                                        <div class="nav__dropdown-content grid px-4">
+                                            <a href="{% url 'events:manage-events' %}"
+                                                class="nav__dropdown-item text-sm py-2 font-normal text-text-custom-h duration-500 text-custom-h rounded">My
+                                                Events</a>
+                                            <a href="{% url 'campaigns:manage-campaigns' %}"
+                                                class="nav__dropdown-item text-sm py-2 font-normal text-text-custom-h duration-500 text-custom-h rounded">My
+                                                Campaigns</a>
+                                            <a href="{% url 'campaigns:all-contributions' %}"
+                                                class="nav__dropdown-item text-sm py-2 font-normal text-text-custom-h duration-500 text-custom-h rounded">Contributions</a>
+                                            <a href="{% url 'events:all-ticket-orders' %}"
+                                                class="nav__dropdown-item text-sm py-2 font-normal text-text-custom-h duration-500 text-custom-h rounded">Ticket Orders</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
+                                    <div
+                                        class="duration-500  group-hover:text-custom-h rounded flex justify-between w-full items-center text-white font-normal text-sm">
+                                        <div>
+                                            <span class="text-base font-normal whitespace-nowrap">Account</span>
+                                        </div>
+                                        <div>
+                                            <i
+                                                class="fa-solid fa-chevron-down text-base group-hover:rotate-180  mr-auto"></i>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="rounded mt-2">
+                                        <div class="nav__dropdown-content grid px-4">
+                                            <a href="{% url 'accounts:contact-update' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">Update
+                                                profile</a>
+                                            <a href="{% url 'events:manage-ticket-orders' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">My
+                                                tickets</a>
+                                            <a href="{% url 'accounts:wallet' %}" class="text-sm font-normal text-custom-h duration-500 py-2">My
+                                                tickets</a>
+                                            <a href="{% url 'campaigns:manage-contributions' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">My
+                                                contributions</a>
+                                            <a href="{% url 'accounts:qualifications' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">My
+                                                education</a>
+                                            <a href="{% url 'accounts:relatives' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">My
+                                                relatives</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="{% url 'accounts:subscribe' %}"
+                                    class="px-4 py-2 duration-500 hover:bg-gray-50 hover:text-custom-h rounded flex items-center text-white font-normal text-base">
+
+                                    <span class="text-base font-normal whitespace-nowrap">Notifications</span>
+                                </a>
+                                <a href="{% url 'accounts:accounts' %}"
+                                    class="px-4 py-2 duration-500 hover:bg-gray-50 hover:text-custom-h rounded flex items-center text-white font-normal text-base">
+                                
+                                    <span class="text-base font-normal whitespace-nowrap">People</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:absolute lg:right-0 w-full lg:w-10/12 h-full lg:top-0 bg-gray-50">
+                    <div class="relative  block w-full">
+                        <nav class="fixed bg-white shadow-md lg:w-10/12 top-0 z-50 right-0 w-full">
+                            <div class="flex items-center w-full justify-between py-3 px-4">
+                                <div class="flex items-center space-x-5 lg:space-x-0">
+                                    <a href="{% url 'home:home' %}"
+                                        class="logo lg:flex items-center lg:pr-7 lg:space-x-2">
+                                        <div class="w-12 h-12">
+                                            <img src="{% static 'images/logo/logo.png' %}" alt="Ndwandwa LOGO"
+                                                class="object-contain w-full h-full" />
+                                        </div>
+                                        <div class="text-black hidden lg:block">
+                                            <h3 class="font-bold font-sans text-base text-custom-primary uppercase">
+                                                Ndwandwa
+                                            </h3>
+                                            <p class="font-sans text-base">family foundation</p>
+                                        </div>
+                                    </a>
+                                    <div @click="dashboard = !dashboard" class="lg:hidden">
+                                        <i class="fa-solid fa-bars text-xl text-custom-h"></i>
+                                    </div>
+                                </div>
+                                <div class="relative block">
+                                    
+                                        <div x-data="{ isOpen: false }" class="relative inline-block ">
+                                            <!-- Dropdown toggle button -->
+                                            <button @click="isOpen = !isOpen"
+                                                class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
+                                                <span class="mx-1">{{request.user.get_full_name}}</span>
+                                                <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
+                                                        fill="currentColor"></path>
+                                                </svg>
+                                            </button>
+                                    
+                                            <!-- Dropdown menu -->
+                                            <div x-cloak x-show="isOpen" @click.away="isOpen = false" x-transition:enter="transition ease-out duration-100"
+                                                x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                                                x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
+                                                x-transition:leave-end="opacity-0 scale-90"
+                                                class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
+                                                <a href="{% url 'accounts:user' request.user.username %}"
+                                                    class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    {% if request.user.profile_image %}
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
+                                                        src="{{request.user.profile_image.url}}" alt="{{request.user.get_full_name}} avatar">
+                                                    {% else %}
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
+                                                        src="{% static 'images/global/no-image-available.webp' %}"
+                                                        alt="{{request.user.get_full_name}} avatar">
+                                                    {% endif %}
+                                                    <div class="mx-1 w-full">
+                                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                                            {{request.user.get_full_name}}</h5>
+                                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                            {{request.user.get_username}}
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                    
+                                                <hr class="border-gray-200 dark:border-gray-700 ">
+                                    
+                                                <a href="{% url 'accounts:me' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    view profile
+                                                </a>
+                                    
+                                                <a href="{% url 'accounts:contact-update' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Settings
+                                                </a>
+                                    
+                                    
+                                                {% if request.user.is_superuser or request.user.is_staff %}
+                                    
+                                                <a href="{% url 'admin:index' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Admin
+                                                </a>
+                                                {% endif %}
+                                                {% if request.user.is_superuser %}
+                                    
+                                                <a href="{% url 'payments:create_webhook' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Request webhook
+                                                </a>
+                                                {% endif %}
+                                    
+                                                <hr class="border-gray-200 dark:border-gray-700 ">
+                                    
+                                                <a href="{% url 'campaigns:create-campaign' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Add Campaign
+                                                </a>
+                                    
+                                                <a href="{% url 'events:create-event' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Add Event
+                                                </a>
+                                                <hr class="border-gray-200 dark:border-gray-700 ">
+                                    
+                                                <a href="{% url 'home:help' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Help
+                                                </a>
+                                                <a href="{% url 'accounts:logout' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    Sign Out
+                                                </a>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="mt-20 bg-gray-50 relative block w-full h-full">
+                            {% block content %}
+                            {% endblock content %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+
+    <script src="{% static 'js/all.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/js.cookie.min.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="{% static 'js/jquery.datetimepicker.full.min.js' %}"></script>
+    {% block js %} {% endblock js %}
+</body>
+
+</html>

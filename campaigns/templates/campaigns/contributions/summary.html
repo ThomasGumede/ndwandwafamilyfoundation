@@ -1,0 +1,194 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="flex items-center py-16 bg-white font-sans">
+    <div class="justify-center flex-1 max-w-5xl px-6 py-6 mx-auto bg-white lg:py-10 md:px-7">
+        <div class="mb-8 text-center">
+            <h1
+                class="mb-4 text-3xl font-semibold leading-7 tracking-wide text-custom-primary dark:text-gray-300 lg:leading-9">
+                A Great big thank you!</h1>
+            <p class="text-gray-500 dark:text-gray-400">Your contribution will go directly to supporting
+                {{campaign.creator.first_name}}'s campaign</p>
+            <p class="text-gray-500 dark:text-gray-400">Please confirm the your contribution details and click pay now
+            </p>
+        </div>
+        <div>
+            {% if form.errors.non_form_errors %}
+
+            <div class="w-fit space-y-1 mx-auto text-sm mt-6 text-red-500 font-normal">
+
+                <p>{{form.errors.non_form_errors.as_text}}</p>
+            </div>
+            {% endif %}
+            <form method="post" class="grid w-full mt-4 mb-4 gap-4 md:mt-6 ">
+                {% csrf_token %}
+                <h3 class="text-center uppercase text-custom-h font-bold text-2xl">contribution details</h3>
+                <div class="bg-white w-full space-y-3 mt-6 rounded">
+                    <div class="flex flex-wrap items-center w-full justify-between">
+                        <p class="text-base font-semibold text-custom-h">Amount to be contributed</p>
+                        <div>
+                            <input type="number" name="amount" value="50" id="id_amount"
+                                class="block p-3 md:text-base w-52 text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150" />
+
+                            {% if form.amount.errors %}
+                            <span
+                                class="text-[11px] text-red-500 block font-normal lowercase">{{form.amount.errors.as_text}}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap w-full justify-between">
+                        <p class="text-base font-semibold text-custom-h">Title</p>
+                        <p class="text-base font-normal text-gray-600">{{campaign.title}}</p>
+                    </div>
+                    <div class="flex flex-wrap w-full justify-between">
+                        <p class="text-base font-semibold text-custom-h">Organisor</p>
+                        <p class="text-base font-normal text-gray-600">{{campaign.organiser.get_full_name}}</p>
+                    </div>
+                    <div class="flex flex-wrap w-full justify-between">
+                        <p class="text-base font-semibold text-custom-h">Campaign Target</p>
+                        <p class="text-base font-normal text-gray-600">R{{campaign.target}}</p>
+                    </div>
+                </div>
+                <hr class="mt-6 border-b-1 border-gray-300">
+                <div class="mt-6 p-4 bg-gray-50 w-full flex flex-col gap-2">
+                    <label for="id_tip" class="text-lg">Please, select your tip choice:</label>
+                    <select name="tip" id="id_tip" class="w-full bg-white outline-none p-2 border text-black">
+                        <option value="10%">10%</option>
+                        <option value="15%">15%</option>
+                        <option value="20%">20%</option>
+                        <option value="25%">25%</option>
+                    </select>
+                    <div class="self-end w-fit justify-self-end">
+                        <p id="tip_amount" class="font-normal text-black">
+
+                        </p>
+                    </div>
+                    <div class="w-full flex items-center justify-between">
+                        <p class="font-normal text-base text-gray-500">
+                            Ndwandwa Family Foundation does not receive any fees from the campaign owners. We receive a
+                            transaction fee from the contributor. Thank you very much for understanding.
+                        </p>
+                        <div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="mt-6 border-b-1 border-gray-300">
+                <div class="w-full bg-white">
+                    <label for="id_message" class=" text-lg">Support message</label>
+                    <span class="block text-gray-500 font-normal text-sm capitalize mb-2">Write a support message to the
+                        owner of this campaign </span>
+                    <div class='relative w-full rounded-lg overflow-hidden bg-gray-50 mx-auto' x-data="{maximum: ''}">
+
+                        <textarea rows="4" maxlength="500" x-model="maximum" x-ref="maximum" name="message"
+                            id="id_message"
+                            class="block w-full mt-1 py-2 px-3 bg-gray-50 border rounded-md shadow-sm focus:outline-none"></textarea>
+                        <span class="absolute px-2 py-1 text-xs text-white bg-blue-500 rounded right-2 bottom-2"
+                            x-text="$refs.maximum.getAttribute('maxlength') - maximum.length" x-cloak></span>
+                    </div>
+                </div>
+                <hr class="mt-6 border-b-1 border-gray-300">
+                <div class="flex items-center mt-5 space-x-4">
+
+                    <input class="inline-flex" type="checkbox" id="id_anonymous" name="anonymous"
+                        class="border-red-500" />
+
+                    <label class="font-normal text-base text-gray-500" for="id_anonymous">
+                        Support as an anonymous supporter</label><br />
+                    {% if form.accepted_laws.errors %}
+                    <span
+                        class="text-[11px] text-red-500 block font-normal lowercase">{{form.accepted_laws.errors.as_text}}</span>
+                    {% endif %}
+
+                </div>
+                <hr class="mt-6 border-b-1 border-gray-300">
+                <div class=" mt-5">
+                    <p class="font-normal text-base text-gray-500">
+                        Please read the <a href="{% url 'home:terms' %}" target="_blank" rel="noopener noreferrer"
+                            class="text-custom-primary">terms and
+                            conditions</a> and <a href="{% url 'home:terms' %}" target="_blank" rel="noopener noreferrer"
+                            class="text-custom-primary">Privacy Policy</a>
+                    </p>
+                    <p class="font-normal text-base text-gray-500">
+                        After clicking confirm, it will be considered that you agree with the privacy policy and the
+                        terms and conditions of Ndwandwa Family Foundation.
+                    </p>
+                    <p class="font-normal text-base text-gray-500">
+                        *As a general rule, refunds cannot be made after payment is completed
+                    </p>
+                </div>
+
+
+                <div class="flex flex-wrap items-center justify-between gap-4 mt-6 ">
+                    <div
+                        class="w-36 lg:w-40 h-12 border-2 border-custom-h bg-white hover:bg-custom-h group duration-500 rounded-md">
+                        <a href="{% url 'campaigns:campaign' campaign.slug %}"
+                            class="w-full h-full grid items-center justify-center duration-500 group-hover:text-white text-custom-h font-medium text-sm lg:text-base">cancel</a>
+                    </div>
+                    <button type="submit" value="submit" class="w-36 lg:w-40 h-12 border-2 border-custom-h bg-custom-h hover:bg-white hover:text-custom-h text-white font-medium text-sm focus-within:outline-none focus:outline-none lg:text-base duration-500 rounded-md">
+                        confirm
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block js %}
+<script>
+
+    // Word count
+    var max_words = 250;
+    $("textarea[name=content]").on("keyup", function () {
+        var str = $(this).val();
+        if (str.split(/[\s]+/).length > max_words) {
+            alert("You cannot put more than" + max_words + " words in this text area.")
+            var new_str = str.split(/[\s]+/).splice(0, max_words).join(' ');
+            $(this).val(new_str);
+        }
+    })
+
+    // Calculate tip
+    const tip_select = document.querySelector("#id_tip");
+    const tip_amount = document.querySelector("#tip_amount");
+    const id_amount = document.querySelector("#id_amount");
+
+    tip_amount.textContent = `Support amount R${parseFloat(id_amount.value) * parseFloat((10 / 100))}`
+
+    tip_select.addEventListener("click", (e) => {
+        e.preventDefault();
+        switch (tip_select.value) {
+            case '10%':
+
+                tip_amount.textContent = `Support amount R${parseFloat(id_amount.value) * parseFloat((10 / 100))}`
+                break;
+
+            case '15%':
+
+                tip_amount.textContent = `Support amount R${parseFloat(id_amount.value) * parseFloat((15 / 100))}`
+                break;
+
+            case '20%':
+
+                tip_amount.textContent = `Support amount R${parseFloat(id_amount.value) * parseFloat((20 / 100))}`
+                break;
+
+            case '25%':
+
+                tip_amount.textContent = `Support amount R${parseFloat(id_amount.value) * parseFloat((25 / 100))}`
+                break;
+
+            default:
+                tip_amount.textContent = `Support amount R${parseFloat(id_amount.value) * parseFloat((10 / 100))}`
+                break;
+        }
+    })
+
+
+</script>
+
+{% endblock js %}

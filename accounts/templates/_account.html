@@ -1,0 +1,47 @@
+{% extends '_dashboard.html' %}
+{% load static %}
+
+{% block title %}Account Settings{% endblock title %}
+
+{% block content %}
+
+<div class="block relative  bg-white">
+  {% include "includes/messages.html" %}
+  <div class="w-full h-full">
+    <div class="relative block">
+      <div class="py-3 ml-4 mr-4 border-b border-b-custom-h">
+        <div class="flex flex-wrap lg:items-center lg:space-x-5">
+          <div class="text-black w-fit text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+            <a href="{% url 'accounts:contact-update' %}"
+              class="font-normal py-2 px-3 duration-500 hover:bg-gray-50 rounded ">Contact</a>
+          </div>
+          <div class="h-full w-1 bg-gray-50"></div>
+          <div class="text-black w-fit text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+            <a href="{% url 'accounts:profile-update' %}"
+              class="font-normal py-2 px-3 duration-500 hover:bg-gray-50 rounded ">Profile</a>
+          </div>
+          <div class="h-full w-1 bg-gray-50"></div>
+          <div class="text-black w-fit text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+            <a href="{% url 'accounts:password-update' %}"
+              class="font-normal py-2 px-3 duration-500 hover:bg-gray-50 rounded ">Password</a>
+          </div>
+          <div class="h-full w-1 bg-gray-50"></div>
+          <div class="text-black w-fit text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+            <a href="{% url 'accounts:verify' %}"
+              class="font-normal py-2 px-3 duration-500 hover:bg-gray-50 rounded ">Identity verify</a>
+          </div>
+          <div class="h-full w-1 bg-gray-50"></div>
+          <div class="text-black w-fit text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+            <a href="{% url 'accounts:update-social-links' %}" class="font-normal py-2 px-3 duration-500 hover:bg-gray-50 rounded ">Social Links</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative block p-4">
+      {% block accountblock %}
+      {% endblock accountblock %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Internet connection error{% endblock title %}
+
+{% block content %}
+
+<section class="py-16 h-full bg-gray-100 font-sans">
+    <div class="container">
+        <div
+            class="w-full max-w-full rounded-xl my-auto bg-white mx-auto md:w-1/2 lg:w-5/12 relative shadow-xl text-center">
+            <div class="p-5 md:p-7">
+                <div class="space-y-6">
+                    <h3 class="text-custom-h text-2xl md:text-4xl font-extrabold">Payment not processed</h3>
+                    <div>
+                        <i class="fa-solid fa-satellite-dish text-8xl font-extralight text-custom-h"></i>
+                    </div>
+
+                    <p class="text-custom-h text-lg font-medium">
+                        It looks like you lost internet connection, We cannot process your request while offline.
+                    </p>
+                    <p class="text-custom-h text-sm font-medium">
+                        Your internet connection is okay? Don't worry, payment error was sent to our technical team for lookup
+                    </p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button value="submit" type="submit"
+                            class="w-full px-4 py-2 outline-none text-custom-primary border border-custom-primary rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                            Re-try
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

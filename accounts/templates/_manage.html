@@ -1,0 +1,15 @@
+{% extends '_dashboard.html' %}
+{% load static %}
+{{form.media}}
+
+{% block title %}Account Settings{% endblock title %}
+
+{% block content %}
+<div class="block relative  bg-custom-bg">
+    {% include "includes/messages.html" %}
+    <div class="w-full h-full relative block p-4">
+        {% block accountblock %}
+        {% endblock accountblock %}
+    </div>
+</div>
+{% endblock content %}

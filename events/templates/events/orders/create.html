@@ -1,0 +1,153 @@
+{% extends '_ticket_order.html' %}
+{% load static %}
+
+{% block ticketsordercontent %}
+
+        <div class="justify-center w-full mx-auto bg-white">
+            <div class="mb-8 text-center">
+                <h1 class="mb-4 text-3xl font-semibold leading-7 tracking-wide">Reserve tickets</h1>
+            </div>
+            <div class="space-y-4">            
+                {% if forms.errors or order_form.errors %}
+                    <div class="w-full mx-auto">
+                        <div class="bg-red-50 border-l-8 border-red-900">
+                            <div class="flex items-center">
+                                <div class="p-2">
+                                    <div class="flex items-center">
+                                        <div class="ml-2">
+                                            <svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer" xmlns="http://www.w3.org/2000/svg"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <p class="px-6 py-4 text-red-900 font-semibold text-lg">Please fix the
+                                            following
+                                            errors.</p>
+                                    </div>
+                    
+                                    <ul class="px-16 mb-4">
+                                        {% if forms.non_field_errors %}
+                                        <li class="text-md font-bold p-1 list-none text-red-500 text-sm">{{forms.non_field_errors.as_text}}</li>
+                                        {% endif %}
+                                        {% if order_form.non_field_errors %}
+                                        <li class="text-md font-bold p-1 list-none text-red-500 text-sm">{{order_form.non_field_errors.as_text}}</li>
+                                        {% endif %}
+                                        {% for error in order_form.errors %}
+                                            <li class="text-md font-bold p-1 list-none text-red-500 text-sm">{{error.as_text}}</li>
+                                        {% endfor %}
+                                        {% for error in forms.errors %}
+                                            <li class="text-md font-bold p-1 list-none text-red-500 text-sm">{{error.as_text}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <form method="post" class="mt-4 md:mt-6" id="tickets_form">
+                    {% csrf_token %}
+                    <div>
+                        <input type="number" class="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-[1]"
+                            name="{{order_form.quantity.html_name}}" value="0" min="0" max="{{event.total_seats}}"
+                            id="{{order_form.quantity.id_for_label}}">
+                            <input type="number" class="w-[0.1px] h-[0.1px]  opacity-0 overflow-hidden absolute -z-[1]"
+                                name="{{order_form.total_price.html_name}}" value="0.00" step="0.01" min="0.00"
+                                id="{{order_form.total_price.id_for_label}}">
+                    </div>
+                    <div>
+                        <input type="hidden" name="form-TOTAL_FORMS" value="{{event.tickettypes.count}}" id="id_form-TOTAL_FORMS">
+                        <input type="hidden" name="form-INITIAL_FORMS" value="1" id="id_form-INITIAL_FORMS">
+                        <input type="hidden" name="form-MIN_NUM_FORMS" value="1" id="id_form-MIN_NUM_FORMS">
+                        <input type="hidden" name="form-MAX_NUM_FORMS" value="{{event.tickettypes.count}}" id="id_form-MAX_NUM_FORMS">
+                    </div>
+                    <div data-tickets-url="{% url 'events:event-ticket-types' event.id %}" class="w-full relative block" id="ticket_types_container">
+                        <div class="grid gap-5" id="ticket_types_inner_container">
+                            
+                        </div>
+                        <div class="w-full mt-4">
+                            <div class="relative block bg-gray-50 p-4 border rounded-md">
+                                <div class="flex w-full flex-wrap gap-4 items-center justify-between mb-2">
+                        
+                                    <div id="ticket_title">
+                                        <p class="text-sm text-gray-500">
+                                            Please enter email address where you'll receive these tickets
+                                        </p>
+                                        <h6 class="text-base">
+                                            Email*
+                                        </h6>
+                                    </div>
+                                    <div class=" rounded-md w-fit">
+                                        <input value="{{request.user.email}}" class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150" type="email" name="{{order_form.email.html_name}}" id="{{order_form.email.id_for_label}}">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="w-full mt-4">
+                            <div class="relative block bg-gray-50 p-4 border rounded-md">
+                                <div class="flex w-full items-center justify-between mb-2">
+                                    
+                                    <div id="ticket_title">
+                                        <h6 class="text-base">
+                                            Total seats
+                                        </h6>
+                                    </div>
+                                    <div class="bg-white border rounded-md w-fit p-3">
+                                        <div class="flex items-center space-x-4">
+                                            <div id="quantity_container">
+                                                <p  id="total_seats" class="text-custom-h text-xl">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex w-full items-center justify-between">
+                                
+                                    <div id="ticket_title">
+                                        <h6 class="text-base">
+                                            Total price <span class="text-gray-500 text-sm font-normal">(incl. VAT)</span>
+                                        </h6>
+                                    </div>
+                                    <div class="bg-white border rounded-md w-fit p-3">
+                                        <div class="flex items-center space-x-4">
+                                            <div id="quantity_container">
+                                                <p class="text-custom-h text-xl">R<span id="total_price">0</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white w-full space-y-3 mt-6 rounded">
+
+                        <div class="flex flex-wrap items-center justify-between gap-4 mt-6 ">
+                            <a href="{% url 'events:event-details' event.slug %}"
+                                class="w-fit px-4 py-2 text-custom-primary border border-custom-primary rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                                Go back
+                            </a>
+                            <div>
+
+                                <button type="submit" value="submit" id="submit_form"
+                                    class="w-full px-4 py-2 bg-custom-primary rounded-md text-gray-50 md:w-auto hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-600">
+                                    Reserve tickets
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                </form>
+            </div>
+        </div>
+    
+{% endblock ticketsordercontent %}
+{% block js %}
+<script src="{% static 'js/order_scripts.js' %}">
+    
+    
+</script>
+
+{% endblock js %}

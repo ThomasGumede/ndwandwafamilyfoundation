@@ -1,0 +1,91 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}My events{% endblock title %}
+
+{% block accountblock %}
+<div class="relative block bg-white">
+    <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white px-12">
+        <div class="flex justify-between">
+            <div>
+                <a href="{% url 'events:create-event' %}"
+                    class="px-5 py-2 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Add
+                    event</a>
+            </div>
+        </div>
+    </div>
+    <div class=" py-2 overflow-x-auto">
+        
+        <div
+            class="align-middle inline-block min-w-full bg-white px-4 pt-3 rounded-bl-lg rounded-br-lg">
+
+            <table id="myDataTable" class="min-w-full">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Title</th>
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Category</th>
+
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Total seats</th>
+                            <th class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                                Where</th>
+                        
+                        <th
+                            class="px-2 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
+                            Status</th>
+                        <th class="px-2 py-3 border-b-2 border-gray-300"></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+
+                    {% for event in events %}
+                    <tr>
+
+                        <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-500">
+                            <a href="{{event.get_absolute_url}}"
+                                class="text-sm leading-5 text-gray-500">{{event.title|truncatewords:4}}</a>
+                        </td>
+                        <td
+                            class="px-2 py-4 whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            {{event.category}}</td>
+                        <td
+                            class="px-2 py-4 whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            {{event.get_total_seats}}</td>
+                        <td
+                            class="px-2 py-4 whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            {{event.venue_name}}</td>
+                        <td
+                            class="px-2 py-4 {{event.status}} whitespace-no-wrap border-b text-gray-500 border-gray-500 text-sm leading-5">
+                            {{event.status}}</td>
+                        <td class="px-2 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                            <div class="flex items-center space-x-2">
+                                <a href="{% url 'events:manage-event' event_slug=event.slug %}"
+                                    class="text-sm font-normal text-custom-h">manage</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock accountblock %}
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('#myDataTable').DataTable({
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "searching": true,
+            scrollX: true,
+            scrollY: 600
+            // Add other options as needed
+        });
+    });
+</script>
+{% endblock js %}

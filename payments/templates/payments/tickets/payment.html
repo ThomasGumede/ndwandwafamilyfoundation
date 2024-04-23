@@ -1,0 +1,47 @@
+{% extends '_ticket_order.html' %}
+{% load static %}
+{% block title %}Order placed successfully{% endblock title %}
+
+{% block ticketsordercontent %}
+
+<div class="bg-custom-bg">
+    <div class="w-full max-w-full rounded-xl my-auto bg-white mx-auto md:w-1/2 lg:w-5/12 relative shadow-xl text-center">
+        <div class="p-5 md:p-7">
+            <div class="space-y-6">
+                <h3 class="text-custom-h text-2xl md:text-4xl font-extrabold">Thank You</h3>
+                <div>
+                    <i class="fa-regular fa-check-circle text-8xl font-extralight text-custom-h"></i>
+                </div>
+                <p class="text-custom-h text-lg font-medium">
+                    R{{ticketorder.total_price}}
+                </p>
+                <p class="text-gray-500 text-lg font-medium">
+                    Your order was successful and ready for payment! Use this order id <span
+                        class="text-custom-secondary">{{ticketorder.order_number}}</span> for future references
+                </p>
+    
+                <div class="flex w-full items-center justify-between">
+                    <div>
+                        <a href="{% url 'events:cancel-ticket-order' ticketorder.id %}"
+                            class="w-full px-4 py-3 outline-none text-custom-primary border border-custom-primary rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 ">
+                            Cancel order
+                        </a>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button value="submit" type="submit"
+                            class="w-full px-4 py-2 outline-none text-white border border-custom-primary bg-custom-primary rounded-md md:w-auto hover:text-custom-primary hover:bg-white ">
+                            Pay now
+                        </button>
+                    </form>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+    
+
+{% endblock ticketsordercontent %}

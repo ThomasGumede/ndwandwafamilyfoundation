@@ -1,0 +1,211 @@
+{% extends '_account.html' %}
+{% load static %}
+
+{% block title %}Edit Contact{% endblock title %}
+
+{% block accountblock %}
+<div class='relative block'>
+    <div class="bg-white">
+        <div class="space-y-4 md:px-4">
+            {% include "includes/errors.html" %}
+            <form method="post">
+                {% csrf_token %}
+                <h6 class="text-gray-900 text-base mt-3 mb-6 font-bold uppercase">
+                    Contact Information
+                </h6>
+                <div class="flex flex-wrap space-y-3 md:space-y-0">
+                    <div class="w-full lg:w-12/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_username" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                htmlfor="grid-password">
+                                Username*
+                            </label>
+                            <input value="{{form.username.value}}" id="id_username" name="username" required
+                                maxlength="300" type="text"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"
+                                value="">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.username.help_text}}</span>
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_email" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                htmlfor="grid-password">
+                                Email*
+                            </label>
+                            <input value="{{form.email.value}}" id="id_email" name="email" maxlength="300" type="email"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.email.help_text}}</span>
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_phone" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                htmlfor="grid-password">
+                                Cellphone*
+                            </label>
+                            <input value="{{form.phone.value}}" id="id_phone" name="phone" required maxlength="15"
+                                type="tel"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.phone.help_text}}</span>
+
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-6 border-b-1 border-blueGray-300">
+                <div class="flex font-sans mt-6 flex-wrap">
+                    <div class="w-full relative lg:w-12/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_address_one"
+                                class="block text-custom-h font-semibold text-sm capitalize mb-2">
+                                Address Line 1*
+                            </label>
+                            <input name="address_one" required id="id_address_one" type="text"
+                                value="{{form.address_one.value}}" placeholder="e.g KwaMashu West"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.address_one.help_text}}</span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-12/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_address_two"
+                                class="block text-custom-h font-semibold text-sm capitalize mb-2">
+                                Address Line 2
+                            </label>
+                            <input id="id_address_two" name="address_two" type="text" value="{{form.address_two.value}}"
+                                placeholder="e.g Block 34, West Street"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primaryease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.address_two.help_text}}</span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-12/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_city" class="block text-custom-h font-semibold text-sm capitalize mb-2">
+                                City*
+                            </label>
+                            <input id="id_city" required name="city" type="text" placeholder="e.g Durban"
+                                value="{{form.city.value}}"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary  focus:border-custom-primary placeholder:text-gray-400 ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.city.help_text}}</span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-4/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_province" class="block text-custom-h font-semibold text-sm capitalize mb-2">
+                                province*
+                            </label>
+                            <input placeholder="e.g KZN, WC, GP" required id="id_province" name="province"
+                                value="{{form.province.value}}" type="text"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px]  text-custom-tertiary block font-normal lowercase">{{form.province.help_text}}</span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-4/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_country" class="block text-sm text-custom-h font-semibold capitalize mb-2">
+                                Country*
+                            </label>
+                            <input readonly id="id_country" name="country" type="text" editable="false"
+                                value="{{form.country.value}}"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"
+                                value="South Africa">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.country.help_text}}</span>
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-4/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_zipcode" class="block text-sm text-custom-h font-semibold capitalize mb-2">
+                                Postal Code*
+                            </label>
+                            <input id="id_zipcode" required name="zipcode" type="number" value="{{form.zipcode.value}}"
+                                class="block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150">
+                            <span
+                                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.zipcode.help_text}}</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="text-center mt-6 text-4xl inline-block h-12 bg-custom-h w-[150px] rounded-md cursor-pointer">
+                    <input type="submit" value="submit"
+                        class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock accountblock %}
+
+{% block js %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1vMyd0KzU7mTn_AkMW3zd2V4cJC9w31I&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cAC"
+    async defer></script>
+<script>
+    "use strict";
+
+    function initMap() {
+
+        const autocompleteInput = document.getElementById('id_address_one');
+        const provinceInput = document.getElementById('id_province');
+        const cityInput = document.getElementById('id_city');
+        const zipcodeInput = document.getElementById('id_zipcode');
+        const addressTwoInput = document.getElementById('id_address_two');
+
+        const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+            fields: ["place_id", "address_components"],
+            types: ["address"],
+        });
+        autocomplete.setComponentRestrictions(
+            {'country': ['za']});
+        autocomplete.addListener('place_changed', function () {
+            // console.log(autocomplete)
+            const place = autocomplete.getPlace();
+            /* if (!place.geometry) {
+            // User entered the name of a Place that was not suggested and
+            // pressed the Enter key, or the Place Details request failed.
+            window.alert('No details available for input: \'' + place.name + '\'');
+            return;
+            } */
+            // console.log(place)
+            fillInAddress(place);
+        });
+
+        function fillInAddress(place) {  // optional parameter
+            const addressNameFormat = {
+                'street_number': 'short_name',
+                'route': 'long_name',
+                'locality': 'long_name',
+                'administrative_area_level_1': 'short_name',
+                'country': 'long_name',
+                'postal_code': 'short_name',
+            };
+            const getAddressComp = function (type) {
+                for (const component of place.address_components) {
+                    if (component.types[0] === type) {
+                        return component[addressNameFormat[type]];
+                    }
+                }
+                return '';
+            };
+
+            autocompleteInput.value = getAddressComp('route')
+            addressTwoInput.value = getAddressComp('street_number')
+            provinceInput.value = getAddressComp('administrative_area_level_1')
+            cityInput.value = getAddressComp('locality')
+            zipcodeInput.value = getAddressComp('postal_code')
+        }
+    }
+</script>
+{% endblock js %}

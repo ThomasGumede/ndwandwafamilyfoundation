@@ -1,0 +1,429 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block description %}
+<meta name="description" content="{{campaign.details|truncatechars:157}}">
+{% endblock description %}
+
+
+<!-- ==================================== TWITTER =================================== -->
+{% block twitter %}
+<meta name="twitter:title" content="{{campaign.title}}" />
+<meta name="twitter:description" content="{{campaign.details|truncatechars:157}}" />
+
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{{campaign.image.url}}" />
+{% endblock twitter %}
+
+
+<!-- ==================================== OG =================================== -->
+{% block OG %}
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="{{campaign.title|truncatechars:157}}">
+<meta property="og:url" content="https://ndwandwafam.org">
+{% endblock OG %}
+
+{% block title %}{{campaign.title}}{% endblock title %}
+
+{% block content %}
+<section class="w-full py-9 bg-white mb-20">
+    {% include "includes/messages.html" %}
+    <div id="campaign_container" class="container">
+        <div class="flex gap-4 flex-col md:flex-row">
+            <div
+                class="w-full max-w-full mt-0 flex-shrink-0 lg:px-4 md:w-1/2 lg:w-7/12 lg:flex-[0_0_auto] lg:ml-3">
+                <div class="relative h-full block">
+                    <div class="w-full h-full overflow-hidden relative block">
+                        {% if campaign.image %}
+                        <img src="{{campaign.image.url}}" class="w-full h-full" />
+                        {% else %}
+                        <img src="{% static 'images/global/no-image-available.webp' %}" class="w-full h-full" />
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2 w-full mt-0 flex-shrink-0 lg:px-4 lg:flex-[0_0_auto] lg:w-5/12">
+                <div class="relative block">
+                    <div class="space-y-4 mb-5">
+                        <div class="bg-custom-primary w-fit text-white py-2 px-2 lg:px-5 text-center text-sm">
+                            <a href="{% url 'campaigns:campaign-by-category' category_slug=campaign.category.slug %}" class="text-white text-center text-sm">{{campaign.category.label}}</a>
+                        </div>
+                        <h1 class="text-2xl lg:text-4xl">{{campaign.title}}</h1>
+                        <ul class="flex flex-wrap border border-[#f2f7f7] items-center">
+                            <li class="w-full pl-0 max-w-[33.333333%] relative text-center flex-[0_0_33.333333%]">
+                                <div class="block relative p-[29px_0_25px]">
+                                    <h3 class="text-2xl mb-1 font-bold text-custom-h p-0">R{{campaign.current_amount}}
+                                    </h3>
+                                    <p class="text-sm font-normal">Pledged</p>
+                                </div>
+                            </li>
+                            <li
+                                class="w-full pl-0 max-w-[33.333333%] before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[1px] before:bg-[#f2f7f7] relative text-center flex-[0_0_33.333333%]">
+                                <div class="block relative p-[29px_0_25px]">
+                                    <h3 class="text-2xl mb-1 font-bold text-custom-h p-0">{{campaign.contributions.count}}
+                                    </h3>
+                                    <p class="text-sm font-normal">Backers</p>
+                                </div>
+                            </li>
+                            <li
+                                class="w-full pl-0 max-w-[33.333333%] before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[1px] before:bg-[#f2f7f7] relative text-center flex-[0_0_33.333333%]">
+                                <div class="block relative p-[29px_0_25px]">
+                                    <h3 class="text-2xl mb-1 font-bold text-custom-h p-0">{{campaign.get_days}}</h3>
+                                    <p class="text-sm font-normal">left</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="relative block mt-4 mb-1">
+                            <div class="relative bg-[#f2f7f7] py-3 px-2 block w-full">
+                                <div class="relative flex items-center justify-between space-x-2 w-full">
+                                    <div class="text-sm font-bold text-custom-h leading-4">
+                                        Raised</div>
+                                    <div class="relative block w-full">
+                                        <div class="w-full relative h-[3px] bg-white rounded-none">
+                                            <div data-style="{{campaign.get_percentage_of_donated_fund}}" id=""
+                                                class=" bg-custom-primary campaign_percentage_w h-[3px] rounded-none relative before:absolute before:content-[''] before:h-3 before:w-3 before:right-0 before:-top-1 before:bg-custom-primary before:rounded-full">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center p-0 w-10 h-5 flex items-center">
+                                        <span
+                                            class="text-gray-500 relative leading-3 font-medium float-none inline-block text-sm">{{campaign.get_percentage_of_donated_fund}}</span>
+                                        <span
+                                            class="text-sm ml-[-2px] float-none font-medium text-gray-500 leading-3">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-base text-custom-primary font-bold ">
+                            <span class="text-custom-h">Goal: </span>{{campaign.target}} ZAR
+                        </p>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-11 h-11 rounded-full overflow-hidden bg-custom-primary">
+                                {% if campaign.organiser.profile_image %}
+                                <img src="{{campaign.organiser.profile_image.url}}" alt="{{campaign.organiser.first_name}}"
+                                    class="w-full h-full object-cover" />
+                                {% else %}
+                                <p class="text-white text-center w-full mx-auto font-bold text-xl">
+                                    {{campaign.organiser.first_name.0}}{{campaign.organiser.last_name.0}}</p>
+                                {% endif %}
+
+                            </div>
+                            <div>
+                                <a href="{{campaign.organiser.get_absolute_url}}"
+                                    class="text-sm text-black font-normal">By {{campaign.organiser.get_full_name}}</a>
+                                <p class="text-custom-tertiary text-xs font-normal">
+                                    {{campaign.organiser.campaigns.count}} Campaign{{campaign.organiser.campaigns.count|pluralize}} /
+                                    {{campaign.organiser.contributions.count}} pledge{{campaign.organiser.contributions.count|pluralize}}</p>
+                            </div>
+                        </div>
+                    </div>
+                        {% if campaign.status == "Completed" %}
+                        <span
+                            class="text-base rounded-lg p-3 bg-green-300 text-black font-normal">Completed</span>
+                        {% else %}
+                        <div class="">
+                            <a href="{% url 'campaigns:create-contribution' campaign_id=campaign.id %}" id="donation_form"
+                                type="submit"
+                                class="text-white grid items-center justify-center h-12 bg-custom-primary w-28 rounded-lg cursor-pointer text-sm font-semibold">Contribute</a>
+                        </div>
+                        {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="relative w-full">
+    <div class="px-6">
+        <div class="flex flex-col lg:flex-row items-start -mx-4">
+            <div class="w-full max-w-full px-4 flex-shrink-0 md:w-7/12 lg:w-8/12 h-full">
+                <div class="w-full space-y-5 relative block">
+                    <div class="border w-full p-2 lg:p-4">
+                        <div class="w-fit mx-auto">
+                            <div class="flex lg:items-center flex-wrap w-full gap-2 lg:gap-4">
+                                <div data-category="full_description"
+                                    class="bg-gray-300 cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-gray-900 font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Description</p>
+                                </div>
+                                <div data-category="donors"
+                                    class="bg-custom-primary cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-white font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Pledgers</p>
+                                </div>
+                                <div data-category="reviews"
+                                    class="bg-custom-primary cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-white font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Reviews</p>
+                                </div>
+                                <div data-category="updates"
+                                    class="bg-custom-primary cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-white font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Updates</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full p-4 relative block max-w-full overflow-hidden">
+                        <div id="full_description"
+                            class="w-12/12 relative block campaign_data transition-all duration-500">
+                            <div class="relative block">
+                                {{campaign.details|safe}}
+                            </div>
+                        </div>
+                        <div id="donors" class="w-full hidden campaign_data transition-all duration-500">
+                            <div class="w-full overflow-x-auto">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr
+                                            class="text-sm font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                                            <th class="px-4 py-3">Donor</th>
+                                            <th class="px-4 py-3">Amount pledged</th>
+                                            <th class="px-4 py-3">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white">
+                                        {% for donation in campaign.contributions.all %}
+                                            {% if donation.contributor == none or donation.anonymous %}
+                                            <tr class="text-gray-700">
+                                                <td class="px-4 py-3 border">
+                                                    <p class="text-xs text-gray-500">Anonymous</p>
+                                                </td>
+                                                <td class="px-4 py-3 border">
+                                                    <p class="text-xs text-gray-500">{{donation.amount}}</p>
+                                                </td>
+                                                <td class="px-4 py-3 border">
+                                                    <p class="text-xs text-gray-500">{{donation.created}}</p>
+                                                </td>
+                                            </tr>
+
+                                            {% else %}
+                                            <tr class="text-gray-700">
+                                                <td class="px-4 py-3 border">
+                                                    <p class="text-xs text-gray-500">{{donation.contributor.get_full_name}}</p>
+                                                </td>
+                                                <td class="px-4 py-3 border">
+                                                    <p class="text-xs text-gray-500">{{donation.amount}}</p>
+                                                </td>
+                                                <td class="px-4 py-3 border">
+                                                    <p class="text-xs text-gray-500">{{donation.created}}</p>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="reviews" class="w-full hidden campaign_data transition-all duration-500">
+                            <div class="w-full space-y-7">
+
+                                <div class="w-full space-y-4">
+                                    {% for donation in campaign.contributions.all %}
+                                    {% if donation.message %}
+                                    <div id="review_1" class="w-full p-2 space-y-3">
+                                        <div class="flex items-center space-x-3">
+                                            {% if donation.contributor == none or donation.anonymous %}
+                                            <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                
+                                                <img src="{% static 'images/global/no-image-available.webp' %}"
+                                                    class="w-full h-full object-cover object-center" />
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-lg text-black">anonymous</p>
+                                                <p class="text-gray-500 text-sm font-normal">{{donation.created}}</p>
+                                            </div>
+                                            {% else %}
+                                            <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                {% if donation.contributor.profile_image %}
+                                                <img src="{{donation.contributor.profile_image.url}}" class="w-full h-full object-cover object-center" />
+                                                {% else %}
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-lg text-black">{{donation.contributor.get_full_name}}</p>
+                                                <p class="text-gray-500 text-sm font-normal">{{donation.created}}</p>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="text-gray-500 text-sm font-normal">
+                                            <p>
+                                                {{donation.message}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div id="updates" class="w-full hidden campaign_data transition-all duration-500">
+                            <div class="w-full relative block mx-auto">
+                                <div class="flex h-full items-center w-full justify-center bg-white px-6">
+                                    <div class="space-y-6 border-l-2 border-dashed">
+                                        {% for update in campaign.updates.all %}
+                                        <div class="relative w-full">
+                                            
+                                            <div class="ml-6">
+                                                <h4 class="font-bold text-custom-h">{{update.title}}</h4>
+                                                <p class="mt-2 max-w-screen-sm text-sm text-gray-500">{{update.content}}</p>
+                                                    
+                                                <span class="mt-1 block text-sm font-semibold text-custom-h">{{update.created}}</span>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full max-w-full flex-shrink-0 px-4 md:w-5/12 lg:w-4/12">
+                <div class="relative space-y-5">  
+                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <div class="space-y-5">
+                            <h3 class="text-base md:text-lg font-bold">Campaign Organiser</h3>
+                            <p class="text-base text-custom-h md:text-lg font-medium">{{campaign.organiser.get_full_name}}</p>
+                            <p class="text-sm text-gray-500 md:text-base font-medium space-x-2"><i class="fa-solid text-lg fa-phone"></i>
+                                <span>{% if campaign.organiser.phone %}{{campaign.organiser.phone}}{% else %}-{% endif %}</span>
+                            </p>
+                            <p class="text-sm text-gray-500 md:text-base font-medium space-x-2"><i class="fa-solid text-lg fa-envelope"></i>
+                                <span>{{campaign.organiser.email}}</span>
+                            </p>
+                            <div class="flex items-center w-full justify-between">
+                                {% if campaign.organiser.sociallinks.facebook %}
+                                <div>
+                                    <a href="{{campaign.organiser.sociallinks.facebook}}"><i
+                                            class="fa-brands text-4xl text-gray-600 fa-facebook"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if campaign.organiser.sociallinks.twitter %}
+                                <div>
+                                    <a href="{{campaign.organiser.sociallinks.twitter}}"><i
+                                            class="fa-brands text-4xl text-gray-600 fa-twitter"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if campaign.organiser.sociallinks.instagram %}
+                                <div>
+                                    <a href="{{campaign.organiser.sociallinks.instagram}}"><i
+                                            class="fa-brands text-4xl text-gray-600 fa-instagram"></i></a>
+                                </div>
+                                {% endif %}
+                                {% if campaign.organiser.sociallinks.linkedin %}
+                                <div>
+                                    <a href="{{campaign.organiser.sociallinks.linkedin}}"><i
+                                            class="fa-brands text-4xl text-gray-600 fa-linkedin"></i></a>
+                                </div>
+                                {% endif %}
+                    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <h3 class="text-lg mb-1 font-extrabold">Categories</h3>
+                        <ul class="space-y-4">
+                            {% for category in categories %}
+                            <li class="flex items-center py-2 px-3 bg-transparent duration-500 group hover:bg-white">
+                                <a href="{% url 'campaigns:campaign-by-category' category.slug %}"
+                                    class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">{{category.label}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <h3 class="text-lg mb-1 font-extrabold">Recent Campaigns</h3>
+                        <ul class="space-y-4">
+                            {% for campaign in recent_campaigns %}
+                            <li class="flex items-center ">
+                                <div class="pr-5 w-20 h-16 overflow-hidden">
+                                    {% if campaign.image.url %}
+                                        <img src="{{campaign.image.url}}" alt="" class="w-full h-full object-cover">
+                                    {% else %}
+                                        <div class="w-full h-full grid items-center justify-center bg-custom-h">
+                                            <p class="text-white font-semibold">{{campaign.title.0}}</p>
+                                        </div>
+                                    {% endif %}
+                                    
+                                </div>
+                                <div class="relative top-[-3px]">
+                                    <h3 class="text-lg m-0 text-custom-h">
+                                        <span class="text-sm font-normal !text-gray-500">
+                                            <i
+                                                class="fa-solid fa-clock text-base pr-1 text-custom-primary before:content-['\f017']"></i>
+                                            {{campaign.start_date}} - {{campaign.end_date}}
+                                        </span>
+                                        <a href="{{campaign.get_absolute_url}}" class="block text-base text-black font-extrabold">
+                                            {{campaign.title}}
+                                        </a>
+                                    </h3>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    let navbarcampaign_toggler = document.querySelectorAll(".campaign_navbar");
+    let campaign_data = document.querySelectorAll(".campaign_data")
+    navbarcampaign_toggler.forEach(ele => {
+        ele.addEventListener("click", (e) => {
+            for (let i = 0; i < navbarcampaign_toggler.length; i++) {
+                navbarcampaign_toggler[i].classList.remove("active");
+                navbarcampaign_toggler[i].classList.remove("bg-gray-300");
+                navbarcampaign_toggler[i].classList.remove("text-gray-900");
+                navbarcampaign_toggler[i].classList.add("bg-custom-primary");
+                navbarcampaign_toggler[i].classList.add("text-custom-h");
+
+            }
+            let dataAttrib = ele.getAttribute("data-category");
+
+
+            loadData(dataAttrib);
+
+            ele.classList.add("active");
+            ele.classList.add("bg-gray-300");
+            ele.classList.add("text-gray-900");
+            ele.classList.remove("bg-custom-primary");
+            ele.classList.remove("text-custom-h");
+        })
+    })
+
+    var campaign_percentage_w = document.getElementsByClassName("campaign_percentage_w");
+
+    window.onload = () => {
+        for (let index = 0; index < campaign_percentage_w.length; index++) {
+            const element = campaign_percentage_w[index];
+            element.style.width = `${element.getAttribute("data-style")}%`
+
+        }
+
+    }
+
+    function loadData(idAttrib) {
+        let data = document.getElementById(idAttrib);
+        for (let i = 0; i < campaign_data.length; i++) {
+            if (campaign_data[i].classList.contains("block")) {
+                campaign_data[i].classList.remove("block");
+                campaign_data[i].classList.add("hidden");
+            }
+
+        }
+        if (data.classList.contains("hidden")) {
+            data.classList.remove("hidden");
+            data.classList.add("block");
+        }
+
+    }
+
+
+</script>
+
+{% endblock js %}

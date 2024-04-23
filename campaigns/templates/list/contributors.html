@@ -1,0 +1,223 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <link href="invoice.css" media="print" rel="stylesheet"> -->
+    <title>Contributors list</title>
+    <meta name="description" content="Contributors list">
+    <style media="print">
+        @font-face {
+            font-family: Pacifico;
+            src: url("{{ protocol }}://{{ domain }}{% static 'fonts/invoice/pacifico.ttf' %}");
+        }
+
+        @font-face {
+            font-family: Source Sans Pro;
+            font-weight: 400;
+            src: url("{{ protocol }}://{{ domain }}{% static 'fonts/invoice/sourcesanspro-regular.otf' %}");
+        }
+
+        @font-face {
+            font-family: Source Sans Pro;
+            font-weight: 700;
+            src: url("{{ protocol }}://{{ domain }}{% static 'fonts/invoice/sourcesanspro-bold.otf' %}");
+        }
+
+        @page {
+            font-family: Pacifico;
+            margin: 1.4cm;
+
+            @bottom-left {
+                color: #00171f;
+                content: '♥ Thank you!';
+            }
+
+            @bottom-right {
+                color: #9f939f;
+                content: 'contact@ndwandwafam.org | ndwandwafam.org';
+                font-size: 9pt;
+            }
+        }
+
+        html {
+            color: #14213d;
+            font-family: Source Sans Pro;
+            font-size: 11pt;
+            line-height: 1.6;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            color: #00171f;
+            font-family: Pacifico;
+            font-size: 40pt;
+            margin: 0;
+        }
+
+        aside {
+            display: flex;
+            margin: 2em 0 4em;
+        }
+
+        aside address {
+            font-style: normal;
+            white-space: pre-line;
+        }
+
+        aside address#from {
+            color: #887f88;
+            flex: 1;
+        }
+
+        aside address#to {
+            text-align: right;
+        }
+
+        dl {
+            position: absolute;
+            right: 0;
+            text-align: right;
+            top: 0;
+        }
+
+        dt,
+        dd {
+            display: inline;
+            margin: 0;
+        }
+
+        dt {
+            color: #a9a;
+        }
+
+        dt::before {
+            content: '';
+            display: block;
+        }
+
+        dt::after {
+            content: ':';
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            border-bottom: .2mm solid #a9a;
+            color: #a9a;
+            font-size: 10pt;
+            font-weight: 400;
+            padding-bottom: .25cm;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding-top: 7mm;
+        }
+
+        /* td:last-of-type {
+            color: #00171f;
+            font-weight: bold;
+            text-align: right;
+        } */
+
+        th,
+        td {
+            text-align: center;
+        }
+
+        th:first-of-type,
+        td:first-of-type {
+            text-align: left;
+        }
+
+        th:last-of-type,
+        td:last-of-type {
+            text-align: right;
+        }
+
+        table#total {
+            background: #f6f6f6;
+            border-color: #f6f6f6;
+            border-style: solid;
+            border-width: 2cm 3cm;
+            bottom: 0;
+            font-size: 10pt;
+            margin: 0 -1.4cm;
+            position: absolute;
+            width: 18cm;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Contributors list</h1>
+
+    <aside>
+        <address id="from">
+            <span style="font-size: 16pt; font-weight: bold; color: #00171f;">{{campaign.title}}</span>
+            {{campaign.get_days}}
+            R{{campaign.target}} - Goal
+            R{{campaign.current_amount}} - Current
+            {{campaign.get_percentage_of_donated_fund}}% Received
+        </address>
+
+        <address id="to">
+            <span style="font-size: 16pt; font-weight: bold; color: #00171f;">Campaign organiser</span>
+            {{campaign.organiser.get_full_name}}
+            {{campaign.organiser.email}}
+            {{campaign.organiser.phone}}
+        </address>
+    </aside>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Contribution no.</th>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for contribution in campaign.contributions.all %}
+            <tr>
+                <td>{{contribution.order_number}}</td>
+                <td>{{contribution.contributor.get_full_name}}</td>
+                <td>{{contribution.contributor.email}}</td>
+                <td>R{{contribution.amount}}</td>
+                <td>{{contribution.contribution_percentage}}</td>
+            </tr>
+            {% endfor %}
+
+            
+        </tbody>
+    </table>
+
+    <table id="total">
+        <thead>
+            <tr>
+                <th>Campaign duration</th>
+                <th></th>
+                <th>Total amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{event.get_days}}</td>
+                <td></td>
+                <td>{{campaign.current_amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

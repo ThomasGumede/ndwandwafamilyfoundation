@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets</title>
+    <style rel="stylesheet" type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        .ts-row::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    {% for ticket in tickets %}
+
+    <div style="border: dotted 1px #1e3737;padding: 25px;position: relative;height: 345px;width: 624px;">
+
+
+        <div
+            style="font-size: 18px; font-family: azo-sans-web; font-weight: 900; height: 10px; padding-bottom: 30px; display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <div style="padding: 1px; color: #1e3737;"><span>Ticket</span></div>
+
+            <div style="padding: 1px; word-wrap: break-word;">
+                <span style="color: #1e3737;">{{event.title|truncatewords:5}}</span>
+            </div>
+
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; width: 100%;">
+            <div style="display: block; align-items: center; justify-content: center; width: 35%; margin-right: 30px;">
+                <div style=" padding: 10px; width: 100%; margin-bottom:10px; background-color: aliceblue;">
+                    <div style="position: relative; width: 100px; height: 100px; overflow: hidden; margin: auto;">
+                        <img src="{{protocol}}://{{domain}}{{ticket.qrcode_image.url}}"
+                            style="width: 100px; height: 100px; object-fit: cover;" alt="{{ticket.qrcode_url}}">
+                    </div>
+                </div>
+                <div style="padding: 1px; font-family: Museo Sans W01_700;background-color: aliceblue;">
+                    <div style="padding: 10px; font-family: Museo Sans W01_700;">
+                        <div style="position: relative; width:170px;height:100px">
+                            <div><img src="{{protocol}}://{{domain}}{{ticket.barcode_image.url}}"
+                                    style="width:170px;height:100px" alt="{{ticket.barcode_url}}" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 12px; width: 65%;">
+                <div style=" padding: 1px; width: 100%;">
+                    <div style="padding-bottom: 8px;">
+                        <div style="display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>VENUE</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                <span>{{event.venue_name}}</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                &nbsp;
+                            </div>
+
+                            <div class="ts-col-9 ts-value"
+                                style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                <span>{{event.event_address}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding-bottom: 8px;">
+                        <div style="display: flex; margin-bottom: 5px;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>WHEN</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                <span>{{event.date_time_formatter}}</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>PRICE</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                <span>{{ticket.ticket_type.title}} - R{{ticket.ticket_type.total_price}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div style="padding-bottom: 8px;">
+                        <div style="margin-bottom: 5px; display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>GUEST NAME</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                {{ticket.guest_full_name}}</div>
+                        </div>
+
+                        <div style="margin-bottom: 5px; display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>GUEST EMAIL</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                {{ticket.guest_email}}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="margin-bottom: 5px; display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>DATE ISSUED</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                {{created}}</div>
+                        </div>
+
+                        <div style="margin-bottom: 5px; display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>ORDER REF</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                {{order_number}}</div>
+                        </div>
+                        <div style="margin-bottom: 5px; display: flex;">
+                            <div
+                                style="padding: 1px; width: 25%; color: #1e3737; font-weight: 500; font-family: Museo Sans W01_700;">
+                                <span>BUYER NAME</span>
+                            </div>
+
+                            <div style="padding: 1px; width: 75%; font-family: Museo Sans W01_500;">
+                                {{buyer_full_name}}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="ts-row ts-note">
+            <div class="ts-col-2 ts-col-m-12 ts-value"
+                style="padding: 1px; width: 16.66%; font-family: Museo Sans W01_700;">&nbsp;</div>
+
+            <div class="ts-col-10 ts-col-m-12"
+                style="padding: 1px; width: 83.33%; font-size: 7px; font-family: Museo Sans W01_500; margin: auto;">
+                <span style="padding: 2px; position: absolute; bottom: 15px;">USE OF THIS TICKET MEANS THAT THE
+                    ATTENDEE IS
+                    BOUND BY ALL EVENT ORGANISER TERMS AND CONDITIONS</span>
+            </div>
+        </div>
+
+    </div>
+
+    {% endfor %}
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block description %}
+<meta name="description" content="{{relative.biography|truncatechars:157}}">
+{% endblock description %}
+
+
+<!-- ==================================== TWITTER =================================== -->
+{% block twitter %}
+<meta name="twitter:title" content="{{relative.relativename}}" />
+<meta name="twitter:description" content="{{relative.biography|truncatechars:157}}" />
+
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{{relative.profile_image.url}}" />
+{% endblock twitter %}
+
+
+<!-- ==================================== OG =================================== -->
+{% block OG %}
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="{{relative.relativename|truncatechars:157}}">
+<meta property="og:url" content="https://ndwandwafam.org">
+<meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{{relative.profile_image.url}}">
+{% endblock OG %}
+
+{% block content %}
+<section class="relative block h-[300px] bg-white">
+    <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-[70px]"
+        style="transform: translateZ(0px)">
+        <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+            version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+            <polygon class="text-white fill-current" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+    </div>
+</section>
+<section class="relative py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+            <div class="px-6">
+                <div class="flex mb-10 flex-wrap lg:items-center justify-center">
+                    <div class="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+                        <div class="relative w-48 h-48 border-none -m-16 -ml-20 lg:-ml-16 rounded-full overflow-hidden">
+                            {% if relative.profile_image %}
+                            <img alt="{{relative.get_full_names}} profile image" src="{{relative.profile_image.url}}"
+                                class="shadow-xl  h-full align-middle  w-full">
+                            {% else %}
+                            <img alt="{{relative.get_full_names}} profile image"
+                                src="{% static 'images/global/no-image-available.webp' %}"
+                                class="shadow-xl  h-full align-middle  w-full">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center grid mt-12">
+                    <h3 class="text-4xl font-semibold leading-normal mb-2 text-gray-700">
+                        {{relative.get_full_names}}
+                    </h3>
+                    <div class="flex items-center self-center justify-self-center w-fit justify-center text-center flex-wrap gap-4">
+                        <div class="mb-2 text-gray-600 MB-2">
+                            <i class="fa-solid fa-people-roof mr-2 text-lg text-gray-400"></i>{{relative.relationship}}
+                        </div>
+                        <div class="mb-2 text-gray-600 MB-2">
+                            <i class="fa-solid fa-phone mr-2 text-lg text-gray-400"></i>{{relative.phone}}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10 py-10 border-t border-gray-200 text-center">
+                    <div class="flex flex-wrap justify-center">
+                        <div class="w-full lg:w-9/12 px-4">
+                            <p class="mb-4 text-lg leading-relaxed text-gray-700">
+                                {{relative.description}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

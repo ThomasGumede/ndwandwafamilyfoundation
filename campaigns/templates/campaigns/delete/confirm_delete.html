@@ -1,0 +1,41 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}contributions{% endblock title %}
+
+{% block accountblock %}
+<div class="relative w-full h-full block bg-gray-50">
+    <div class="flex items-center w-full h-screen justify-center">
+        <div
+            class="w-full max-w-full rounded-xl bg-white md:w-1/2 lg:w-5/12 relative shadow-xl text-center">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="p-5 md:p-7">
+                    <div class="space-y-6">
+                        <h3 class="text-custom-h text-2xl md:text-4xl font-extrabold">Please confirm</h3>
+                        <div>
+                            <i class="fa-regular fa-circle-xmark text-8xl font-extralight text-custom-h"></i>
+                        </div>
+
+                        <p class="text-custom-h text-lg font-medium">
+                            {{title}}
+                        </p>
+                        <p class="text-gray-500 text-lg font-medium">
+                            {{message}}
+                        </p>
+                        <p class="text-custom-h text-sm font-medium">
+                            Please note that there's no coming back after this
+                        </p>
+                        <div>
+                            <input type="submit" value="Confirm"
+                                class="w-full cursor-pointer px-4 py-2 outline-none text-custom-primary border border-custom-primary rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+{% endblock accountblock %}

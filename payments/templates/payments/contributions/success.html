@@ -1,0 +1,38 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Payment successfully{% endblock title %}
+
+{% block content %}
+<section class="py-16 h-full bg-gray-100 font-sans">
+    {% include "includes/messages.html" %}
+    <div class="container">
+        <div
+            class="w-full max-w-full rounded-xl my-auto bg-white mx-auto md:w-1/2 lg:w-5/12 relative shadow-xl text-center">
+            <div class="p-5 md:p-7">
+                <div class="space-y-6">
+                    <h3 class="text-custom-h text-2xl md:text-4xl font-extrabold">A Big Thank You</h3>
+                    <div>
+                        <i class="fa-solid fa-heart-circle-check text-8xl font-extralight text-custom-h"></i>
+                    </div>
+                    <p>
+
+                    </p>
+
+                    <p class="text-gray-500 text-lg font-medium">
+                        Amount of R{{contribution.total_amount}} contribution {{contribution.order_number}} was declared and successfully paid! We believe Your contribution made a difference.
+                    </p>
+                    <p class="text-custom-h text-base font-medium">
+                        You will receive payment confirmation shortly
+                    </p>
+                    <div>
+                        <a href="{% url 'campaigns:campaign' contribution.campaign.slug %}"
+                            class="w-full px-4 py-2 outline-none text-custom-primary border border-custom-primary rounded-md md:w-auto hover:text-gray-100 hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                            Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content%}

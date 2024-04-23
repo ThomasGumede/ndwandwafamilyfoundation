@@ -1,0 +1,329 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Search results{% endblock title %}
+
+{% block content %}
+<section class="w-full bg-custom-bg py-20">
+    <div class="relative w-full h-fit">
+        <div class="w-fit mx-auto mb-4">
+            <div class="grid items-center w-full justify-center text-center space-y-7">
+
+                <h2 class="text-gray-900 font-bold font-sans text-3xl md:text-5xl">
+                    Search Ndwandwa Fam
+                </h2>
+                <span class="text-gray-500 font-sans text-lg md:text-xl font-normal"> 
+                    Getting help from family is
+                    easy now!
+                </span>
+            </div>
+        </div>
+        <div class="w-fit h-fit mx-auto">
+            <div class="px-4 py-3 w-full relative text-black">
+                <div class="w-full relative block">
+                    <form method="get" class="">
+                        <div class="flex flex-col lg:flex-row  gap-4  w-full justify-between">
+                            <div class="flex bg-gray-50 p-2 rounded-md border items-center text-base gap-4 w-full">
+                                <div class="p-1 hidden md:block">
+                                    <i class="fa-solid text-gray-500 fa-search text-2xl"></i>
+                                </div>
+                                {{form.query}}
+                            </div>
+                            {{form.search_by}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full bg-custom-bg mb-36">
+    <div class="container font-sans">
+        <div class="">
+            {% if query %}
+                <p class="text-xl font-medium mb-6 w-fit mx-auto text-custom-h">Your search for "{{query}}" in "{{results_type}}"</p>
+            {% endif %}
+            <div class="w-full mx-auto relative block">
+                {% if results != none and results.count != 0 %}
+                    {% if results_type == "campaigns" %}
+                    <div class="grid mx-auto w-full sm:grid-cols-2 md:grid-cols-3 gap-7">
+                        {% for campaign in results %}
+                        <div
+                            class="group">
+                            <div class="relative mb-7 block">
+                                <div class="img_box relative block">
+                                    <div class="overflow-hidden h-64 bg-custom-h relative block transition-all duration-500 ease-in">
+                                        {% if campaign.image %}
+                                        <img src="{{campaign.image.url}}" alt="" class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div
+                                    class="block text-center bg-white p-[26px_30px_20px] shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)]">
+                                    <div class="inline-block relative text-center bg-custom-primary p-[7px_19px_8px]">
+                                        <p class="font-bold text-white text-xs leading-3">
+                                            {{campaign.category.label}}
+                                        </p>
+                                    </div>
+                                    <h3
+                                        class="text-custom-h m-0 transition-all duration-500 text-xl md:text-2xl font-bold mt-4 mb-2">
+                                        <a href="{{campaign.get_absolute_url}}" class="text-custom-h transition-all duration-500 ease-in group-hover:text-custom-primary">{{campaign.title|truncatewords:5}}</a>
+                                    </h3>
+                                    <div class="relative flex justify-center items-center">
+                                        <div class="text-sm text-custom-primary">
+                                            <i class="fa-solid fa-clock font-bold"></i>
+                                        </div>
+                                        <div class="ml-1">
+                                            <p class="text-xs font-normal">{{campaign.get_days}} remaining</p>
+                                        </div>
+                                    </div>
+                                        <div class="relative block mt-4 mb-1">
+                                            <div class="relative bg-[#f2f7f7] py-3 px-2 block w-full">
+                                                <div class="relative flex items-center justify-between space-x-2 w-full">
+                                                    <div
+                                                        class="text-sm font-bold text-custom-h leading-4">
+                                                        Raised</div>
+                                                    <div class="relative block w-full">
+                                                        <div class="w-full relative h-[3px] bg-white rounded-none">
+                                                            <div data-style="{{campaign.get_percentage_of_donated_fund}}" id="" class=" bg-custom-primary campaign_percentage_w h-[3px] rounded-none relative before:absolute before:content-[''] before:h-3 before:w-3 before:right-0 before:-top-1 before:bg-custom-primary before:rounded-full"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center p-0 w-10 h-5 flex items-center">
+                                                        <span class="text-gray-500 relative leading-3 font-medium float-none inline-block text-sm">{{campaign.get_percentage_of_donated_fund}}</span>
+                                                        <span class="text-sm ml-[-2px] float-none font-medium text-gray-500 leading-3">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="relative flex items-center justify-between">
+                                            <p class="text-xs text-gray-500 font-semibold">Achieved: <span class="font-bold text-custom-h">R{{campaign.target}}</span></p>
+                                            <p class="text-xs text-gray-500 font-semibold">Goal: <span class="font-bold text-custom-h">R{{campaign.current_amount}}</span></p>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% elif results_type == "posts" %}
+                    <div class="grid mx-auto w-full gap-14 md:grid-cols-2 lg:grid-cols-3">
+                        {% for post in results %}
+                            <div
+                            class=" group px-[calc(30px_/_2)]">
+                                <div class="relative block mb-8">
+                                    <div class="relative block">
+                                        <div class="relative block overflow-hidden">
+                                            {% if post.image %}
+                                            <img src="{{post.image.url}}" alt="{{post.title}} banner" class="w-full">
+                                            {% else %}
+                                            <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image available" class="w-full">
+                                            {% endif %}
+                                        </div>
+                                        <div class="absolute bottom-5 right-5 bg-custom-primary p-[15px_14px_15px] text-center items-center">
+                                            <p class="text-base text-white font-bold mb-1">{{post.created.date.day}}</p>
+                                            <span class="relative block text-xs text-white font-bold uppercase">{{post.created.date.month}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="relative block bg-white p-[26px_30px_20px] shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)]">
+                                        <ul class="relative flex items-center pl-0">
+                                            <li>
+                                                <a href="{{post.author.get_absolute_url}}" class="text-sm font-normal text-custom-h">
+                                                    <i class="fa-solid fa-user-circle text-custom-primary pr-1"></i>
+                                                    By {{post.author.get_full_name}}
+                                                </a>
+                                            </li>
+                                            <li class="ml-2">
+                                                <p class="text-sm font-normal text-custom-h">
+                                                    <i class="fa-solid fa-user-circle text-custom-primary pr-1"></i>
+                                                    {{post.comments.count}} comments
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <h3 class="text-2xl font-bold">
+                                            <a href="{{post.get_absolute_url}}" class="text-custom-h">{{post.title|truncatewords:5}}</a>
+                                        </h3>
+                                        <div class="relative flex center justify-between px-8 py-0 bg-[#f2f7f7] mt-5">
+                                            <div>
+                                                <a href="{{post.get_absolute_url}}" class="relative text-xs font-medium uppercase text-gray-500 flex items-center py-1">
+                                                    Read more
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% elif results_type == "events" %}
+                        <div class="grid mx-auto w-full sm:grid-cols-2 md:grid-cols-3 gap-7">
+                            {% for event in results %}
+                                <div class="relative  overflow-hidden">
+                                    <div class="relative block bg-custom-h w-full h-80 group overflow-hidden">
+                                        <div class="bg-custom-primary  z-20  absolute top-4 left-4 py-1 md:py-2 px-2 md:px-4 text-center">
+                                            <p class="text-xs text-white">{{event.category}}</p>
+                                        </div>
+                                
+                                        {% if event.image %}
+                                        <img src="{{event.image.url}}" alt="{{event.title}} image" srcset="" lazyload
+                                            class="object-cover block h-full w-full duration-500 group-hover:scale-105">
+                                        {% else %}
+                                        <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image" srcset=""
+                                            class="object-cover block h-full w-full">
+                                        {% endif %}
+                                
+                                
+                                        <div
+                                            class="w-full h-full bg-[linear-gradient(0deg,_rgba(6,2,75,1)_33%,_rgba(13,9,79,0.3127626050420168)_84%,_rgba(69,79,145,0.6965161064425771)_100%)] absolute top-0 left-0">
+                                        </div>
+                                        <div class="absolute group text-white duration-500 bottom-0 left-0 w-full h-fit p-4">
+                                            <div class="font-sans space-y-3">
+                                
+                                                <div class="flex w-full items-center justify-between">
+                                                    <p class="duration-500 space-x-1 flex items-center text-sm font-normal">
+                                                        <i class="fa-solid fa-clock text-xs md:text-sm"></i>
+                                                        <span class="m-0 p-0">
+                                                            {{event.sales_days_left}} left
+                                                        </span>
+                                                    </p>
+                                                    <div class="duration-500 space-x-1 flex items-center text-sm font-normal">
+                                                        <div class="w-4 h-4 rounded-full bg-white overflow-hidden relative">
+                                                            {% if event.organiser.profile_image %}
+                                                            <img class="w-full h-full rounded-full object-fill" alt="{{event.organiser.get_full_name}}"
+                                                                src="{{event.organiser.profile_image.url}}" />
+                                                            {% else %}
+                                                            <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image" srcset=""
+                                                                class="object-cover block h-full w-full">
+                                                            {% endif %}
+                                                        </div>
+                                                        <p class="">
+                                                            By <a href=""
+                                                                class="text-sm font-normal hover:text-custom-primary">{{event.organiser.get_full_name}}</a>
+                                                        </p>
+                                
+                                                    </div>
+                                                </div>
+                                                <a href="{{event.get_absolute_url}}"
+                                                    class="block  duration-500 font-bold text-white text-lg md:text-2xl">
+                                                    {{event.title|truncatewords:3}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% elif results_type == "people" %}
+                        <div class="grid mx-auto w-full md:grid-cols-4 gap-7">
+                            {% for account in results %}
+                            <div class="w-64 h-[350px] bg-white">
+                                <div class="w-full group duration-500 h-full relative">
+                                    <div class="w-full h-full overflow-hidden rounded-2xl relative">
+                                        {% if account.profile_image %}
+                                        <img src="{{account.profile_image.url}}" alt="{{account.get_full_name}} avatar"
+                                            class="w-full h-full object-cover duration-500 group-hover:scale-105 bg-center" />
+                                        {% else %}
+                                        <img src="{% static 'images/global/no-image-available.webp' %}" alt="no avatar available"
+                                            class="w-full h-full object-cover bg-center" />
+                                        {% endif %}
+                                        <div class="absolute w-full h-full top-0 bottom-0 bg-[rgba(0,0,0,0.57)]"></div>
+                                        <div class="absolute bottom-6 left-4 ">
+                                            <div class=" text-white">
+                                                <h2 class="font-medium text-xl text-white">
+                                                    {{account.get_full_name}}
+                                                </h2>
+                                                <p class="text-xs text-[#ccc]">
+                                                    {{account.occupation}}, {{account.address.province}}
+                                                </p>
+                                                <div class="mt-4 group">
+                                                    <a href="{% url 'accounts:user' username=account.username %}"
+                                                        class="w-20 hover:bg-white hover:text-custom-h border duration-500 text-white border-white rounded-3xl p-2 px-4 text-center cursor-pointer">See
+                                                        me</a>
+                                                </div>
+                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-full h-full rounded-2xl"></div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="grid mx-auto w-full sm:grid-cols-2 md:grid-cols-3 gap-7">
+                            {% for campaign in results %}
+                            <div class="group">
+                                <div class="relative mb-7 block">
+                                    <div class="img_box relative block">
+                                        <div class="overflow-hidden h-64 bg-custom-h relative block transition-all duration-500 ease-in">
+                                            {% if campaign.image %}
+                                            <img src="{{campaign.image.url}}" alt=""
+                                                class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="block text-center bg-white p-[26px_30px_20px] shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)]">
+                                        <div class="inline-block relative text-center bg-custom-primary p-[7px_19px_8px]">
+                                            <p class="font-bold text-white text-xs leading-3">
+                                                {{campaign.category.label}}
+                                            </p>
+                                        </div>
+                                        <h3 class="text-custom-h m-0 transition-all duration-500 text-xl md:text-2xl font-bold mt-4 mb-2">
+                                            <a href="{{campaign.get_absolute_url}}"
+                                                class="text-custom-h transition-all duration-500 ease-in group-hover:text-custom-primary">{{campaign.title|truncatewords:5}}</a>
+                                        </h3>
+                                        <div class="relative flex justify-center items-center">
+                                            <div class="text-sm text-custom-primary">
+                                                <i class="fa-solid fa-clock font-bold"></i>
+                                            </div>
+                                            <div class="ml-1">
+                                                <p class="text-xs font-normal">{{campaign.get_days}} remaining</p>
+                                            </div>
+                                        </div>
+                                        <div class="relative block mt-4 mb-1">
+                                            <div class="relative bg-[#f2f7f7] py-3 px-2 block w-full">
+                                                <div class="relative flex items-center justify-between space-x-2 w-full">
+                                                    <div class="text-sm font-bold text-custom-h leading-4">
+                                                        Raised</div>
+                                                    <div class="relative block w-full">
+                                                        <div class="w-full relative h-[3px] bg-white rounded-none">
+                                                            <div data-style="{{campaign.get_percentage_of_donated_fund}}" id=""
+                                                                class=" bg-custom-primary campaign_percentage_w h-[3px] rounded-none relative before:absolute before:content-[''] before:h-3 before:w-3 before:right-0 before:-top-1 before:bg-custom-primary before:rounded-full">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center p-0 w-10 h-5 flex items-center">
+                                                        <span
+                                                            class="text-gray-500 relative leading-3 font-medium float-none inline-block text-sm">{{campaign.get_percentage_of_donated_fund}}</span>
+                                                        <span class="text-sm ml-[-2px] float-none font-medium text-gray-500 leading-3">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="relative flex items-center justify-between">
+                                            <p class="text-xs text-gray-500 font-semibold">Achieved: <span
+                                                    class="font-bold text-custom-h">R{{campaign.target}}</span></p>
+                                            <p class="text-xs text-gray-500 font-semibold">Goal: <span
+                                                    class="font-bold text-custom-h">R{{campaign.current_amount}}</span></p>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="relative block text-center overflow-hidden w-6/12 mx-auto h-96">
+                        <div class="mb-6 overflow-hidden mx-auto  w-6/12">
+                           <img src="{% static 'images/global/search.svg' %}" alt="" srcset="" class="object-contain w-full h-full" />  
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    src: url('FontAwesome6Free-Regular.woff2') format('woff2'),
+        url('FontAwesome6Free-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    src: url('FontAwesome6Brands-Regular.woff2') format('woff2'),
+        url('FontAwesome6Brands-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    src: url('FontAwesome6Brands-Regular.woff2') format('woff2'),
+        url('FontAwesome6Brands-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    src: url('FontAwesome6Free-Regular.woff2') format('woff2'),
+        url('FontAwesome6Free-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free Solid';
+    src: url('FontAwesome6Free-Solid.woff2') format('woff2'),
+        url('FontAwesome6Free-Solid.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome v4 Compatibility';
+    src: url('FontAwesomev4Compatibility-Regular.woff2') format('woff2'),
+        url('FontAwesomev4Compatibility-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome v4 Compatibility';
+    src: url('FontAwesomev4Compatibility-Regular.woff2') format('woff2'),
+        url('FontAwesomev4Compatibility-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free Solid';
+    src: url('FontAwesome6Free-Solid.woff2') format('woff2'),
+        url('FontAwesome6Free-Solid.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+

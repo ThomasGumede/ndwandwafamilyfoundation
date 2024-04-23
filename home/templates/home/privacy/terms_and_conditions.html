@@ -1,0 +1,38 @@
+{% extends "_privacy.html" %}
+{% load static %}
+{% block title %}
+    {{term.title}}
+{% endblock title %}
+
+{% block description %}
+<meta name="description" content="{{term.content|truncatechars:157}}">
+{% endblock description %}
+
+
+<!-- ==================================== TWITTER =================================== -->
+{% block twitter %}
+<meta name="twitter:title" content="{{term.title}}" />
+<meta name="twitter:description" content="{{term.content|truncatechars:157}}" />
+
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{{term.image.url}}" />
+{% endblock twitter %}
+
+
+<!-- ==================================== OG =================================== -->
+{% block OG %}
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="{{term.title|truncatechars:157}}">
+<meta property="og:url" content="https://ndwandwafam.org">
+<meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/logo/logo.png' }">
+
+{% endblock OG %}
+
+{% block seo %}
+
+{% endblock seo %}
+
+{% block privacy %}
+    <div>
+        {{term.content|safe}}
+    <div>
+{% endblock privacy %}

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap');
+
+@layer base {
+    
+
+    label {
+        @apply block text-gray-600 text-base font-normal capitalize mb-2
+    }
+}
+
+@layer components {
+    .container {
+        @apply ml-auto mx-auto px-2 w-full md:w-11/12 md:px-5
+    }
+}

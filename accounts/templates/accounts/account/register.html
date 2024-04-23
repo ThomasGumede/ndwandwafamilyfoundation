@@ -1,0 +1,413 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+{% include "includes/messages.html" %}
+<section class="w-full mt-16 font-sans overflow-hidden mb-20">
+    <div class="container">
+        <div class="lg:w-11/12 mx-auto bg-white">
+            <div class="space-y-6 border-0 bg-white w-full relative">
+                {% include "includes/errors.html" %}
+
+                {% if form2.errors %}
+                <div class="w-full mx-auto">
+                    <div class="bg-red-50 border-l-8 border-red-900">
+                        <div class="flex items-center">
+                            <div class="p-2">
+                                <div class="flex items-center">
+                                    <div class="ml-2">
+                                        <svg class="h-8 w-8 text-red-900 mr-2 cursor-pointer"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <p class="px-6 py-4 text-red-900 font-semibold text-lg">Please fix the
+                                        following
+                                        errors.</p>
+                                </div>
+                                <div class="px-16 mb-4">
+                                    {% for field in form2 %}
+                                        {% if field.errors %}
+                                        <li class="text-md font-bold text-red-500 text-sm">{{field.label}}: {{field.errors.as_text}}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                    <form method="post" enctype="multipart/form-data" id="register_form">
+                        {% csrf_token %}
+
+                        {% include "includes/personal.html" %}
+                        {% include "includes/address.html" %}
+                        <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                        <h6 class=" text-semibold mt-6 mb-6  uppercase">
+                            About Me
+                        </h6>
+                        <div class="flex flex-wrap mb-4">
+                            <div class="w-full lg:w-12/12 md:px-4">
+                                <div class="mb-5">
+                                    <label for="email">Identity type*</label>
+                                    <div class="flex">
+                                        <label for="id_identity_choices_0"
+                                            class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
+                                            <div class="text-teal-600 mr-3">
+                                                <input type="radio" name="identity_choices" checked required id="id_identity_choices_0"
+                                                    value="ID_NUMBER" class="form-radio focus:outline-none focus:shadow-outline" />
+                                            </div>
+                                            <div class="select-none text-gray-700">ID number</div>
+                                        </label>
+                            
+                                        <label for="id_identity_choices_1"
+                                            class="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
+                                            <div class="text-teal-600 mr-3">
+                                                <input type="radio" name="identity_choices" required id="id_identity_choices_1" value="PASSPORT"
+                                                    class="form-radio focus:outline-none focus:shadow-outline" />
+                                            </div>
+                                            <div class="select-none text-gray-700">Passport</div>
+                                        </label>
+                                    </div>
+                                </div>
+                            
+                                <div class="mb-5">
+                                    <label for="profession">ID /
+                                        Passport*</label>
+                                    <input type="text" name="identity_number" id="id_identity_number" required
+                                        class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-6/12 md:px-4">
+                                <div class="relative w-full mb-3">
+                                    <label for="id_occupation">
+                                        Occupation
+                                    </label>
+                                    <input value="" id="id_occupation" name="occupation" maxlength="300" type="text"
+                                        placeholder="e.g Accountant at Zululand"
+                                        class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                                        value="">
+                                    <span class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.occupation.help_text}}</span>
+                            
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-6/12 md:px-4">
+                                <div class="relative w-full mb-3">
+                                    <label for="id_professional_affiliations">
+                                        professional affiliations
+                                    </label>
+                                    <input value="" id="id_professional_affiliations"
+                                        name="professional_affiliations" maxlength="300" type="text" placeholder="e.g ABASA member"
+                                        class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150">
+                                    <span
+                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.professional_affiliations.help_text}}</span>
+                            
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="mt-6 border-b-1 border-blueGray-300">
+                        <h6 class="text-base mt-6 mb-6  uppercase">
+                            Security
+                        </h6>
+                        <div class="flex flex-wrap mb-4">
+                            <div class="w-full lg:w-6/12 md:px-4">
+                                <div class="relative w-full mb-3" x-data="{ showpassword1: true }">
+                                    <label for="id_password">
+                                        Password*
+                                    </label>
+                                    <div class="relative">
+                                        <input :type="showpassword1 ? 'password' : 'text'" name="password1" autocomplete="new-password"
+                                            class="block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"
+                                            required="" id="id_password1">
+                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                        
+                                            <svg class="h-6 text-gray-700" fill="none" @click="showpassword1 = !showpassword1"
+                                                :class="{'hidden': !showpassword1, 'block':showpassword1 }" xmlns="http://www.w3.org/2000/svg"
+                                                viewbox="0 0 576 512">
+                                                <path fill="currentColor"
+                                                    d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
+                                                </path>
+                                            </svg>
+                                        
+                                            <svg class="h-6 text-gray-700" fill="none" @click="showpassword1 = !showpassword1"
+                                                :class="{'block': !showpassword1, 'hidden':showpassword1 }" xmlns="http://www.w3.org/2000/svg"
+                                                viewbox="0 0 640 512">
+                                                <path fill="currentColor"
+                                                    d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z">
+                                                </path>
+                                            </svg>
+                                        
+                                        </div>
+                                    </div>
+                                    
+                                    <span
+                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">your password must contain at least 8 characters.</span>
+
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-6/12 md:px-4">
+                                <div class="relative w-full mb-3" x-data="{ showpassworde2: true }">
+                                    <label for="id_password2">
+                                        Retype password*
+                                    </label>
+                                    <div class="relative">
+                                        <input :type="showpassworde2 ? 'password' : 'text'" name="password2" autocomplete="new-password"
+                                            class="block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"
+                                            required="" id="id_password2">
+                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                        
+                                            <svg class="h-6 text-gray-700" fill="none" @click="showpassworde2 = !showpassworde2" :class="{'hidden': !showpassworde2, 'block':showpassworde2 }"
+                                                xmlns="http://www.w3.org/2000/svg" viewbox="0 0 576 512">
+                                                <path fill="currentColor"
+                                                    d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
+                                                </path>
+                                            </svg>
+                                        
+                                            <svg class="h-6 text-gray-700" fill="none" @click="showpassworde2 = !showpassworde2" :class="{'block': !showpassworde2, 'hidden':showpassworde2 }"
+                                                xmlns="http://www.w3.org/2000/svg" viewbox="0 0 640 512">
+                                                <path fill="currentColor"
+                                                    d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z">
+                                                </path>
+                                            </svg>
+                                        
+                                        </div>
+                                    </div>
+                                    
+                                    <span
+                                        class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.password2.help_text}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-base text-gray-700">
+                                By clicking 'register' you agree to Ndwandwa Family Foundation <a href="{% url 'home:terms' %}" class="text-custom-primary font-bold underline">Terms of use</a> and <a href="{% url 'home:terms' %}" class="text-custom-primary font-bold underline">Privacy policy</a>.
+                            </p>
+                        </div>
+                        <div class="space-y-4 md:space-y-0 md:space-x-7 mt-3">
+                            <div
+                                class="text-center inline-block h-12 bg-custom-primary w-[150px] rounded-md cursor-pointer">
+                                <input type="submit" value="register" id="submit_button"
+                                    class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
+                            </div>
+                            <div class="inline-block">
+                                <p>Already a member? <a href="{% url 'accounts:login' %}" class="text-blue-400">Sign
+                                        in</a></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block js %}
+
+
+<script>
+
+    const file_picker = document.querySelector("#id_profile_image"),
+        pick_image = document.querySelector("#pick_image"),
+        register_form = document.querySelector("#register_form"),
+        email = document.querySelector("#id_email"),
+        confirm_email = document.querySelector("#id_confirm_email"),
+        confirm_email_error = document.querySelector("#confirm_email_error")
+
+    pick_image.addEventListener('click', () => {
+        file_picker.click()
+    })
+
+
+    file_picker.onchange = ({target}) => {
+        const no_image = document.querySelector("#no_image");
+        const img_container = document.querySelector("#img_container")
+        const img = document.querySelector("#img")
+        const file = target.files[0]
+        if (file) {
+            // console.log(no_image)
+            if (no_image) {
+                // console.log(img_container)
+
+                img_container.removeChild(no_image);
+                img_container.innerHTML += `
+                    <img
+                        src="${window.URL.createObjectURL(file)}"
+                        alt="{{request.user.first_name}}"
+                        class="w-full h-full object-cover"
+                        id="img"
+                    />
+                `
+            } else {
+                img.src = window.URL.createObjectURL(file)
+            }
+
+        } else {
+            alert("no file selected")
+        }
+
+    };
+
+    var max_words = 150;
+
+    $("textarea[name=biography]").on("keyup", function () {
+        var str = $(this).val();
+        if (str.split(/[\s]+/).length > max_words) {
+            alert("You cannot put more than" + max_words + " words in this text area.")
+            var new_str = str.split(/[\s]+/).splice(0, max_words).join(' ');
+            $(this).val(new_str);
+        }
+    })
+
+    confirm_email.addEventListener("keyup", function(e){
+        e.preventDefault();
+        console.log(email.value)
+        if(confirm_email.value !== email.value){
+            if(confirm_email_error.classList.contains("hidden"))
+            {
+                confirm_email_error.classList.remove("hidden");
+                confirm_email_error.classList.add("block");
+            }
+        }else{
+            if (confirm_email_error.classList.contains("block")) {
+                confirm_email_error.classList.remove("block");
+                confirm_email_error.classList.add("hidden");
+            }
+        }
+    })
+</script>
+<script>
+    "use strict";
+    
+    function initMap() {
+
+        const CONFIGURATION = {
+            "ctaTitle": "Checkout",
+            "mapOptions": {"center": {"lat": -33.918861, "lng": 18.423300}, "fullscreenControl": true, "mapTypeControl": false, "streetViewControl": true, "zoom": 11, "zoomControl": true, "maxZoom": 22, "mapId": ""},
+            "capabilities": {"addressAutocompleteControl": true, "mapDisplayControl": true, "ctaControl": true}
+        };
+
+        const componentForm = [
+            'location',
+            'locality',
+            'administrative_area_level_1',
+            'country',
+            'postal_code',
+        ];
+        
+
+        const getFormInputElement = (component) => document.getElementById(component + '-input');
+        const autocompleteInput = document.getElementById('id_address_one');
+        const provinceInput = document.getElementById('id_province');
+        const cityInput = document.getElementById('id_city');
+        const zipcodeInput = document.getElementById('id_zipcode');
+        const addressTwoInput = document.getElementById('id_address_two');
+
+        const map = new google.maps.Map(document.getElementById("gmp-map-account"), {
+            zoom: CONFIGURATION.mapOptions.zoom,
+            center: {lat: -33.918861, lng: 18.423300},
+            mapTypeControl: true,
+            fullscreenControl: CONFIGURATION.mapOptions.fullscreenControl,
+            zoomControl: CONFIGURATION.mapOptions.zoomControl,
+            streetViewControl: CONFIGURATION.mapOptions.streetViewControl
+        });
+
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const clientLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map.setCenter(clientLocation);
+                    const marker = new google.maps.Marker({position: clientLocation, map: map, draggable: false});
+                    const geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ location: clientLocation}, (results, status) => {
+                        if(status === 'OK'){
+                            fillInAddress(results[0]);
+                        }else{
+                            alert("Sorry, we couldn't find address suggestion for your current location")
+                        }
+                    })
+                },
+                () => {
+                    
+                }
+            )
+        }
+        
+        const marker = new google.maps.Marker({map: map, draggable: false});
+        google.maps.event.addListener(map, 'click', (event) => {
+            marker.setPosition(event.latLng);
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({location: event.latLng}, (results, status) => {
+                if (status === 'OK') {
+                    console.log(results)
+                    fillInAddress(results[0]);
+                } else {
+                    alert("Sorry, we couldn't find address suggestions for your location")
+                }
+            })
+        })
+        const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+            fields: ["place_id", "address_components", "geometry", "name"],
+            types: ["address"],
+        });
+        
+        autocomplete.setComponentRestrictions(
+            {'country': ['za']});
+
+        autocomplete.addListener('place_changed', function () {
+            
+            const place = autocomplete.getPlace();
+            if (!place.geometry) {
+                window.alert('No details available for input: \'' + place.name + '\'');
+                return;
+            }
+            console.log(place)
+            renderAddress(place);
+            fillInAddress(place);
+        });
+
+        function fillInAddress(place) {
+            const addressNameFormat = {
+                'street_number': 'short_name',
+                'route': 'long_name',
+                'locality': 'long_name',
+                'administrative_area_level_1': 'short_name',
+                'country': 'long_name',
+                'postal_code': 'short_name',
+            };
+            const getAddressComp = function (type) {
+                for (const component of place.address_components) {
+                    if (component.types[0] === type) {
+                        return component[addressNameFormat[type]];
+                    }
+                }
+                return '';
+            };
+
+            autocompleteInput.value = getAddressComp('route')
+            addressTwoInput.value = getAddressComp('street_number')
+            provinceInput.value = getAddressComp('administrative_area_level_1')
+            cityInput.value = getAddressComp('locality')
+            zipcodeInput.value = getAddressComp('postal_code')
+        }
+
+        function renderAddress(place) {
+            map.setCenter(place.geometry.location);
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1vMyd0KzU7mTn_AkMW3zd2V4cJC9w31I&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cAC" async defer></script>
+
+{% endblock js %}

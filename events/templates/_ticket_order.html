@@ -1,0 +1,38 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Tickets order{% endblock title %}
+
+{% block content %}
+
+<section class="block relative  bg-custom-bg">
+    <div class="w-full h-full">
+        <div class="relative w-fit mx-auto block p-4">
+            <div class="py-3 ml-4 mr-4 ">
+                <div class="flex gap-2 lg:gap-4 items-center">
+                    <div class=" text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+                        <a 
+                            class="font-normal py-2 px-3 duration-500 {% if mode == 'create' %}bg-custom-h text-white{% else %}text-custom-h bg-gray-50{% endif %} rounded ">Reserve</a>
+                    </div>
+                    
+                    <div class="text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+                        <a 
+                            class="font-normal py-2 px-3 duration-500 {% if mode == 'guest' %}bg-custom-h text-white{% else %}text-custom-h bg-gray-50{% endif %} rounded ">Guest</a>
+                    </div>
+                    
+                    <div class="text-base font-normal px-3 py-2 lg:px-0 lg:py-0">
+                        <a 
+                            class="font-normal py-2 px-3 duration-500 {% if mode == 'payment' %}bg-custom-h text-white{% else %}text-custom-h bg-gray-50{% endif %} rounded ">Payment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            {% include "includes/messages.html" %}
+            {% block ticketsordercontent %}
+            {% endblock ticketsordercontent %}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

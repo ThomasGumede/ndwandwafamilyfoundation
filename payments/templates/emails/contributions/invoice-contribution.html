@@ -1,0 +1,228 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <link href="invoice.css" media="print" rel="stylesheet"> -->
+    <title>Invoice</title>
+    <meta name="description" content="Ndwandwa Family Invoice">
+    <style media="print">
+        @font-face {
+            font-family: Pacifico;
+            src: url("{{ protocol }}://{{ domain }}{% static 'fonts/invoice/pacifico.ttf' %}");
+        }
+
+        @font-face {
+            font-family: Source Sans Pro;
+            font-weight: 400;
+            src: url("{{ protocol }}://{{ domain }}{% static 'fonts/invoice/sourcesanspro-regular.otf' %}");
+        }
+
+        @font-face {
+            font-family: Source Sans Pro;
+            font-weight: 700;
+            src: url("{{ protocol }}://{{ domain }}{% static 'fonts/invoice/sourcesanspro-bold.otf' %}");
+        }
+
+        @page {
+            font-family: Pacifico;
+            margin: 1.4cm;
+
+            @bottom-left {
+                color: #00171f;
+                content: '♥ Thank you!';
+            }
+
+            @bottom-right {
+                color: #9f939f;
+                content: 'info@ndwandwa.africa | ndwandwa.africa';
+                font-size: 9pt;
+            }
+        }
+
+        html {
+            color: #14213d;
+            font-family: Source Sans Pro;
+            font-size: 11pt;
+            line-height: 1.6;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            color: #00171f;
+            font-family: Pacifico;
+            font-size: 40pt;
+            margin: 0;
+        }
+
+        aside {
+            display: flex;
+            margin: 2em 0 4em;
+        }
+
+        aside address {
+            font-style: normal;
+            white-space: pre-line;
+        }
+
+        aside address#from {
+            color: #887f88;
+            flex: 1;
+        }
+
+        aside address#to {
+            text-align: right;
+        }
+
+        dl {
+            position: absolute;
+            right: 0;
+            text-align: right;
+            top: 0;
+        }
+
+        dt,
+        dd {
+            display: inline;
+            margin: 0;
+        }
+
+        dt {
+            color: #a9a;
+        }
+
+        dt::before {
+            content: '';
+            display: block;
+        }
+
+        dt::after {
+            content: ':';
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            border-bottom: .2mm solid #a9a;
+            color: #a9a;
+            font-size: 10pt;
+            font-weight: 400;
+            padding-bottom: .25cm;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding-top: 7mm;
+        }
+
+        td:last-of-type {
+            color: #00171f;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        th,
+        td {
+            text-align: center;
+        }
+
+        th:first-of-type,
+        td:first-of-type {
+            text-align: left;
+        }
+
+        th:last-of-type,
+        td:last-of-type {
+            text-align: right;
+        }
+
+        table#total {
+            background: #f6f6f6;
+            border-color: #f6f6f6;
+            border-style: solid;
+            border-width: 2cm 3cm;
+            bottom: 0;
+            font-size: 10pt;
+            margin: 0 -1.4cm;
+            position: absolute;
+            width: 18cm;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Invoice</h1>
+
+    <aside>
+        <address id="from">
+            <span style="font-size: 10pt; font-weight: bold; color: #00171f;">Ndwandwa Family Foundation</span>
+            Reg no: 2023/10234 7
+            email: info@ndwandwa.africa
+            tel: 081 123 4567
+            website: htps://ndwandwa.africa
+            36 Avenue
+            69100 Villeurbanne
+            RSA
+        </address>
+
+        <address id="to">
+            {{buyer_full_name}}
+            Email: {{order.contributor.email}}
+            phone: {{order.contributor.phone}}
+            {{order.contributor.address.address_one}}
+            {{order.contributor.address.city}}, {{order.contributor.address.zipcode}}, {{order.contributor.address.province}}, RSA
+        </address>
+    </aside>
+
+    <dl id="informations">
+        <dt>Invoice number</dt>
+        <dd>{{order.order_number}}</dd>
+        <dt>Date</dt>
+        <dd>{{order.created}}</dd>
+        <dt>Status</dt>
+        <dd>{{order.paid}}</dd>
+    </dl>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Contribution to {{order.campaign.title}} campaign</td>
+                
+                <td>R{{order.total_amount}}<span style="font-size: 15px; font-weight: 400; color: #a9a;">(incl. TIP)</span></td>
+            </tr>
+           
+        </tbody>
+    </table>
+
+    <table id="total">
+        <thead>
+            <tr>
+                <th>Due by</th>
+                <th></th>
+                <th>Total due</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{due_time}}</td>
+                <td></td>
+                <td>R{{order.total_amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

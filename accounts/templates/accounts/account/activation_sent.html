@@ -1,0 +1,33 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+{% include "includes/messages.html" %}
+<section class="w-full font-sans mb-20">
+
+    <div class="container">
+        <div class="max-w-xl mx-auto px-4 py-10">
+            <div>
+                <div class="bg-white rounded-lg p-10 flex items-center shadow justify-between">
+                    <div class="text-center space-y-4">
+                        <div>
+                        <i class="fa-solid fa-heart-circle-check text-6xl"></i>
+                            </div>
+                        <h2 class="text-2xl mb-4 text-custom-h text-center font-bold">Registration Success</h2>
+
+                        <div class="text-custom-tertiary mb-8">
+                            We are glad, that you're with us. We've emailed you instructions to activate your account. You should receive them shortly. If you don't receive an email, please make sure you've entered a valid email address, and check your spam folder.
+                        </div>
+
+                        <div
+                            class="w-36 lg:w-40 h-12 border-2 border-custom-h mx-auto bg-white hover:bg-custom-h group duration-500 rounded-md">
+                            <a href="{% url 'campaigns:campaigns' %}"
+                                class="w-full h-full grid items-center justify-center duration-500 group-hover:text-white text-custom-h font-medium text-sm lg:text-base">home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
