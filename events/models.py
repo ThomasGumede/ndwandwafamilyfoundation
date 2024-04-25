@@ -45,7 +45,7 @@ EVENT_CATEGORIES = (
         ("Digital", "Digital"),
         ("Other", "Other")
     )
-class EventModel(AbstractCreate, AbstractPayment):
+class EventModel(AbstractCreate):
     category = models.ForeignKey(CategoryModel, on_delete=models.PROTECT, related_name="events", null=True, blank=True)
     image = models.ImageField(help_text=_("Upload campaign image."), upload_to=handle_event_file_upload)
     title = models.CharField(help_text=_("Enter title for your event"), max_length=150)
@@ -105,7 +105,7 @@ class EventModel(AbstractCreate, AbstractPayment):
         if self.status == StatusChoices.COMPLETED:
             pass
     
-class EventTicketTypeModel(AbstractCreate, AbstractPayment):
+class EventTicketTypeModel(AbstractCreate):
     title = models.CharField(max_length=250, help_text=_("Enter ticket type"))
     available_seats = models.PositiveIntegerField(default=0)
     sale_start = models.DateTimeField(null=True, blank=True, validators = [MinValueValidator(timezone.now(), "Ticket sale start date and time cannot be in the past")])
@@ -193,7 +193,7 @@ class TicketOrderModel(AbstractCreate, AbstractPayment):
         self.order_number = generate_order_number(TicketOrderModel)
         super(TicketOrderModel, self).save(*args, **kwargs)
 
-class TicketModel(AbstractCreate, AbstractPayment):
+class TicketModel(AbstractCreate):
     guest_full_name = models.CharField(max_length=300, null=True, blank=True)
     guest_email = models.EmailField(null=True, blank=True)
     guest_phone_number = models.CharField(max_length=15, null=True, blank=True, validators=[PHONE_REGEX])

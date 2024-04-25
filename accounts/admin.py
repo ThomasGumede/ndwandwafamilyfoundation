@@ -10,7 +10,7 @@ from accounts.tasks import send_notification_mail_to_subscribers, send_email_to_
 class EventInline(admin.TabularInline):
     model = EventModel
     exclude = ("image", "content", "slug", "allocated_seats", "unallocated_seats")
-    readonly_fields = ("title", "category", "event_startdate", "event_enddate", "total_seats_sold", "venue_name", "event_address", "event_link")
+    readonly_fields = ("title", "tip","category", "event_startdate", "event_enddate", "total_seats_sold", "venue_name", "event_address", "event_link")
     extra = 0
 
 @admin.action(description="Payout the selected wallets")
@@ -36,7 +36,8 @@ class QualificationInline(admin.TabularInline):
 
 class RelativeInline(admin.TabularInline):
     model = RelativeModel
-    readonly_fields =("full_name", "relationship", "phone")
+    exclude = ('description',)
+    readonly_fields =('title', 'surname', 'full_name', 'profile_image', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name')
     empty_value_display = "Empty"
     
     extra = 0
@@ -71,8 +72,8 @@ class WalletAdmin(admin.ModelAdmin):
 @admin.register(CustomUserModel)
 class CustomUserAdmin(admin.ModelAdmin):
     list_display =("username", "first_name", "last_name", "phone", "verification_status")
-    exclude = ("password", "profile_image", "hobbies","first_name", "last_name", "email", "phone", "biography", "identity_number", "identity_choice", "occupation", "professional_affiliations")
-    readonly_fields = ("image_tag", "username", "get_full_name", "contact_details", "identity_information", "address", "employment_details", "last_login", "hobbies")
+    exclude = ("password", "profile_image", "address_one", "address_two", "city", "country", "facebook", "twitter", "instagram", "linkedIn","province", "zipcode", "hobbies","first_name", "last_name", "email", "phone", "biography", "identity_number", "identity_choice", "occupation", "professional_affiliations")
+    readonly_fields = ("image_tag", "title", "username", "get_full_name", "contact_details", "identity_information", "address", "employment_details", "last_login", "hobbies")
     empty_value_display = "Empty"
     inlines = [WalletInline, IdentityVerificationInline, QualificationInline, RelativeInline, CampaignInline, EventInline]
 
