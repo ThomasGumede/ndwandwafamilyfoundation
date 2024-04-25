@@ -27,7 +27,7 @@ AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 LOGIN_URL = 'accounts:login'
 
 YOCO_TEST_MODE = config('YOCO_TEST_MODE')
-DEBUG=True
+DEBUG=False
 SECRET_KEY='django-insecure-1=5*x6y@4v9_%91v$@183ri9hrw84)-353z8u2c@!!q5^+i)nk'
 
 ADMINS = [('admin@ndwandwa.africa'),( 'support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
