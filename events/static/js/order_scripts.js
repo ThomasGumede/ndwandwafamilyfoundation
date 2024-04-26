@@ -52,7 +52,7 @@ function get_ticket_types() {
                                                 R${ticket_type.fields.total_price}<span>(incl. R${ticket_type.fields.transaction_cost})</span> - ${ticket_type.fields.available_seats} seats available
                                             </p>
                                             <p class="text-sm" id="form-${index}-price-text">
-                                                Ticket sale will end on ${ticket_type.fields.sale_end}}
+                                                Ticket sale will end on ${ticket_type.fields.sale_end}
                                             </p>
                                         </div>
                                         <div class="bg-white border rounded-md w-fit p-3">

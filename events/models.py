@@ -115,6 +115,7 @@ class EventTicketTypeModel(AbstractCreate):
     total_price = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)
     event = models.ForeignKey(EventModel, related_name="tickettypes", on_delete=models.CASCADE)
 
+
     def __str__(self) -> str:
         return f"{self.title} - R{self.price}(+ R{self.transaction_cost})"
     
