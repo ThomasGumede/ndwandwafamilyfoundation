@@ -15,6 +15,11 @@ window.addEventListener("load", () => {
   get_ticket_types();
 });
 
+function formatDate(date) {
+  var options = { month: "short", day: "numeric", year: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
 submit_form.addEventListener("click", (e) => {
   e.preventDefault();
   if (parseInt(id_quantity.value) === 0) {
@@ -33,8 +38,10 @@ function get_ticket_types() {
     success: function (data) {
       if (data.success) {
         tickets_types = JSON.parse(data.event_ticket_types);
-       
+        
         tickets_types.forEach((ticket_type, index) => {
+          var saleEndDate = new Date(ticket_type.fields.sale_end);
+          var formattedSaleEndDate = formatDate(saleEndDate);
           ticket_types_inner_container.innerHTML += `
                             <div class="relative block bg-gray-50 p-4 border rounded-md">
                                 <div class="space-y-4">
@@ -52,7 +59,7 @@ function get_ticket_types() {
                                                 R${ticket_type.fields.total_price}<span>(incl. R${ticket_type.fields.transaction_cost})</span> - ${ticket_type.fields.available_seats} seats available
                                             </p>
                                             <p class="text-sm" id="form-${index}-price-text">
-                                                Ticket sale will end on ${ticket_type.fields.sale_end}
+                                                Ticket sale will end on <span id="sale-end-date">${formattedSaleEndDate}</span>
                                             </p>
                                         </div>
                                         <div class="bg-white border rounded-md w-fit p-3">
@@ -75,6 +82,7 @@ function get_ticket_types() {
                             </div>
                         `;
         });
+
       } else {
         ticket_types = data;
       }
