@@ -6,8 +6,8 @@
 
 <section class="w-full bg-gray-50 relative py-20">
     <div class="container font-sans">
-        <div class="space-y-6 w-full">
-            <div class="w-full flex flex-col items-center justify-center md:flex-row gap-5 self-center justify-self-center">
+        <div class="space-y-6 overflow-hidden w-full">
+            <div class="w-full flex flex-col items-center justify-center md:flex-row self-center justify-self-center">
                 <div class="relative block w-full md:w-6/12">
                     <form method="get" action="{% url 'home:news' %}">
                         <div class="relative w-full">
@@ -25,41 +25,6 @@
                                 class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                         </div>
                     </form>
-                </div>
-                <div class="relative block rounded-md">
-                    <div class="md:hidden w-11/12 md:w-fit overflow-auto flex items-center gap-5 p-2">
-                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
-                            <a href="{% url 'home:news' %}" role="menuitem" tabindex="-1"
-                                class="text-gray-700 block text-sm">All</a>
-                        </div>
-                        {% for categoryy in categories %}
-                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
-                            <a href="{% url 'home:news-category' category_slug=categoryy.slug %}" role="menuitem"
-                                tabindex="-1" class="text-gray-700 block text-sm">{{categoryy.label}}</a>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="rounded-md hidden md:block">
-                        <div class="relative mb-2 rounded-md flex items-center justify-between">
-                            <div id class="relative self-end bg-custom-primary z-40 py-3 px-3">
-            
-                                <p id="category_button" aria-haspopup="true" aria-expanded="true"
-                                    class="text-white text-sm cursor-pointer">
-                                    {% if category != none %}{{category.label}}{% else %}Category{% endif %}</p>
-                                <div id="category_menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
-                                    class="absolute  hidden right-0 z-20 mt-2 duration-500 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <div class="py-1 z-40">
-                                        <a href="{% url 'events:events' %}" role="menuitem" tabindex="-1"
-                                            class="text-gray-700 block px-4 py-2 text-sm">All</a>
-                                        {% for category in categories %}
-                                        <a href="{% url 'events:events-by-category' category_slug=category.slug %}" role="menuitem"
-                                            tabindex="-1" class="text-gray-700 block px-4 py-2 text-sm">{{category.label}}</a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="flex flex-wrap">

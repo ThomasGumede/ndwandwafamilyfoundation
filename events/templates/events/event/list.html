@@ -66,7 +66,7 @@
 <section class="w-full bg-gray-50 py-20">
     {% include "includes/messages.html" %}
     <div class="container font-sans">
-        <div class="space-y-8 w-full">
+        <div class="space-y-8 overflow-hidden w-full">
             <div class="w-full flex flex-col items-center justify-center md:flex-row gap-5 self-center justify-self-center">
                 <div class="relative block w-full md:w-6/12">
                     <form method="get" action="{% url 'events:events' %}">
@@ -87,7 +87,7 @@
                     </form>
                 </div>
                 <div class="relative block rounded-md">
-                    <div class="md:hidden w-11/12 md:w-fit overflow-auto flex items-center gap-5 p-2">
+                    <div class="md:hidden w-11/12 overflow-x-auto flex items-center gap-5 p-2">
                         <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
                             <a href="{% url 'events:events' %}" role="menuitem" tabindex="-1"
                                 class="text-gray-700 block text-sm">All</a>
