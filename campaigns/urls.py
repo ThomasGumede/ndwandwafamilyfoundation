@@ -18,7 +18,7 @@ urlpatterns = [
     path("campaign/delete/<slug:campaign_slug>", delete_campaign, name="delete-campaign"),
 
     path("campaign/updates/create/<slug:campaign_slug>", create_campaign_update, name="create-campaign-update"),
-    path("campaign/updates/delete/<int:update_id>", delete_campaign_update, name="delete-campaign-update"),
+    path("campaign/updates/delete/<uuid:update_id>", delete_campaign_update, name="delete-campaign-update"),
 
     path("contributions/all", contributions, name="all-contributions"),
     path("contribution/all/<uuid:campaign_id>", contributions, name="contributions"),

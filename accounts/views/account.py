@@ -98,7 +98,7 @@ def get_accounts(request):
             | Q(address__address_one__icontains = query)
         )
         
-    return render(request, template, {"users": users})
+    return render(request, template, {"users": users, "query": query})
 
 @user_not_authenticated
 def register(request):

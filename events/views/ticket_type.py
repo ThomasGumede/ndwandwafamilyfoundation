@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from events.models import EventModel, EventTicketTypeModel, TicketModel
 from events.forms import EventTicketTypeForm
 from django.contrib import messages
+from django.utils import timezone
 
 @login_required
 def get_event_ticket_types(request, event_id):

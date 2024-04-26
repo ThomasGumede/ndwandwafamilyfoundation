@@ -36,7 +36,6 @@ class PostModel(AbstractCreate):
     author = models.ForeignKey(get_user_model(), on_delete=models.SET_DEFAULT, default=None, related_name="posts", null=True)
     category = models.ForeignKey(CategoryModel, on_delete=models.PROTECT, related_name="posts")
     content = HTMLField()
-    tags = TaggableManager(blank=True)
 
     class Meta:
         verbose_name = 'Post'

@@ -23,7 +23,7 @@ def events(request, category_slug=None):
         else:
             events = queryset
 
-    return render(request, "events/event/list.html", {"events": events})
+    return render(request, "events/event/list.html", {"events": events, "query": query})
 
 def event_details(request, event_slug):
     queryset = EventModel.objects.all().select_related("organiser")

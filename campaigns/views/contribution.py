@@ -27,7 +27,7 @@ def contributions(request, campaign_id = None):
 
     if campaign_id:
         campaign_model = get_object_or_404(CampaignModel, id=campaign_id, organiser=request.user)
-        contributions = ContributionModel.objects.filter(campaign = campaign).select_related("contributor")
+        contributions = ContributionModel.objects.filter(campaign = campaign_model).select_related("contributor")
     else:
         campaigns = CampaignModel.objects.prefetch_related("contributions").filter(organiser=request.user).order_by("-created")
         

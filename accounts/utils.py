@@ -212,7 +212,7 @@ def handle_verification_docs_upload(instance, filename):
 from django.db import models
 
 WALLET_STATUS = (
-    ("Not status", "Not status"),
+    ("No status", "No status"),
     ("Requested Payout Details", "Requested Payout Details"),
     ("Verifying Payout Details", "Verifying Payout Details"),
     ("Approved Payout", "Approved Payout"),

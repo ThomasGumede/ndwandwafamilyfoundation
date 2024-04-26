@@ -33,7 +33,7 @@ def manage_events(request):
 def manage_event(request, event_slug):
     events = EventModel.objects.filter(organiser = request.user).prefetch_related("tickettypes", "ticket_orders")
     event = get_object_or_404(events, slug=event_slug)
-    total_sales = sum([order.total_price for order in event.ticket_orders.all()])
+    total_sales = sum([order.total_price for order in event.ticket_orders.filter(paid = PaymentStatus.PAID)])
     return render(request, "events/event/manage/event.html", {"event": event, "sale": total_sales})
 
 @login_required

@@ -8,8 +8,6 @@ from accounts.utils import StatusChoices
 from datetime import timedelta
 from home.tasks import send_email_to_admin
 from django.db.models import Q
-
-from django.db.models import Q
 from django.contrib import messages
 
 def home(request):
@@ -73,15 +71,21 @@ def search(request):
     return render(request, template, context=context)
 
 def news(request, category_slug=None):
+    query = request.GET.get("query", None)
     template = "home/news/news.html"
     model = PostModel
-    news = model.objects.all().only("title", "description", "image", "author")
-    category = "all"
+    
     if category_slug:
         category = get_object_or_404(CategoryModel, slug=category_slug)
-        news = model.objects.filter(category=category).only("title", "description", "image", "author")
+        news = model.objects.filter(category=category)
+        if query:
+            news = news.filter(title__icontains=query)
+    else:
+        news = model.objects.all()
+        if query:
+            news = news.filter(title__icontains=query)
 
-    context = {"posts": news, "category": category}
+    context = {"posts": news, "query": query}
 
     return render(request, template, context)
 

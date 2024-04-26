@@ -40,7 +40,7 @@
             </div>
             <div class="w-full">
                 <div class="py-7 mb-4">
-                    <div class="flex flex-col w-full gap-4 lg:flex-row lg:gap-7 h-full lg:h-60">
+                    <article class="flex flex-col w-full gap-4 lg:flex-row lg:gap-7 h-full lg:h-60">
                         <div id="image_container" class="w-full lg:w-4/12 h-full rounded-md overflow-hidden">
                             <img src="{{campaign.image.url}}" class="w-full h-full object-cover object-center" />
                         </div>
@@ -82,7 +82,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
             <div class=" bg-white mb-7 w-full">
@@ -116,7 +116,7 @@
                             </thead>
                         
                             <tbody>
-                                {% for order in campaign.contributions.all %}
+                                {% for order in campaign.contributions.all|slice:":5" %}
                                 <tr
                                     class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
                                     <td

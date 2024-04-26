@@ -44,6 +44,26 @@ add_ticket_type.addEventListener("click", () => {
 
                         </div>
                     </div>
+                    <div class="w-full lg:w-5/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_form-${form_count}-sale_start">
+                                ticket sale start date*
+                            </label>
+                            <input type="text" name="form-${form_count}-sale_start" class="block ticket_datetime p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150" maxlength="250" id="id_form-${form_count}-title">
+                            <span class="text-[11px] text-custom-tertiary block font-normal lowercase">Enter ticket type</span>
+
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-5/12 md:px-4">
+                        <div class="relative w-full mb-3">
+                            <label for="id_form-${form_count}-sale_end">
+                                ticket sale start date*
+                            </label>
+                            <input type="text" name="form-${form_count}-sale_end" class="block ticket_datetime p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150" maxlength="250" id="id_form-${form_count}-title">
+                            <span class="text-[11px] text-custom-tertiary block font-normal lowercase">Enter ticket type</span>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="absolute top-4 right-4  bg-current">
                     <div data-formid="form_content_${form_count}" onclick="delete_ticket_form('form_content_${form_count}')" class="grid items-center group justify-center delete_current_form cursor-pointer">
@@ -63,3 +83,8 @@ function delete_ticket_form(form_id) {
   forms_container.removeChild(form);
   id_form_total.value = parseInt(id_form_total.value) - 1;
 }
+
+
+
+    
+

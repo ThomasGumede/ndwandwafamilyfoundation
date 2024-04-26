@@ -163,6 +163,30 @@
                             >
                             </div>
                         </div>
+                        <div class="w-full lg:w-5/12 md:px-4">
+                          <div class="relative w-full mb-3">
+                            <label for="{{form.sale_start.id_for_label}}">
+                              ticket sale start date*
+                            </label>
+                            <input type="text" name="{{form.sale_start.html_name}}"
+                              class="block ticket_datetime p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                              maxlength="250" id="{{form.sale_start.id_for_label}}">
+                            <span class="text-[11px] text-custom-tertiary block font-normal lowercase">Add ticket sale start date</span>
+                        
+                          </div>
+                        </div>
+                        <div class="w-full lg:w-5/12 md:px-4">
+                          <div class="relative w-full mb-3">
+                            <label for="{{form.sale_end.id_for_label}}">
+                              ticket sale end date*
+                            </label>
+                            <input type="text" name="{{form.sale_end.html_name}}"
+                              class="block ticket_datetime p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
+                              maxlength="250" id="{{form.sale_end.id_for_label}}">
+                            <span class="text-[11px] text-custom-tertiary block font-normal lowercase">Add ticket sale end date</span>
+                        
+                          </div>
+                        </div>
                     </div>
                     <div class="absolute top-4 right-4">
                         <div data-formid="form_content_0" onclick="delete_ticket_form('form_content_0')" class="grid items-center delete_current_form group justify-center cursor-pointer">
@@ -185,6 +209,7 @@
                   class="text-white group-hover:text-custom-primary duration-500 w-full h-full cursor-pointer text-sm font-semibold"
                 />
               </div>
+              
             </div>
           </form>
         </div>
@@ -199,6 +224,17 @@
 
 </script>
 <script>
-  
+
+  $(document).ready(function () {
+    // Initialize DateTimePicker for startDatetime
+    $(document).ready(function () {
+      // Initialize DateTimePicker for startDatetime
+      $('.ticket_datetime').datetimepicker({
+        format: 'Y-m-d H:i:s',
+        minDate: 0,  // Set minimum date to the current date
+        step: 15,   // Set the time step to 15 minutes (optional)
+      });
+    });
+  });
 </script>
 {% endblock js %}

@@ -49,23 +49,33 @@
     </div>
     <div class="w-full lg:w-6/12 md:px-4">
         <div class="relative w-full mb-3">
-            <label for="id_email">
+            <label for="id_confirm_email">
                 Retype Email address*
             </label>
             {{form.confirm_email}}
-            <span class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.confirm_email.help_text}}</span>
-            <span id="confirm_email_error" class="text-[11px] hidden text-red-500 font-normal lowercase">Confirm Email does not match with email one</span>
-    
+            <span
+                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.confirm_email.help_text}}</span>
+            <span id="confirm_email_error" class="text-[11px] hidden text-red-500 font-normal lowercase">Confirm Email
+                does not match with email one</span>
+
         </div>
     </div>
     <div class="w-full lg:w-6/12 md:px-4">
         <div class="relative w-full mb-3">
             <label for="id_first_name">
-                First name* <span class="text-[11px] text-custom-tertiary font-normal lowercase">(Registered
-                    name(s))</span>
+                Title*
             </label>
-            {{form.first_name}}
+            {{form.title}}
             <span
+                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.first_name.help_text}}</span>
+        </div>
+    </div>
+    <div class="w-full lg:w-6/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_first_name">
+                Full name(s)*
+            </label>
+            {{form.first_name}}<span
                 class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.first_name.help_text}}</span>
 
         </div>
@@ -73,11 +83,21 @@
     <div class="w-full lg:w-6/12 md:px-4">
         <div class="relative w-full mb-3">
             <label for="id_last_name">
-                Surname* <span class="text-[11px] text-custom-tertiary font-normal lowercase">(Registered
-                    surname)</span>
+                Surname*
             </label>
-            {{form.last_name}}<span
+            {{form.last_name}}
+            <span
                 class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.last_name.help_text}}</span>
+
+        </div>
+    </div>
+    <div class="w-full lg:w-6/12 md:px-4">
+        <div class="relative w-full mb-3">
+            <label for="id_maiden_name">
+                Maiden name
+            </label>
+            {{form.maiden_name}}<span
+                class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.maiden_name.help_text}}</span>
 
         </div>
     </div>

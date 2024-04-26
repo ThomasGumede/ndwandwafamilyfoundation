@@ -56,7 +56,7 @@ def generate_contributors_list(request, campaign_id):
 def manage_campaign(request, campaign_id):
     try:
         campaign = get_object_or_404(CampaignModel.objects.prefetch_related("contributions").all(), organiser = request.user, id=campaign_id)
-        amount = sum([contribution.amount for contribution in campaign.contributions.all()])
+        amount = sum([contribution.amount for contribution in campaign.contributions.filter(paid = PaymentStatus.PAID)])
         return render(request, "campaigns/campaign/manage/campaign.html", {"campaign": campaign, "sales": amount})
     
     except CampaignModel.MultipleObjectsReturned:
@@ -79,7 +79,7 @@ def campaigns(request, category_slug=None):
         else:
             campaigns = queryset
     
-    return render(request, "campaigns/campaign/list.html", {"campaigns": campaigns})
+    return render(request, "campaigns/campaign/list.html", {"campaigns": campaigns, "query": query})
 
 def campaign_details(request, campaign_slug):
     queryset = CampaignModel.objects.select_related("organiser", "category").order_by("-created")

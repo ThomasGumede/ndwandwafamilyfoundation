@@ -8,10 +8,10 @@
 <section class="w-full py-10 bg-white">
     <div class="p-4">
         <div class="w-full grid mx-auto bg-white space-y-4">
-            <div class="w-full self-center justify-self-center">
-                <div class="relative block w-full">
+            <div class="w-full grid self-center justify-self-center">
+                <div class="relative block w-full mx-auto md:w-6/12">
                     <form method="get" action="{% url 'accounts:accounts' %}">
-                        <div class="relative w-full">
+                        <div class="relative w-full" >
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </div>
-                            <input type="search" id="default-search" name="query"
+                            <input type="search" id="default-search" name="query" {% if query %}value="{{query}}"{% endif %}
                                 class="block p-4 pl-10 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Search e.g Thabiso" required>
                             <button type="submit"
