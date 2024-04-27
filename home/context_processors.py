@@ -1,33 +1,34 @@
-# from django.contrib.sites.shortcuts import get_current_site
-# from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
 
 # from accounts.models import CompanyModel
-# from home.models import CategoryModel
+from home.models import CategoryModel
 
 # COMPANIES = CompanyModel.objects.all()
 # company = None
 # if COMPANIES.count() > 0:
 #     company = COMPANIES[0]
-# def global_context(request):
-#     PROTOCOL = "https" if request.is_secure() else "http"
-#     DOMAIN = get_current_site(request).domain
 
-#     context = {
-#         'domain' : DOMAIN,
-#         'protocol': PROTOCOL,
-#         "categories": CategoryModel.objects.all(),
-#     }
+def global_context(request):
+    PROTOCOL = "https" if request.is_secure() else "http"
+    DOMAIN = get_current_site(request).domain
 
-#     if company:
-#         context["company"] = company
-#         context["facebook"] = company.facebook
-#         context["twitter"] = company.twitter
-#         context["linkedIn"] = company.linkedIn
-#         context["company_support"]: company.phone # type: ignore
-#         context["company_support_mail"]: company.support_email  # type: ignore
-#         context["company_street_address_1"] = company.address_one
-#         context["company_city"] = company.city
-#         context["company_state"] = company.province
+    context = {
+        'domain' : DOMAIN,
+        'protocol': PROTOCOL,
+        "categories": CategoryModel.objects.all(),
+    }
 
-#     return context
+    # if company:
+    #     context["company"] = company
+    #     context["facebook"] = company.facebook
+    #     context["twitter"] = company.twitter
+    #     context["linkedIn"] = company.linkedIn
+    #     context["company_support"]: company.phone # type: ignore
+    #     context["company_support_mail"]: company.support_email  # type: ignore
+    #     context["company_street_address_1"] = company.address_one
+    #     context["company_city"] = company.city
+    #     context["company_state"] = company.province
+
+    return context
 
