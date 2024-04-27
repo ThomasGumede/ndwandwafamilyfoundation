@@ -23,10 +23,10 @@ def activate(request, uidb64, token):
     try:
         payload = jwt.decode(uidb64, settings.SECRET_KEY, algorithms=['HS256'])
         user = User.objects.get(pk=payload["user_id"], username=payload["username"])
-    except:
+    except User.DoesNotExist:
         user = None
     
-    if user is not None and account_activation_token.check_token(user, token):
+    if user and account_activation_token.check_token(user, token):
         if user.is_active == True:
             messages.success(
                 request,

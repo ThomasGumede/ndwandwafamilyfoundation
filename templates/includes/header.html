@@ -2,7 +2,7 @@
 <header class="w-full  z-[600] top-0 bg-white left-0">
     <div class="lg:container">
         <div class="w-full relative bg-white z-[600]">
-            <nav x-data="{ navOpen: false }" class="font-sans relative bg-white dark:bg-gray-800">
+            <nav x-data="{ navOpen: false }" class="font-sans relative bg-white ">
                 <div class="py-4 lg:mx-auto">
                     <div class="lg:flex lg:items-center lg:justify-between">
                         <div class="flex px-6 lg:px-0 items-center justify-between">
@@ -23,7 +23,7 @@
                             <!-- Mobile menu button -->
                             <div class="flex lg:hidden">
                                 <div x-cloak  @click="navOpen = !navOpen"
-                                    class="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
+                                    class="text-gray-500  hover:text-gray-600  focus:outline-none focus:text-gray-600"
                                     aria-label="toggle menu">
                                     <svg x-cloak x-show="!navOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -71,7 +71,7 @@
                                 <div x-data="{ isOpen: false }" class="relative inline-block ">
                                     <!-- Dropdown toggle button -->
                                     <button @click="isOpen = !isOpen"
-                                        class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
+                                        class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40  focus:ring-blue-300  focus:ring  focus:outline-none">
                                         <span class="mx-1">{{request.user.get_full_name}}</span>
                                         <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -89,9 +89,9 @@
                                         x-transition:leave="transition ease-in duration-100"
                                         x-transition:leave-start="opacity-100 scale-100"
                                         x-transition:leave-end="opacity-0 scale-90"
-                                        class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
+                                        class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl ">
                                         <a href="{% url 'accounts:user' request.user.username %}"
-                                            class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform  hover:bg-gray-100 ">
                                             {% if request.user.profile_image %}
                                             <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
                                                 src="{{request.user.profile_image.url}}" alt="{{request.user.get_full_name}} avatar">
@@ -100,23 +100,27 @@
                                                 alt="{{request.user.get_full_name}} avatar">
                                             {% endif %}
                                             <div class="mx-1 w-full">
-                                                <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                                <h5 class="text-sm font-semibold text-gray-700 ">
                                                     {{request.user.get_full_name}}</h5>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                <p class="text-sm text-gray-500 ">
                                                     {{request.user.get_username}}
                                                 </p>
                                             </div>
                                         </a>
 
-                                        <hr class="border-gray-200 dark:border-gray-700 ">
+                                        <hr class="border-gray-200  ">
 
                                         <a href="{% url 'accounts:me' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                            view profile
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
+                                            Dashboard
+                                        </a>
+                                        <a href="{% url 'accounts:relatives' %}"
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
+                                            Relatives
                                         </a>
 
                                         <a href="{% url 'accounts:contact-update' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
                                             Settings
                                         </a>
                                         
@@ -124,31 +128,31 @@
                                         {% if request.user.is_superuser or request.user.is_staff %}
 
                                         <a href="{% url 'admin:index' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                             Admin
                                         </a>
                                         {% endif %}
                                         
 
-                                        <hr class="border-gray-200 dark:border-gray-700 ">
+                                        <hr class="border-gray-200  ">
 
                                         <a href="{% url 'campaigns:create-campaign' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                             Add Campaign
                                         </a>
 
                                         <a href="{% url 'events:create-event' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                             Add Event
                                         </a>
-                                        <hr class="border-gray-200 dark:border-gray-700 ">
+                                        <hr class="border-gray-200  ">
 
                                         <a href="{% url 'home:help' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                             Help
                                         </a>
                                         <a href="{% url 'accounts:logout' %}"
-                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                             Sign Out
                                         </a>
                                     </div>
