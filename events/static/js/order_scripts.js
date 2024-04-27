@@ -40,8 +40,8 @@ function get_ticket_types() {
         tickets_types = JSON.parse(data.event_ticket_types);
         
         tickets_types.forEach((ticket_type, index) => {
-          var saleEndDate = new Date(ticket_type.fields.sale_end);
-          var formattedSaleEndDate = formatDate(saleEndDate);
+          let saleEndDate = new Date(ticket_type.fields.sale_end);
+          let formattedSaleEndDate = formatDate(saleEndDate);
           ticket_types_inner_container.innerHTML += `
                             <div class="relative block bg-gray-50 p-4 border rounded-md">
                                 <div class="space-y-4">
