@@ -112,8 +112,11 @@ def register(request):
             cd = form.cleaned_data
             user = form.save(commit=False)
             user.is_active = False
-            user.identity_choice = cd['identity_choices']
-            user.identity_number = cd['identity_number']
+            identity_choice = cd.get('identity_choices', None)
+            identity_number = cd.get('identity_number', None)
+            if identity_choice and identity_number:
+                user.identity_choice = cd['identity_choices']
+                user.identity_number = cd['identity_number']
             user.save()
             sent = send_verification_email(user, request)
 
