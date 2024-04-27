@@ -1,11 +1,13 @@
 from celery import shared_task
 import logging
+from accounts.models import CompanyModel
 from events.models import TicketOrderModel, EventModel
 from campaigns.tasks import update_status_email
 from django.utils import timezone
 from accounts.utils import StatusChoices
 from campaigns.utils import PaymentStatus
 
+COMPANY = CompanyModel.objects.all()[0]
 logger = logging.getLogger("tasks")
 
 @shared_task

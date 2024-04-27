@@ -1,5 +1,5 @@
 from django.contrib import admin
-from accounts.models import CustomUserModel, MailMessageModel, QualificationModel, RelativeModel, MailingGroupModel, IdentityVerificationModel, WalletModel, SubscribeModel
+from accounts.models import CompanyModel, CustomUserModel, MailMessageModel, QualificationModel, RelativeModel, MailingGroupModel, IdentityVerificationModel, WalletModel, SubscribeModel
 from events.models import EventModel
 from campaigns.models import CampaignModel
 from django.utils import timezone
@@ -20,6 +20,10 @@ def clear_wallet(modeladmin, request, querset):
 class WalletInline(admin.TabularInline):
     model = WalletModel
     readonly = ("name", "balance", "created", "cleared_date")
+
+@admin.register(CompanyModel)
+class CompanyAdmin(admin.ModelAdmin):
+    pass
 
 class CampaignInline(admin.TabularInline):
     model = CampaignModel

@@ -3,7 +3,7 @@ from campaigns.models import CampaignModel, CampaignUpdateModel, ContributionMod
 from accounts.utils import StatusChoices, custom_send_email
 from django.utils import timezone
 from campaigns.utils import PaymentStatus
-from django.core.mail import EmailMessage
+from accounts.models import CompanyModel
 from django.template.loader import render_to_string
 from django.db.models import Q
 from django.db.models import Prefetch
@@ -11,7 +11,7 @@ import logging
 
 task_logger = logging.getLogger("tasks")
 campaigns_logger = logging.getLogger("campaigns")
-
+COMPANY = CompanyModel.objects.all()[0]
 def update_status_email(model_name, model, domain = 'ndwandwa.africa', protocol = 'https'):
     message = render_to_string("global/emails/status_change_email.html", {
         "domain": domain,
@@ -20,14 +20,14 @@ def update_status_email(model_name, model, domain = 'ndwandwa.africa', protocol 
         "task": f'{model.title} {model_name}',
         "status": f'{model.status}',
         
-        # "facebook": COMPANY.facebook,
-        #     "twitter": COMPANY.twitter,
-        #     "linkedIn": COMPANY.linkedIn,
-        #     "company_support": COMPANY.phone,
-        #     "company_support_mail": COMPANY.support_email, 
-        #     "company_street_address_1": COMPANY.address.address_one,
-        #     "company_city": COMPANY.address.city,
-        #     "company_state": COMPANY.address.province
+        "facebook": COMPANY.facebook,
+            "twitter": COMPANY.twitter,
+            "linkedIn": COMPANY.linkedIn,
+            "company_support": COMPANY.phone,
+            "company_support_mail": COMPANY.support_email, 
+            "company_street_address_1": COMPANY.address_one,
+            "company_city": COMPANY.city,
+            "company_state": COMPANY.province
     })
     
     sent = custom_send_email(model.organiser.email, f"{model_name} Status update", message)
@@ -80,14 +80,14 @@ def update_contributors(update_id, domain, protocol):
             "protocol": protocol,
             "domain": domain,
             "name": "Contributor/Organisor",
-            # "facebook": COMPANY.facebook,
-            # "twitter": COMPANY.twitter,
-            # "linkedIn": COMPANY.linkedIn,
-            # "company_support": COMPANY.phone,
-            # "company_support_mail": COMPANY.support_email, 
-            # "company_street_address_1": COMPANY.address.address_one,
-            # "company_city": COMPANY.address.city,
-            # "company_state": COMPANY.address.province
+            "facebook": COMPANY.facebook,
+            "twitter": COMPANY.twitter,
+            "linkedIn": COMPANY.linkedIn,
+            "company_support": COMPANY.phone,
+            "company_support_mail": COMPANY.support_email, 
+            "company_street_address_1": COMPANY.address_one,
+            "company_city": COMPANY.city,
+            "company_state": COMPANY.province
         })
         for contribution in campaign.contributions.all():
             email = contribution.contributor.email

@@ -1,13 +1,14 @@
 import logging
 from celery import shared_task
 from django.core.mail import EmailMessage
+from accounts.models import CompanyModel
 from .models import MailingGroupModel, MailMessageModel
 from accounts.utils import custom_send_email
 from django.template.loader import render_to_string
 
 task_logger = logging.getLogger("tasks")
 accounts_logger = logging.getLogger("accounts")
-
+COMPANY = CompanyModel.objects.all()[0]
 @shared_task
 def send_email_to_subscribers(mail_message_id, domain, protocol):
     try:
@@ -16,14 +17,14 @@ def send_email_to_subscribers(mail_message_id, domain, protocol):
             "protocol": protocol,
             "domain": domain,
             "message": mail_message.message,
-            # "facebook": COMPANY.facebook,
-            # "twitter": COMPANY.twitter,
-            # "linkedIn": COMPANY.linkedIn,
-            # "company_support": COMPANY.phone,
-            # "company_support_mail": COMPANY.support_email, 
-            # "company_street_address_1": COMPANY.address.address_one,
-            # "company_city": COMPANY.address.city,
-            # "company_state": COMPANY.address.province
+            "facebook": COMPANY.facebook,
+            "twitter": COMPANY.twitter,
+            "linkedIn": COMPANY.linkedIn,
+            "company_support": COMPANY.phone,
+            "company_support_mail": COMPANY.support_email, 
+            "company_street_address_1": COMPANY.address_one,
+            "company_city": COMPANY.city,
+            "company_state": COMPANY.province
         })
 
         for subcriber in mail_message.mailing_group.subscribers.all():
@@ -45,14 +46,14 @@ def send_notification_mail_to_subscribers(mailing_group_id, domain, protocol):
             "title": mailing_group.title,
             "describe": mailing_group.description,
             "name": "Contributor/Organisor",
-            # "facebook": COMPANY.facebook,
-            # "twitter": COMPANY.twitter,
-            # "linkedIn": COMPANY.linkedIn,
-            # "company_support": COMPANY.phone,
-            # "company_support_mail": COMPANY.support_email, 
-            # "company_street_address_1": COMPANY.address.address_one,
-            # "company_city": COMPANY.address.city,
-            # "company_state": COMPANY.address.province
+            "facebook": COMPANY.facebook,
+            "twitter": COMPANY.twitter,
+            "linkedIn": COMPANY.linkedIn,
+            "company_support": COMPANY.phone,
+            "company_support_mail": COMPANY.support_email, 
+            "company_street_address_1": COMPANY.address_one,
+            "company_city": COMPANY.city,
+            "company_state": COMPANY.province
         })
 
         

@@ -42,6 +42,18 @@ class AbstractCreate(models.Model):
     class Meta:
         abstract = True
 
+class CompanyModel(AbstractCreate, AbstractProfile):
+    support_email = models.EmailField(max_length=254, unique=True)
+    phone = models.CharField(help_text=_("Enter your cellphone number"), max_length=15, validators=[PHONE_VALIDATOR], unique=True, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "Company Details"
+        verbose_name_plural = "Company Details"
+    
+    def __str__(self):
+        return "Ndwandwa Family Foundation"
+    
+
 class WalletModel(AbstractCreate):
     name = models.CharField(max_length=250)
     balance = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)

@@ -92,6 +92,7 @@ class CampaignModel(AbstractCreate):
     def content_safe(self):
         return mark_safe(self.details)
 
+
 class CampaignUpdateModel(AbstractCreate):
     campaign = models.ForeignKey(CampaignModel, on_delete=models.CASCADE, related_name="updates")
     title = models.CharField(max_length=250)
@@ -99,8 +100,8 @@ class CampaignUpdateModel(AbstractCreate):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'CampaignUpdate'
-        verbose_name_plural = 'CampaignUpdates'
+        verbose_name = 'Campaign Update'
+        verbose_name_plural = 'Campaign Updates'
 
     def __str__(self) -> str:
         return f'Update for {self.campaign.title} - {self.created}'

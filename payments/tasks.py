@@ -3,13 +3,13 @@ from celery import shared_task
 from payments.models import NdwandwaBankModel, PaymentInformation
 from events.models import TicketOrderModel, reservation_time
 from campaigns.models import ContributionModel, in_fourteen_days
-from accounts.models import WalletModel
+from accounts.models import CompanyModel, WalletModel
 from campaigns.utils import PaymentStatus
 from accounts.utils import send_html_email_with_attachments
 from django.template.loader import render_to_string
 from django.template.loader import get_template
 from weasyprint import HTML
-
+COMPANY = CompanyModel.objects.all()[0]
 
 logger = logging.getLogger("tasks")
 event_logger = logging.getLogger("events")
@@ -38,14 +38,14 @@ def send_tickets_email(status, order: TicketOrderModel, protocol, domain):
                     "domain": domain,
                     "user": order.buyer.get_full_name(),
                     "order": order,
-                    # "facebook": COMPANY.facebook,
-                    # "twitter": COMPANY.twitter,
-                    # "linkedIn": COMPANY.linkedIn,
-                    # "company_support": COMPANY.phone,
-                    # "company_support_mail": COMPANY.support_email, 
-                    # "company_street_address_1": COMPANY.address.address_one,
-                    # "company_city": COMPANY.address.city,
-                    # "company_state": COMPANY.address.province
+                    "facebook": COMPANY.facebook,
+                    "twitter": COMPANY.twitter,
+                    "linkedIn": COMPANY.linkedIn,
+                    "company_support": COMPANY.phone,
+                    "company_support_mail": COMPANY.support_email, 
+                    "company_street_address_1": COMPANY.address_one,
+                    "company_city": COMPANY.city,
+                    "company_state": COMPANY.province
                 }
         if status == "payment.succeeded" or status == PaymentStatus.PAID:
 
@@ -98,14 +98,14 @@ def send_contribution_confirm_email(order: ContributionModel, protocol, domain, 
                         "domain": domain,
                         "user": order.contributor.get_full_name(),
                         "order": order,
-                        # "facebook": COMPANY.facebook,
-                        # "twitter": COMPANY.twitter,
-                        # "linkedIn": COMPANY.linkedIn,   
-                        # "company_support": COMPANY.phone,
-                        # "company_support_mail": COMPANY.support_email, 
-                        # "company_street_address_1": COMPANY.address.address_one,
-                        # "company_city": COMPANY.address.city,
-                        # "company_state": COMPANY.address.province
+                        "facebook": COMPANY.facebook,
+                        "twitter": COMPANY.twitter,
+                        "linkedIn": COMPANY.linkedIn,   
+                        "company_support": COMPANY.phone,
+                        "company_support_mail": COMPANY.support_email, 
+                        "company_street_address_1": COMPANY.address_one,
+                        "company_city": COMPANY.city,
+                        "company_state": COMPANY.province
                     }
 
         if status == "payment.succeeded" or status == PaymentStatus.PAID:
