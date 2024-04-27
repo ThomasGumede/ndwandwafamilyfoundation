@@ -9,7 +9,11 @@ from accounts.utils import send_html_email_with_attachments
 from django.template.loader import render_to_string
 from django.template.loader import get_template
 from weasyprint import HTML
-COMPANY = CompanyModel.objects.all()[0]
+
+COMPANIES = CompanyModel.objects.all()
+COMPANY = None
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
 
 logger = logging.getLogger("tasks")
 event_logger = logging.getLogger("events")

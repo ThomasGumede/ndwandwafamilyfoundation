@@ -7,7 +7,11 @@ from django.utils import timezone
 from accounts.utils import StatusChoices
 from campaigns.utils import PaymentStatus
 
-COMPANY = CompanyModel.objects.all()[0]
+COMPANIES = CompanyModel.objects.all()
+COMPANY = None
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
+    
 logger = logging.getLogger("tasks")
 
 @shared_task

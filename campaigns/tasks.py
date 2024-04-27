@@ -11,7 +11,12 @@ import logging
 
 task_logger = logging.getLogger("tasks")
 campaigns_logger = logging.getLogger("campaigns")
-COMPANY = CompanyModel.objects.all()[0]
+
+COMPANIES = CompanyModel.objects.all()
+COMPANY = None
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
+
 def update_status_email(model_name, model, domain = 'ndwandwa.africa', protocol = 'https'):
     message = render_to_string("global/emails/status_change_email.html", {
         "domain": domain,

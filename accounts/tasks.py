@@ -8,7 +8,12 @@ from django.template.loader import render_to_string
 
 task_logger = logging.getLogger("tasks")
 accounts_logger = logging.getLogger("accounts")
-COMPANY = CompanyModel.objects.all()[0]
+
+COMPANIES = CompanyModel.objects.all()
+COMPANY = None
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
+
 @shared_task
 def send_email_to_subscribers(mail_message_id, domain, protocol):
     try:

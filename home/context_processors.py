@@ -4,7 +4,10 @@ from django.conf import settings
 from accounts.models import CompanyModel
 from home.models import CategoryModel
 
-company: CompanyModel = CompanyModel.objects.all()[0]
+COMPANIES = CompanyModel.objects.all()
+company = None
+if COMPANIES.count() > 0:
+    company = COMPANIES[0]
 def global_context(request):
     PROTOCOL = "https" if request.is_secure() else "http"
     DOMAIN = get_current_site(request).domain
