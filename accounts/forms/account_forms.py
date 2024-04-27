@@ -92,6 +92,12 @@ class AccountUpdateForm(forms.ModelForm):
             #'hobbies': forms.TextInput(attrs={"class": "block p-3 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"}),
             
         }
+
+    def __init__(self, *args, **kwargs):
+        super(AccountUpdateForm, self).__init__(*args, **kwargs)
+        for field_name, field_value in self.initial.items():
+            if field_value is None:
+                self.initial[field_name] = ''
     
     def clean(self):
         clean = super().clean()
@@ -124,6 +130,12 @@ class GeneralEditForm(forms.ModelForm):
             'province': forms.TextInput(attrs={"class": "block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"}),
             'zipcode': forms.NumberInput(attrs={"class": "block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"})
         }
+
+    def __init__(self, *args, **kwargs):
+        super(GeneralEditForm, self).__init__(*args, **kwargs)
+        for field_name, field_value in self.initial.items():
+            if field_value is None:
+                self.initial[field_name] = ''
 
     def clean(self):
         cleaned_data = super().clean()

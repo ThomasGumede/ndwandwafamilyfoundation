@@ -27,6 +27,12 @@ class CampaignForm(forms.ModelForm):
             raise forms.ValidationError("Start date cannot be greater than end date")
         
         return cleaned_data
+    
+    def __init__(self, *args, **kwargs):
+        super(CampaignForm, self).__init__(*args, **kwargs)
+        for field_name, field_value in self.initial.items():
+            if field_value is None:
+                self.initial[field_name] = ''
 
 class ContributionForm(forms.ModelForm):
     class Meta:

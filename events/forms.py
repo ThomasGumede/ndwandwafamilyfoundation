@@ -20,6 +20,12 @@ class EventForm(forms.ModelForm):
             'content': TinyMCE(attrs={"class": "border-0 px-3 py-3 {% if form.content.errors %} h-44 border-2 border-red-500{% endif %} placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150", "rows": 8}),
             'event_enddate': forms.DateTimeInput(attrs={"type": "text", "step": "any", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"})
         }
+
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        for field_name, field_value in self.initial.items():
+            if field_value is None:
+                self.initial[field_name] = ''
             
   
     def clean(self):
