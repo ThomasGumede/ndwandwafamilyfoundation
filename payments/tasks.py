@@ -10,10 +10,10 @@ from django.template.loader import render_to_string
 from django.template.loader import get_template
 from weasyprint import HTML
 
-# COMPANIES = CompanyModel.objects.all()
-# COMPANY = None
-# if COMPANIES.count() > 0:
-#     COMPANY = COMPANIES[0]
+COMPANIES = CompanyModel.objects.all()
+COMPANY = None
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
 
 logger = logging.getLogger("tasks")
 event_logger = logging.getLogger("events")
@@ -42,14 +42,14 @@ def send_tickets_email(status, order: TicketOrderModel, protocol, domain):
                     "domain": domain,
                     "user": order.buyer.get_full_name(),
                     "order": order,
-                    # "facebook": COMPANY.facebook,
-                    # "twitter": COMPANY.twitter,
-                    # "linkedIn": COMPANY.linkedIn,
-                    # "company_support": COMPANY.phone,
-                    # "company_support_mail": COMPANY.support_email, 
-                    # "company_street_address_1": COMPANY.address_one,
-                    # "company_city": COMPANY.city,
-                    # "company_state": COMPANY.province
+                    "facebook": COMPANY.facebook,
+                    "twitter": COMPANY.twitter,
+                    "linkedIn": COMPANY.linkedIn,
+                    "company_support": COMPANY.phone,
+                    "company_support_mail": COMPANY.support_email, 
+                    "company_street_address_1": COMPANY.address_one,
+                    "company_city": COMPANY.city,
+                    "company_state": COMPANY.province
                 }
         if status == "payment.succeeded" or status == PaymentStatus.PAID:
 
@@ -102,14 +102,14 @@ def send_contribution_confirm_email(order: ContributionModel, protocol, domain, 
                         "domain": domain,
                         "user": order.contributor.get_full_name(),
                         "order": order,
-                        # "facebook": COMPANY.facebook,
-                        # "twitter": COMPANY.twitter,
-                        # "linkedIn": COMPANY.linkedIn,   
-                        # "company_support": COMPANY.phone,
-                        # "company_support_mail": COMPANY.support_email, 
-                        # "company_street_address_1": COMPANY.address_one,
-                        # "company_city": COMPANY.city,
-                        # "company_state": COMPANY.province
+                        "facebook": COMPANY.facebook,
+                        "twitter": COMPANY.twitter,
+                        "linkedIn": COMPANY.linkedIn,   
+                        "company_support": COMPANY.phone,
+                        "company_support_mail": COMPANY.support_email, 
+                        "company_street_address_1": COMPANY.address_one,
+                        "company_city": COMPANY.city,
+                        "company_state": COMPANY.province
                     }
 
         if status == "payment.succeeded" or status == PaymentStatus.PAID:
