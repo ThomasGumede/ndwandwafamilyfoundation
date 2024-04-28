@@ -2,6 +2,8 @@ from accounts.models import MailingGroupModel, QualificationModel, RelativeModel
 from django import forms
 from django.contrib.auth import get_user_model
 
+from accounts.utils import RelationShip
+
 class QualificationForm(forms.ModelForm):
     class Meta:
         model = QualificationModel
@@ -53,6 +55,22 @@ class RelativeForm(forms.ModelForm):
             'gender': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
         }
 
+    def clean_relative_side(self):
+        clean = self.cleaned_data
+        relation = clean.get('relationship', None)
+        relation_side = clean.get('relative_side', None)
+        relation_list = [RelationShip.GRANDMOTHER, RelationShip.GRANDFATHER, RelationShip.STEPBROTHER, RelationShip.STEPSISTER ,RelationShip.NIECE, RelationShip.NEPHEW, RelationShip.GREATGRANDFATHER, RelationShip.GREATGRANDMOTHER, RelationShip.GREATGREATGRANDFATHER, RelationShip.GREATGREATGRANDMOTHER]
+        
+        if relation and relation in relation_list and relation_side == None:
+            raise forms.ValidationError(f'Please choose relationship side of your {relation}')
+        
+        return relation_side
+    
+    def __init__(self, *args, **kwargs):
+        super(RelativeForm, self).__init__(*args, **kwargs)
+        for field_name, field_value in self.initial.items():
+            if field_value is None:
+                self.initial[field_name] = ''
 
     def clean(self):
         clean = super().clean()
@@ -83,7 +101,22 @@ class RelativeUpdateForm(forms.ModelForm):
             'gender': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
         }
 
-
+    def clean_relative_side(self):
+        clean = self.cleaned_data
+        relation = clean.get('relationship', None)
+        relation_side = clean.get('relative_side', None)
+        relation_list = [RelationShip.GRANDMOTHER, RelationShip.GRANDFATHER, RelationShip.STEPBROTHER, RelationShip.STEPSISTER ,RelationShip.NIECE, RelationShip.NEPHEW, RelationShip.GREATGRANDFATHER, RelationShip.GREATGRANDMOTHER, RelationShip.GREATGREATGRANDFATHER, RelationShip.GREATGREATGRANDMOTHER]
+        
+        if relation and relation in relation_list and relation_side == None:
+            raise forms.ValidationError(f'Please choose relationship side of your {relation}')
+        
+        return relation_side
+    
+    def __init__(self, *args, **kwargs):
+        super(RelativeUpdateForm, self).__init__(*args, **kwargs)
+        for field_name, field_value in self.initial.items():
+            if field_value is None:
+                self.initial[field_name] = ''
 
 class SocialLinksForm(forms.ModelForm):
     class Meta:

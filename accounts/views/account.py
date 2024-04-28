@@ -95,7 +95,7 @@ def get_accounts(request):
             Q(username__icontains=query)
             | Q(first_name__icontains=query)
             | Q(last_name__icontains=query) 
-            | Q(address__address_one__icontains = query)
+            | Q(address_one__icontains = query)
         )
         
     return render(request, template, {"users": users, "query": query})

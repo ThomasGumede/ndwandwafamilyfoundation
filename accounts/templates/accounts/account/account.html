@@ -235,51 +235,49 @@
                         </div>
 
                         {% else %}
-                        <div class="overflow-x-auto">
+                        <div class="">
                             <div class="w-full">
-                                <div class="w-full overflow-x-auto">
+                                <div class="w-full ">
+                                    <div class="grid w-full items-center justify-center sm:grid-cols-2 md:grid-cols-3 gap-7">
+                                        {% for account in user.relatives.all %}
+                                        <div class="w-64 h-[350px] bg-white">
+                                            <div class="w-full group duration-500 h-full relative">
+                                                <div class="w-full h-full overflow-hidden rounded-2xl relative">
+                                                    {% if account.profile_image %}
+                                                    <img src="{{account.profile_image.url}}" alt="{{account.get_full_names}} avatar"
+                                                        class="w-full h-full object-cover duration-500 group-hover:scale-105 bg-center" />
+                                                    {% else %}
+                                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="no avatar available"
+                                                        class="w-full h-full object-cover bg-center" />
+                                                    {% endif %}
+                                                    <div class="absolute w-full h-full top-0 bottom-0 bg-[rgba(0,0,0,0.57)]"></div>
+                                                    <div class="absolute bottom-6 left-4 ">
+                                                        <div class=" text-white">
+                                                            <h2 class="font-medium text-xl text-white">
+                                                                {{account.get_full_names}}
+                                                            </h2>
+                                                            <p class="text-xs text-[#ccc]">
+                                                                {{account.relationship}}
+                                                            </p>
+                                                            <div class="mt-4">
+                                                                <div class="group">
+                                                                    <a href="{% url 'accounts:relative' account.id %}"
+                                                                        class="w-20 hover:bg-white hover:text-custom-h border duration-500 text-white border-white rounded-md py-2 px-3 text-center cursor-pointer">View</a>
+                                                                </div>
+                                                                
+                                                            </div>
                                     
-                                    <table class="w-full">
-                                        <thead>
-                                            <tr
-                                                class="text-sm font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                                <th class="px-4 py-3"></th>
-                                                <th class="px-4 py-3">Full name</th>
-                                                <th class="px-4 py-3">Relationship</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white">
-
-                                            {% for relative in user.relatives.all %}
-                                            <tr class="text-gray-700">
-                                                <td class="px-4 py-3 w-fit font-normal text-gray-900">
-                                                    <a href="{% url 'accounts:relative' relative.id %}" class=" font-normal text-gray-900">
-                                                        <div class="relative h-10 w-10">
-                                                            {% if relative.profile_image %}
-                                                            <img class="h-full w-full rounded-full object-cover object-center" src="{{relative.profile_image.url}}"
-                                                                alt="" />
-                                                            {% else %}
-                                                            <img class="h-full w-full rounded-full object-cover object-center" src="{{relative.profile_image.url}}"
-                                                                alt="" />
-                                                            {% endif %}
+                                    
                                                         </div>
-                                                
-                                                    </a>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    <a href="{% url 'accounts:relative' relative.id %}" class="text-xs text-gray-500">{{relative.get_full_names}}</a>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    <p class="text-xs text-gray-500">{{relative.relationship}}</p>
-                                                </td>
-                                            
-                                            
-
-                                            </tr>
-                                            {% endfor %}
-
-                                        </tbody>
-                                    </table>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full h-full rounded-2xl"></div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

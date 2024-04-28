@@ -2,13 +2,18 @@ from accounts.forms.profile_forms import RelativeForm, RelativeUpdateForm
 from accounts.models import RelativeModel
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.db.models import Q
+from accounts.utils import RelationShip
 
 
 def relatives(request):
     template = "accounts/relative/list.html"
     queryset = RelativeModel.objects.filter(relative = request.user)
+    query = request.GET.get("query", None)
+    if query:
+        queryset = queryset.filter(Q(full_name__icontains=query) | Q(maiden_name__icontains=query) | Q(surname__icontains=query))
 
-    return render(request, template, {"relatives": queryset})
+    return render(request, template, {"relatives": queryset, "query": query})
 
 def relative(request, id):
     relative = get_object_or_404(RelativeModel, id=id)
@@ -21,7 +26,6 @@ def create_relative(request):
         if form.is_valid() and form.is_multipart():
             relative = form.save(commit=False)
             relative.relative = request.user
-            print(form)
             relative.save()
             messages.success(request, "Your relative was added successfully")
             return redirect("accounts:relatives")
@@ -36,7 +40,6 @@ def update_relative(request, id):
     model = get_object_or_404(RelativeModel, relative=request.user, id=id)
     if request.method == 'POST':
         form = RelativeUpdateForm(instance=model,data=request.POST, files=request.FILES)
-        print(form)
         if form.is_valid() and form.is_multipart():
             relative = form.save(commit=False)
             relative.save()

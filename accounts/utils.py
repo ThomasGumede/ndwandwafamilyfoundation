@@ -252,8 +252,10 @@ class RelationShip(models.TextChoices):
     SON = ("SON", "Son")
     MOTHER = ("MOTHER", "Mother")
     FATHER = ("FATHER", "Father")
-    STEPMOTHER = ("STEPMOTHER", "Stepmother")
-    STEPFATHER = ("STEPFATHER", "Stepfather")
+    STEPMOTHER = ("STEPMOTHER", "Step-mother")
+    STEPFATHER = ("STEPFATHER", "Step-father")
+    STEPBROTHER = ("STEPBROTHER", "Step-Brother")
+    STEPSISTER = ("STEPSISTER", "Step-Sister")
     GRANDMOTHER = ("GRANDMOTHER", "Grandmother")
     GRANDFATHER = ("GRANDFATHER", "Grandfather")
     GREATGRANDMOTHER = ("GREATGRANDMOTHER", "Great Grandmother")
@@ -267,6 +269,15 @@ class RelationShip(models.TextChoices):
     UNCLE = ("UNCLE", "Uncle")
     NEPHEW = ("NEPHEW", "Nephew")
     NIECE = ("NIECE", "Niece")
+
+class RelationshipSides(models.TextChoices):
+    MOTHER = ("MOTHER'S SIDE", "Mother's side")
+    FATHER = ("FATHER'S SIDE", "Father's side")
+    STEPMOTHER = ("STEPMOTHER'S SIDE", "Stepmother's side")
+    STEPFATHER = ("STEPFATHER'S SIDE", "Stepfather's side")
+    BROTHER = ("BROTHER'S SIDE", "Brother's side")
+    SISTER = ("SISTER'S SIDE", "Sister's side")
+    
 
 class QualificationType(models.TextChoices):
     BACHELOR = ("BACHELOR", "Bachelor's Degree")

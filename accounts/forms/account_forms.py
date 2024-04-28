@@ -52,11 +52,12 @@ class RegistrationForm(UserCreationForm):
         clean = super().clean()
         identity_choice = clean.get('identity_choices', None)
         identity_number = clean.get('identity_number', None)
-        # second_email = clean["confirm_email"]
-        # mail = clean["email"]
+        second_email = clean.get("confirm_email", None)
+        mail = clean.get("email", None)
 
-        # if mail != second_email:
-        #     raise forms.ValidationError(f'This email: {mail} does not match with confirmation email.')
+        if second_email and mail and mail != second_email:
+            raise forms.ValidationError(f'This email: {mail} does not match with confirmation email.')
+        
         if identity_number and identity_choice:
             if identity_choice == IdentityNumberChoices.ID_NUMBER:
                 message = validate_sa_id_number(identity_number)
@@ -101,16 +102,17 @@ class AccountUpdateForm(forms.ModelForm):
     
     def clean(self):
         clean = super().clean()
-        identity_choice = clean["identity_choices"]
-        identity_number = clean["identity_number"]
-        
-        if identity_choice == IdentityNumberChoices.ID_NUMBER:
-            message = validate_sa_id_number(identity_number)
-            if message["success"] == False:
-                raise forms.ValidationError(message["message"])
-        else:
-            if not validate_sa_passport_number(identity_number):
-                raise forms.ValidationError("Your passport number is invalid")
+        identity_choice = clean.get('identity_choices', None)
+        identity_number = clean.get('identity_number', None)
+
+        if identity_number and identity_choice:
+            if identity_choice == IdentityNumberChoices.ID_NUMBER:
+                message = validate_sa_id_number(identity_number)
+                if message["success"] == False:
+                    raise forms.ValidationError(message["message"])
+            else:
+                if not validate_sa_passport_number(identity_number):
+                    raise forms.ValidationError("Your passport number is invalid")
             
         return clean
     

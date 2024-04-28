@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import pre_delete, post_save
-from accounts.utils import (TITLE_CHOICES, WALLET_STATUS, Gender, StatusChoices, IdentityNumberChoices, RelationShip, QualificationType, 
+from accounts.utils import (TITLE_CHOICES, WALLET_STATUS, Gender, RelationshipSides, StatusChoices, IdentityNumberChoices, RelationShip, QualificationType, 
                             handle_profile_upload, handle_relativeprofile_upload, handle_verification_docs_upload, verify_rsa_phone,
                             validate_twitter_link, validate_fcbk_link, validate_in_link, validate_insta_link)
 from tinymce.models import HTMLField
@@ -177,7 +177,7 @@ class RelativeModel(AbstractCreate):
     phone = models.CharField(help_text=_("Enter relative's cell phone number"), max_length=15,  validators=[PHONE_VALIDATOR], unique=True, null=True, blank=True)
     relative = models.ForeignKey(CustomUserModel, related_name="relatives", on_delete=models.CASCADE)
     gender = models.CharField(help_text=_("Select relative's gender"), max_length=15, choices=Gender.choices)
-    relative_side = models.CharField(max_length=300, choices=RelationShip.choices, default=RelationShip.MOTHER)
+    relative_side = models.CharField(max_length=300, choices=RelationshipSides.choices, blank=True, null=True)
     description = models.TextField(blank=True, null=True, help_text=_("Provide a small description of this relative, e.g His/Her Children"))
 
     class Meta:

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from home.models import PostModel, CategoryModel, PrivacyModel, FAQ
 from home.forms import CommentForm, SearchForm, EmailForm
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from campaigns.models import CampaignModel
 from events.models import EventModel
@@ -58,6 +59,10 @@ def search(request):
         "campaigns" : CampaignModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
         "events": EventModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
         "news": PostModel.objects.filter(Q(title__icontains=query)),
+        "people": get_user_model().objects.filter(Q(username__icontains=query)
+            | Q(first_name__icontains=query)
+            | Q(last_name__icontains=query) 
+            | Q(address_one__icontains = query)),
     }
     context = {}
     if query and query_by:

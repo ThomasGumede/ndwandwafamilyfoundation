@@ -5,80 +5,87 @@
 
 {% block accountblock %}
 <div class="relative block bg-white">
-    <div class=" py-2 overflow-x-auto">
+    <div class=" py-2 space-y-5 overflow-x-auto">
         <div
             class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white px-12">
-            <div class="flex justify-between">
-                
+            <div class="flex flex-wrap gap-5 w-full items-center justify-between">
                 <div>
                     <a href="{% url 'accounts:create-relative' %}"
-                            class="px-5 py-2 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Add relative</a>
+                            class="px-5 py-3 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Add relative</a>
+                </div>
+                <div class="relative block w-full  md:w-6/12">
+                    <form method="get" action="{% url 'accounts:relatives' %}">
+                        <div class="relative w-full">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search" name="query" {% if query %}value="{{query}}" {% endif %}
+                                class="block p-4 pl-10 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Search e.g Thabiso" required>
+                            <button type="submit"
+                                class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div
             class="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
-            <table class="min-w-full">
-                <thead>
-                    <tr>
-                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
-                            </th>
-                        <th
-                            class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
-                            Full name</th>
-                        <th
-                            class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
-                            Relation</th>
-
-                        
-                        <th
-                            class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-custom-h tracking-wider">
-                            Created At</th>
-                        <th class="px-6 py-3 border-b-2 border-gray-300"></th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-
-                    {% for relative in relatives %}
-                    <tr>
-                        <td class="px-4 py-3 w-fit font-normal text-gray-900">
-                            <a href="{% url 'accounts:relative' relative.id %}" class=" font-normal text-gray-900">
-                                <div class="relative h-10 w-10">
-                                    {% if relative.profile_image %}
-                                    <img class="h-full w-full rounded-full object-cover object-center" src="{{relative.profile_image.url}}"
-                                        alt="" />
-                                    {% else %}
-                                    <img class="h-full w-full rounded-full object-cover object-center" src="{{relative.profile_image.url}}"
-                                        alt="" />
-                                    {% endif %}
+            <div class="grid w-full items-center justify-center sm:grid-cols-2 md:grid-cols-4 gap-7">
+                {% if relatives.count != 0 %}
+                {% for account in relatives %}
+                    <div class="w-64 h-[350px] bg-white">
+                        <div class="w-full group duration-500 h-full relative">
+                            <div class="w-full h-full overflow-hidden rounded-2xl relative">
+                                {% if account.profile_image %}
+                                <img src="{{account.profile_image.url}}" alt="{{account.get_full_names}} avatar"
+                                    class="w-full h-full object-cover duration-500 group-hover:scale-105 bg-center" />
+                                {% else %}
+                                <img src="{% static 'images/global/no-image-available.webp' %}" alt="no avatar available"
+                                    class="w-full h-full object-cover bg-center" />
+                                {% endif %}
+                                <div class="absolute w-full h-full top-0 bottom-0 bg-[rgba(0,0,0,0.57)]"></div>
+                                <div class="absolute bottom-6 left-4 ">
+                                    <div class=" text-white">
+                                        <h2 class="font-medium text-xl text-white">
+                                            {{account.get_full_names}}
+                                        </h2>
+                                        <p class="text-xs text-[#ccc]">
+                                            {{account.relationship}}
+                                        </p>
+                                        <div class="flex items-center space-x-5 mt-4">
+                                            <div class="group">
+                                                <a href="{% url 'accounts:relative' account.id %}"
+                                                    class="w-20 hover:bg-white hover:text-custom-h border duration-500 text-white border-white rounded-md py-2 px-3 text-center cursor-pointer">View</a>
+                                            </div>
+                                            <div class="group">
+                                                <a href="{% url 'accounts:update-relative' account.id %}"
+                                                    class="w-20 hover:bg-white hover:text-custom-h border duration-500 text-white border-white rounded-md py-2 px-3 text-center cursor-pointer">Edit</a>
+                                            </div>
+                                            <div class="group">
+                                                <a href="{% url 'accounts:delete-relative' account.id %}"
+                                                    class="w-20 hover:bg-red-500 hover:text-white border duration-500 text-red-500 border-red-500 rounded-md py-2 px-3 text-center cursor-pointer">Del</a>
+                                            </div>
+                                        </div>
+                                        
+                
+                                    </div>
                                 </div>
-                        
-                            </a>
-                        </td>
-                        <td class="px-6 py-4 whitespace-no-wrap ">
-                            <a href="{{relative.get_absolute_url}}" class="text-sm leading-5 text-custom-primary">{{relative.get_full_names}}</a>
-                        </td>
-                        <td
-                            class="px-6 py-4 whitespace-no-wrap text-custom-primary border-gray-500 text-sm leading-5">
-                            {{relative.relationship}}</td>
-                        
-
-                        <td
-                            class="px-6 py-4 whitespace-no-wrap  text-custom-primary text-sm leading-5">
-                            {{relative.created}}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap flex gap-2 text-right  text-sm leading-5">
-                            <a href="{% url 'accounts:update-relative' relative.id %}"
-                                class="grid items-center justify-center w-fit py-2 px-3 border-custom-h border text-custom-h  rounded transition duration-300 hover:bg-custom-h hover:text-white focus:outline-none">Update</a>
-                            <a href="{% url 'accounts:delete-relative' relative.id %}"
-                                class="grid items-center justify-center w-fit py-2 px-3 border-red-500 border text-red rounded transition duration-300 hover:bg-red-500 hover:text-white focus:outline-none">
-                                Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-
-                </tbody>
-            </table>
-
+                            </div>
+                            <div class="w-full h-full rounded-2xl"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <div class="w-full">
+                        <p class=" text-gray-500 font-normal text-2xl">No relatives found, try searching another name</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
