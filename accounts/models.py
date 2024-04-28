@@ -107,7 +107,13 @@ class CustomUserModel(AbstractUser, AbstractProfile):
         return ""
     
     def address(self):
-        return f"{self.address_one}, {self.address_two}, {self.city}, {self.province}, {self.country}"
+        if self.address_one and self.city and self.province and self.country:
+            if self.address_two:
+                return f"{self.address_one}, {self.address_two}, {self.city}, {self.province}, {self.country}"
+            else:
+                return f"{self.address_one}, {self.city}, {self.province}, {self.country}"
+        else:
+            return "No address"
     
     def contact_details(self):
         return mark_safe(f"""
@@ -120,33 +126,19 @@ class CustomUserModel(AbstractUser, AbstractProfile):
                 <a href="{self.twitter}" style="margin: 0rem 1rem;">{self.twitter}</a>
             </div>
         """)
-    
-    def get_social_links(self):
-        links = []
-        content = ""
-        if self.facebook is not None:
-            links.append(self.facebook)
-
-        if self.twitter is not None:
-            links.append(self.twitter)
-
-        if self.linkedIn is not None:
-            links.append(self.linkedIn)
-
-        if self.instagram is not None:
-            links.append(self.instagram)
-        
-
-
-        for link in links:
-            content += f"<a href='{link}'><i class='bx bxl-'></i></a>"
-
 
     def identity_information(self):
         return f"{self.identity_number} - {self.identity_choice}"
     
     def employment_details(self):
-        return f"{self.occupation} - {self.professional_affiliations}"
+        if self.occupation and self.professional_affiliations:
+            return f"{self.occupation} - {self.professional_affiliations}"
+        elif self.occupation:
+            return f"{self.occupation}"
+        elif self.professional_affiliations:
+            return f"No occupation - {self.professional_affiliations}"
+        else:
+            return "No occupation"
     
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} - {self.username}"

@@ -357,7 +357,7 @@
                                                 {% endif %}
                                             </div>
                                             <p class="">
-                                                By <a href=""
+                                                By <a href="{% url 'accounts:user' event.organiser.username %}"
                                                     class="text-sm font-normal hover:text-custom-primary">{{event.organiser.get_full_name}}</a>
                                             </p>
 
