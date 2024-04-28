@@ -19,11 +19,27 @@ def relative(request, id):
     relative = get_object_or_404(RelativeModel, id=id)
     return render(request, "accounts/relative/details.html", {"relative": relative})
 
+def validate_relative(clean, request):
+    name = clean.get("full_name", None)
+    last_name = clean.get("surname", None)
+    other_surname = clean.get("maiden_name", None)
+    title = clean.get("title", None)
+    gender = clean.get("gender", None)
+    relative = request.user.relatives.filter(title=title, full_name = name, surname = last_name, maiden_name = other_surname, gender=gender).exists()
+
+    return relative
+
 def create_relative(request):
     template = "accounts/relative/create.html"
     if request.method == 'POST':
         form = RelativeForm(request.POST, request.FILES)
         if form.is_valid() and form.is_multipart():
+            clean = form.cleaned_data
+            relative = validate_relative(clean, request)
+            if relative:
+                messages.error(request,f"Relative with following details already exists")
+                return render(request, template, {"form": form})
+            
             relative = form.save(commit=False)
             relative.relative = request.user
             relative.save()

@@ -72,19 +72,19 @@ class RelativeForm(forms.ModelForm):
             if field_value is None:
                 self.initial[field_name] = ''
 
-    def clean(self):
-        clean = super().clean()
-        name = clean.get("full_name", None)
-        last_name = clean.get("surname", None)
-        other_surname = clean.get("maiden_name", None)
-        relation = clean.get("relationship", None)
-        gender = clean.get("gender", None)
-        relative = RelativeModel.objects.filter(full_name = name, surname = last_name, maiden_name = other_surname, gender=gender, relationship = relation).exists()
+    # def clean(self):
+    #     clean = super().clean()
+    #     name = clean.get("full_name", None)
+    #     last_name = clean.get("surname", None)
+    #     other_surname = clean.get("maiden_name", None)
+    #     relation = clean.get("relationship", None)
+    #     gender = clean.get("gender", None)
+    #     relative = RelativeModel.objects.filter(full_name = name, surname = last_name, maiden_name = other_surname, gender=gender, relationship = relation).exists()
 
-        if relative:
-            raise forms.ValidationError(f"Relative with following details already exists")
+    #     if relative:
+    #         raise forms.ValidationError(f"Relative with following details already exists")
 
-        return clean
+    #     return clean
 
 class RelativeUpdateForm(forms.ModelForm):
     class Meta:
