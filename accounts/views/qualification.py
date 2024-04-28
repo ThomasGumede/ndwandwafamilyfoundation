@@ -3,6 +3,13 @@ from accounts.forms.profile_forms import QualificationForm, QualificationUpdateF
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
+def validate_qualification(clean, request):
+    name = clean.get("title", None)
+    last_name = clean.get("institution", None)
+    other_surname = clean.get("year", None)
+    qual_type = clean.get("qualification_type", None)
+    qualification = request.user.qualifications.filter(title = name, institution = last_name, year = other_surname, qualification_type= qual_type).exists()
+    return qualification
 
 def qualifications(request):
     template = "accounts/qualification/list.html"
@@ -15,6 +22,12 @@ def create_qualification(request):
     if request.method == 'POST':
         form = QualificationForm(request.POST)
         if form.is_valid():
+            clean = form.cleaned_data
+            qualification_found = validate_qualification(clean, request)
+            if qualification_found:
+                messages.error(request, "Qualification with following details already exists")
+                return render(request, template, {"form": form})
+            
             qualification = form.save(commit=False)
             qualification.owner = request.user
             qualification.save()

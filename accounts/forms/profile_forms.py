@@ -15,18 +15,18 @@ class QualificationForm(forms.ModelForm):
             
         }
 
-    def clean(self):
-        clean = super().clean()
-        name = clean.get("title", None)
-        last_name = clean.get("institution", None)
-        other_surname = clean.get("year", None)
-        qual_type = clean.get("qualification_type", None)
-        relative = QualificationModel.objects.filter(title = name, institution = last_name, year = other_surname, qualification_type= qual_type).exists()
+    # def clean(self):
+    #     clean = super().clean()
+    #     name = clean.get("title", None)
+    #     last_name = clean.get("institution", None)
+    #     other_surname = clean.get("year", None)
+    #     qual_type = clean.get("qualification_type", None)
+    #     relative = QualificationModel.objects.filter(title = name, institution = last_name, year = other_surname, qualification_type= qual_type).exists()
 
-        if relative:
-            raise forms.ValidationError("Qualification with following details already exists")
+    #     if relative:
+    #         raise forms.ValidationError("Qualification with following details already exists")
 
-        return clean
+    #     return clean
     
 class QualificationUpdateForm(forms.ModelForm):
     class Meta:

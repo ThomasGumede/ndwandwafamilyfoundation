@@ -35,8 +35,9 @@
         </div>
         <div
             class="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
+            {% if relatives.count != 0 %}
             <div class="grid w-full items-center justify-center sm:grid-cols-2 md:grid-cols-4 gap-7">
-                {% if relatives.count != 0 %}
+                
                 {% for account in relatives %}
                     <div class="w-64 h-[350px] bg-white">
                         <div class="w-full group duration-500 h-full relative">
@@ -80,12 +81,13 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% else %}
-                    <div class="w-full">
-                        <p class=" text-gray-500 font-normal text-2xl">No relatives found, try searching another name</p>
-                    </div>
-                {% endif %}
+                
             </div>
+            {% else %}
+            <div class="w-full">
+                <p class=" text-gray-500 font-normal text-2xl">No relatives found, try searching another name</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
