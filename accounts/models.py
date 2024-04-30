@@ -78,7 +78,7 @@ class WalletModel(AbstractCreate):
 class CustomUserModel(AbstractUser, AbstractProfile):
     profile_image = models.ImageField(help_text=_("Upload profile image"), upload_to=handle_profile_upload, null=True, blank=True, default="images/global/no-image-available.webp")
     title = models.CharField(max_length=30, choices=TITLE_CHOICES)
-    maiden_name = models.CharField(help_text=_("Enter your relative's maiden name"), max_length=300, blank=True, null=True)
+    maiden_name = models.CharField(help_text=_("Enter your maiden name"), max_length=300, blank=True, null=True)
     phone = models.CharField(help_text=_("Enter your cellphone number"), max_length=15, validators=[PHONE_VALIDATOR], unique=True, null=True, blank=True)
     occupation = models.CharField(default='N/A',help_text=_("Enter your current employment"), max_length=500, blank=True, null=True)
     biography = models.TextField(blank=True)
@@ -185,6 +185,9 @@ class RelativeModel(AbstractCreate):
             return f"{self.title} {self.full_name} {self.surname} {self.maiden_name}"
         else:
             return f"{self.title} {self.full_name} {self.surname}"
+        
+    def get_info(self):
+        return f"{self.relative.get_full_name()}'s {self.relationship}"
     
     def __str__(self):
         return self.full_name

@@ -12,6 +12,7 @@ class SearchForm(forms.Form):
         ("events", "events"),
         ("news", "news"),
         ("people", "people"),
+        ("relatives", "relatives")
     )
     search_by = forms.ChoiceField(choices=SEARCH_CHOICES, required=False, widget=forms.Select(attrs={"class": "bg-gray-50 outline-none focus:outline-none border-none p-4 border rounded-md text-lg text-black focus:border-none h-full"}))
     query = forms.CharField(widget=forms.TextInput(attrs={"type": "search", "class": "bg-gray-50 outline-none focus:outline-none border-none p-2 py-2 rounded-md text-lg text-black focus:border-none h-full"}))

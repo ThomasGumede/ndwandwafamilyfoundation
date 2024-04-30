@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.conf import settings
 import logging, jwt
-from accounts.models import MailingGroupModel, SubscribeModel
+from accounts.models import MailingGroupModel, SubscribeModel, WalletModel
 
 logger = logging.getLogger("accounts")
 
@@ -36,11 +36,13 @@ def activate(request, uidb64, token):
         
         user.is_active = True
         user.is_email_activated = True
-
+        wallet , created_wallet = WalletModel.objects.get_or_create(name=f"{user.username}-wallet", owner=user)
         for group in MailingGroupModel.objects.all():
             subscribed, created = SubscribeModel.objects.get_or_create(user=user, mailinggroup=group)
+            
             if created:
                 pass
+        
         user.save(update_fields=["is_active", "is_email_activated"])
 
         messages.success(

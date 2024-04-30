@@ -254,65 +254,37 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <div class="grid mx-auto w-full sm:grid-cols-2 md:grid-cols-3 gap-7">
-                            {% for campaign in results %}
-                            <div class="group">
-                                <div class="relative mb-7 block">
-                                    <div class="img_box relative block">
-                                        <div class="overflow-hidden h-64 bg-custom-h relative block transition-all duration-500 ease-in">
-                                            {% if campaign.image %}
-                                            <img src="{{campaign.image.url}}" alt=""
-                                                class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
-                                            {% else %}
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="block text-center bg-white p-[26px_30px_20px] shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)]">
-                                        <div class="inline-block relative text-center bg-custom-primary p-[7px_19px_8px]">
-                                            <p class="font-bold text-white text-xs leading-3">
-                                                {{campaign.category.label}}
-                                            </p>
-                                        </div>
-                                        <h3 class="text-custom-h m-0 transition-all duration-500 text-xl md:text-2xl font-bold mt-4 mb-2">
-                                            <a href="{{campaign.get_absolute_url}}"
-                                                class="text-custom-h transition-all duration-500 ease-in group-hover:text-custom-primary">{{campaign.title|truncatewords:5}}</a>
-                                        </h3>
-                                        <div class="relative flex justify-center items-center">
-                                            <div class="text-sm text-custom-primary">
-                                                <i class="fa-solid fa-clock font-bold"></i>
-                                            </div>
-                                            <div class="ml-1">
-                                                <p class="text-xs font-normal">{{campaign.get_days}} remaining</p>
-                                            </div>
-                                        </div>
-                                        <div class="relative block mt-4 mb-1">
-                                            <div class="relative bg-[#f2f7f7] py-3 px-2 block w-full">
-                                                <div class="relative flex items-center justify-between space-x-2 w-full">
-                                                    <div class="text-sm font-bold text-custom-h leading-4">
-                                                        Raised</div>
-                                                    <div class="relative block w-full">
-                                                        <div class="w-full relative h-[3px] bg-white rounded-none">
-                                                            <div data-style="{{campaign.get_percentage_of_donated_fund}}" id=""
-                                                                class=" bg-custom-primary campaign_percentage_w h-[3px] rounded-none relative before:absolute before:content-[''] before:h-3 before:w-3 before:right-0 before:-top-1 before:bg-custom-primary before:rounded-full">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-center p-0 w-10 h-5 flex items-center">
-                                                        <span
-                                                            class="text-gray-500 relative leading-3 font-medium float-none inline-block text-sm">{{campaign.get_percentage_of_donated_fund}}</span>
-                                                        <span class="text-sm ml-[-2px] float-none font-medium text-gray-500 leading-3">%</span>
-                                                    </div>
+                        <div class="grid mx-auto w-full md:grid-cols-4 gap-7">
+                            {% for account in results %}
+                            <div class="w-64 h-[350px] bg-white">
+                                <div class="w-full group duration-500 h-full relative">
+                                    <div class="w-full h-full overflow-hidden rounded-2xl relative">
+                                        {% if account.profile_image %}
+                                        <img src="{{account.profile_image.url}}" alt="{{account.get_full_names}} avatar"
+                                            class="w-full h-full object-cover duration-500 group-hover:scale-105 bg-center" />
+                                        {% else %}
+                                        <img src="{% static 'images/global/no-image-available.webp' %}" alt="no avatar available"
+                                            class="w-full h-full object-cover bg-center" />
+                                        {% endif %}
+                                        <div class="absolute w-full h-full top-0 bottom-0 bg-[rgba(0,0,0,0.57)]"></div>
+                                        <div class="absolute bottom-6 left-4 ">
+                                            <div class=" text-white">
+                                                <h2 class="font-medium text-xl text-white">
+                                                    {{account.get_full_names}}
+                                                </h2>
+                                                <p class="text-xs text-[#ccc]">
+                                                    {{account.get_info}}
+                                                </p>
+                                                <div class="mt-4 group">
+                                                    <a href="{% url 'accounts:relative' account.id %}"
+                                                        class="w-20 hover:bg-white hover:text-custom-h border duration-500 text-white border-white rounded-3xl p-2 px-4 text-center cursor-pointer">See
+                                                        me</a>
                                                 </div>
+                        
                                             </div>
                                         </div>
-                                        <div class="relative flex items-center justify-between">
-                                            <p class="text-xs text-gray-500 font-semibold">Achieved: <span
-                                                    class="font-bold text-custom-h">R{{campaign.target}}</span></p>
-                                            <p class="text-xs text-gray-500 font-semibold">Goal: <span
-                                                    class="font-bold text-custom-h">R{{campaign.current_amount}}</span></p>
-                                        </div>
-                        
                                     </div>
+                                    <div class="w-full h-full rounded-2xl"></div>
                                 </div>
                             </div>
                             {% endfor %}

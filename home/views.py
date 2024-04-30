@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from home.models import PostModel, CategoryModel, PrivacyModel, FAQ
 from home.forms import CommentForm, SearchForm, EmailForm
+from accounts.models import RelativeModel
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from campaigns.models import CampaignModel
@@ -54,7 +55,7 @@ def search(request):
 
     form = SearchForm()
     query = request.GET.get("query", None)
-    query_by = request.GET.get("search_by", "campaigns")
+    query_by = request.GET.get("search_by", None)
     results_dic = {
         "campaigns" : CampaignModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
         "events": EventModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
@@ -63,12 +64,36 @@ def search(request):
             | Q(first_name__icontains=query)
             | Q(last_name__icontains=query) 
             | Q(address_one__icontains = query)),
+        "relatives": RelativeModel.objects.filter(Q(surname__icontains=query)
+            | Q(full_name__icontains=query)
+            | Q(maiden_name__icontains=query))
     }
     context = {}
     if query and query_by:
         context["results"] = results_dic[query_by]
         context["results_type"] = query_by
         context["query"] = query
+    elif query:
+        if results_dic["campaigns"].count() > 0:
+            context["results"] = results_dic["campaigns"]
+            context["results_type"] = "campaigns"
+            context["query"] = query
+        elif results_dic["events"].count() > 0:
+            context["results"] = results_dic["events"]
+            context["results_type"] = "events"
+            context["query"] = query
+        elif results_dic["news"].count() > 0:
+            context["results"] = results_dic["news"]
+            context["results_type"] = "news"
+            context["query"] = query
+        elif results_dic["people"].count() > 0:
+            context["results"] = results_dic["people"]
+            context["results_type"] = "people"
+            context["query"] = query
+        else:
+            context["results"] = results_dic["relatives"]
+            context["results_type"] = "relatives"
+            context["query"] = query
         
     
     context["form"] = form
