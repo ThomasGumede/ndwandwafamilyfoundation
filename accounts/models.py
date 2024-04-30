@@ -166,7 +166,7 @@ class RelativeModel(AbstractCreate):
     maiden_name = models.CharField(help_text=_("Enter your relative's maiden name"), max_length=300, blank=True, null=True)
     surname = models.CharField(help_text=_("Enter your relative's surname"), max_length=300)
     relationship = models.CharField(max_length=300, choices=RelationShip.choices, default=RelationShip.OTHER)
-    phone = models.CharField(help_text=_("Enter relative's cell phone number"), max_length=15,  validators=[PHONE_VALIDATOR], unique=True, null=True, blank=True)
+    phone = models.CharField(help_text=_("Enter relative's cell phone number"), max_length=15,  validators=[PHONE_VALIDATOR], null=True, blank=True)
     relative = models.ForeignKey(CustomUserModel, related_name="relatives", on_delete=models.CASCADE)
     gender = models.CharField(help_text=_("Select relative's gender"), max_length=15, choices=Gender.choices)
     relative_side = models.CharField(max_length=300, choices=RelationshipSides.choices, blank=True, null=True)
@@ -175,6 +175,7 @@ class RelativeModel(AbstractCreate):
     class Meta:
         verbose_name = 'Relative'
         verbose_name_plural = 'Relatives'
+        unique_together = ['title', 'full_name', 'maiden_name', 'surname', 'relative', 'relationship', 'relative_side', 'phone']
 
     def get_absolute_url(self):
         return reverse("accounts:relative", kwargs={"id": self.id})
@@ -201,6 +202,7 @@ class QualificationModel(AbstractCreate):
     class Meta:
         verbose_name = 'Qualification'
         verbose_name_plural = 'Qualifications'
+        unique_together = ['title', 'qualification_type', 'year', 'owner']
 
     def __str__(self):
         return self.title
