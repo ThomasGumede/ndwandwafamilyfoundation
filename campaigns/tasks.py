@@ -44,10 +44,11 @@ def check_campaigns_status():
     campaigns = CampaignModel.objects.select_related("organiser").filter(end_date__lte=now)
     
     for campaign in campaigns:
-        campaign.status = StatusChoices.COMPLETED
-        campaign.save(update_fields=["status"])
-        if not update_status_email("campaign", campaign):
-            task_logger.error(f"Failed to send campaign status update - id {campaign.id}")
+        if campaign.status != StatusChoices.COMPLETED:
+            campaign.status = StatusChoices.COMPLETED
+            campaign.save(update_fields=["status"])
+            if not update_status_email("campaign", campaign):
+                task_logger.error(f"Failed to send campaign status update - id {campaign.id}")
 
 
     return f"{campaigns.count()} were marked at completed"

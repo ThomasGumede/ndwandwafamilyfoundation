@@ -37,7 +37,7 @@
                         {% if event.image %}
                         <img src="{{event.image.url}}" alt="{{event.title}}" class="w-full h-full object-cover" />
                         {% else %}
-                        <img src="{% static 'images/global/no-image-available.webp' %}" alt="" srcset=""
+                        <img src="{% static 'images/global/image-no.jpg' %}" alt="" srcset=""
                             class="object-cover block h-full w-full">
                         {% endif %}
                     </div>
@@ -138,8 +138,9 @@
                             <li class="flex items-center ">
                                 <div class="pr-5 w-20 h-16 overflow-hidden">
                                     {% if recent.image %}
-                                    <img src="{{recent.image.url}}" alt="" class="w-full h-full object-cover">
+                                    <img alt="{{recent.title}}" src="{{recent.image.url}}" alt="" class="w-full h-full object-cover">
                                     {% else %}
+                                    <img alt="{{recent.title}}" src="{% static 'images/global/image-no.jpg' %}" alt="" class="w-full h-full object-cover">
                                     {% endif %}
                                 </div>
                                 <div class="relative top-[-3px]">

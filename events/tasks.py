@@ -33,10 +33,11 @@ def check_events_status():
     events = EventModel.objects.filter(event_enddate__lte=now)
 
     for event in events:
-        event.status = StatusChoices.COMPLETED
-        event.save(update_fields=["status"])
-        if not update_status_email("Event", event):
-            logger.error("Failed to send email of Event status change")
+        if event.status != StatusChoices.COMPLETED:
+            event.status = StatusChoices.COMPLETED
+            event.save(update_fields=["status"])
+            if not update_status_email("Event", event):
+                logger.error("Failed to send email of Event status change")
 
     f"{events.count()} events were marked at completed"
 

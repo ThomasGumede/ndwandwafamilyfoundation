@@ -37,7 +37,7 @@ class AbstractPayment(models.Model):
         abstract = True
 
 class CampaignModel(AbstractCreate):
-    image = models.ImageField(help_text=_("Upload campaign image."), upload_to=handle_campaign_file_upload)
+    image = models.ImageField(help_text=_("Upload campaign image."), upload_to=handle_campaign_file_upload, blank=True, null=True)
     title = models.CharField(help_text=_("Enter title for your campaign"), max_length=150)
     slug = models.SlugField(max_length=250, blank=True)
     organiser = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="campaigns")

@@ -110,6 +110,7 @@ PASSWORD_RESET_TIMEOUT = 14400
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5MB
 
 TINYMCE_DEFAULT_CONFIG = {
+    'content_style': '* { margin: 0 !important; padding: 0 !important; }',
     'theme_advanced_fonts': 'DM Sans=dm-sans,Arial=arial,helvetica,sans-serif',
     'height': "400px",
     'cleanup_on_startup': True,

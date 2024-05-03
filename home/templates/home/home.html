@@ -146,7 +146,7 @@
                                     <img src="{{campaign.image.url}}" alt="{{campaign.title}} image" loading="lazy"
                                         class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
                                     {% else %}
-                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image"
+                                    <img src="{% static 'images/global/image-no.jpg'  %}" alt="no image"
                                         srcset="" loading="lazy"
                                         class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
                                     {% endif %}
@@ -325,7 +325,7 @@
                             <img src="{{event.image.url}}" alt="{{event.title}} image" srcset="" lazyload
                                 class="object-cover block h-full w-full duration-500 group-hover:scale-105">
                             {% else %}
-                            <img src="{% static 'images/global/no-image-available.webp' %}" alt="no image" srcset=""
+                            <img src="{% static 'images/global/image-no.jpg'  %}" alt="no image" srcset=""
                                 class="object-cover block h-full w-full">
                             {% endif %}
 
@@ -350,7 +350,7 @@
                                                     alt="{{event.organiser.get_full_name}}"
                                                     src="{{event.organiser.profile_image.url}}" />
                                                 {% else %}
-                                                <img src="{% static 'images/global/no-image-available.webp' %}"
+                                                <img src="{% static 'images/global/image-no.jpg'  %}"
                                                     alt="no image" srcset="" class="object-cover block h-full w-full">
                                                 {% endif %}
                                             </div>

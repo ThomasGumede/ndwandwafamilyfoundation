@@ -35,7 +35,7 @@
                         {% if campaign.image %}
                         <img src="{{campaign.image.url}}" class="w-full h-full" />
                         {% else %}
-                        <img src="{% static 'images/global/no-image-available.webp' %}" class="w-full h-full" />
+                        <img src="{% static 'images/global/image-no.jpg' %}" class="w-full h-full" />
                         {% endif %}
                     </div>
                 </div>
@@ -220,7 +220,7 @@
                                             {% if donation.contributor == none or donation.anonymous %}
                                             <div class="w-11 h-11 rounded-full overflow-hidden">
                                                 
-                                                <img src="{% static 'images/global/no-image-available.webp' %}"
+                                                <img src="{% static 'images/global/image-no.jpg' %}"
                                                     class="w-full h-full object-cover object-center" />
                                             </div>
                                             <div>
@@ -230,8 +230,9 @@
                                             {% else %}
                                             <div class="w-11 h-11 rounded-full overflow-hidden">
                                                 {% if donation.contributor.profile_image %}
-                                                <img src="{{donation.contributor.profile_image.url}}" class="w-full h-full object-cover object-center" />
+                                                <img alt="{{donation.contributor.get_full_name}} avatar" src="{{donation.contributor.profile_image.url}}" class="w-full h-full object-cover object-center" />
                                                 {% else %}
+                                                <img alt="{{donation.contributor.get_full_name}} avatar" src="{% static 'images/global/image-no.jpg' %}" class="w-full h-full object-cover object-center" />
                                                 {% endif %}
                                             </div>
                                             <div>

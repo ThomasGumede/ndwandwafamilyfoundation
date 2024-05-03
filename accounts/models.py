@@ -141,7 +141,10 @@ class CustomUserModel(AbstractUser, AbstractProfile):
             return "No occupation"
     
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} - {self.username}"
+        if self.first_name:
+            return self.first_name
+        else:
+            return f"{self.username}"
     
 class IdentityVerificationModel(AbstractCreate):
     identity_image =  models.ImageField(upload_to=handle_verification_docs_upload, null=False, help_text=_("Please take a selfie while holding an official identification document(ID Card, Passport)"))
