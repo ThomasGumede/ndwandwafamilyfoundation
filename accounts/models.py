@@ -129,6 +129,12 @@ class CustomUserModel(AbstractUser, AbstractProfile):
 
     def identity_information(self):
         return f"{self.identity_number} - {self.identity_choice}"
+
+    def full_names(self):
+        if self.maiden_name != None:
+            return f"{self.title} {self.first_name} {self.last_name} {self.maiden_name}"
+        else:
+            return f"{self.title} {self.first_name} {self.last_name}"
     
     def employment_details(self):
         if self.occupation and self.professional_affiliations:

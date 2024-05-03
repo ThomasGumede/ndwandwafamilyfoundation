@@ -19,7 +19,7 @@ def clear_wallet(modeladmin, request, querset):
 
 class WalletInline(admin.TabularInline):
     model = WalletModel
-    readonly = ("name", "balance", "created", "cleared_date")
+    readonly_fields = ("name", "balance", "created", "cleared_date")
 
 @admin.register(CompanyModel)
 class CompanyAdmin(admin.ModelAdmin):
@@ -76,8 +76,8 @@ class WalletAdmin(admin.ModelAdmin):
 @admin.register(CustomUserModel)
 class CustomUserAdmin(admin.ModelAdmin):
     list_display =("username", "first_name", "last_name", "phone", "verification_status")
-    exclude = ("password", "profile_image", "address_one", "address_two", "city", "country", "facebook", "twitter", "instagram", "linkedIn","province", "zipcode", "hobbies","first_name", "last_name", "email", "phone", "biography", "identity_number", "identity_choice", "occupation", "professional_affiliations")
-    readonly_fields = ("image_tag", "title", "username", "get_full_name", "contact_details", "identity_information", "address", "employment_details", "last_login", "hobbies")
+    exclude = ("password", "profile_image", "maiden_name", "address_one", "address_two", "groups", "user_permissions","city", "country", "facebook", "twitter", "instagram", "address_id", "linkedIn","province", "zipcode", "hobbies","first_name", "last_name", "email", "phone", "biography", "identity_number", "identity_choice", "occupation", "professional_affiliations")
+    readonly_fields = ("image_tag", "title", "username", "full_names", "contact_details", "identity_information", "address", "employment_details", "last_login", "date_joined")
     empty_value_display = "Empty"
     inlines = [WalletInline, IdentityVerificationInline, QualificationInline, RelativeInline, CampaignInline, EventInline]
 
