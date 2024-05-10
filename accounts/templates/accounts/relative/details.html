@@ -63,6 +63,20 @@
                             <i class="fa-solid fa-phone mr-2 text-lg text-gray-400"></i>{{relative.phone}}
                         </div>
                     </div>
+                    {% if relative.date_of_birth %}
+                    <div class="flex items-center self-center justify-self-center w-fit justify-center text-center flex-wrap gap-4">
+                        <div class="mb-2 text-gray-600 MB-2">
+                            <i class="fa-solid fa-cake-candles mr-2 text-lg text-gray-400"></i>{{relative.date_of_birth}}
+                        </div>
+                        {% if relative.date_of_death %}
+                        <div>-</div>
+                        <div class="mb-2 text-gray-600 MB-2">
+                            {{relative.date_of_death}}
+                        </div>
+                        {% endif %}
+                        
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="mt-10 py-10 border-t border-gray-200 text-center">
                     <div class="flex flex-wrap justify-center">

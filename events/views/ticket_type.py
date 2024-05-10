@@ -4,7 +4,7 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from events.models import EventModel, EventTicketTypeModel, TicketModel
-from events.forms import EventTicketTypeForm
+from events.forms import EventTicketTypeForm, EventTicketTypeUpdateForm
 from django.contrib import messages
 from django.utils import timezone
 
@@ -29,25 +29,28 @@ def create_ticket_types(request, event_id):
         messages.error(request, "Cannot add another ticket type, it either you already have 5 tickets or there are no tickets available to allocate")
         return redirect("events:manage-events")
     
-    form = formset_factory(EventTicketTypeForm, extra=1, max_num=max_forms, absolute_max=max_forms)
     if request.method == 'POST':
         
-        formsets = form(request.POST)
+        form = EventTicketTypeForm(request.POST)
 
-        if formsets.is_valid(): 
-            for form in formsets:
-                ticket_type = form.save(commit=False)
-                ticket_type.event = event
-                ticket_type.save()
-            messages.success(request, "Your Tickets types we successfully created")
-            return redirect("events:manage-events")
+        if form.is_valid():
+            add_another = form.cleaned_data.get("add_another", None)
+            title = form.cleaned_data.get("title", None)
+            ticket_type = form.save(commit=False)
+            ticket_type.event = event
+            ticket_type.save()
+            messages.success(request, f"Your Ticket type({title}) we successfully created")
+            if add_another:
+                return redirect("events:create-ticket-types", event_id=event.id)
+            
+            return redirect("events:manage-event", event_slug=event.slug)
         else:
             messages.error(request, "Something is missing, please fix errors below")
-            return render(request, "events/ticket/create_tickets_type.html", {"forms": formsets, "event": event, "max_forms": max_forms})
+            return render(request, "events/ticket/create_tickets_type.html", {"form": form, "event": event, "max_forms": max_forms})
     else:    
         
-        formsets = form()
-        return render(request, "events/ticket/create_tickets_type.html", {"forms": formsets, "event": event, "max_forms": max_forms})
+        form = EventTicketTypeForm()
+        return render(request, "events/ticket/create_tickets_type.html", {"form": form, "event": event, "max_forms": max_forms})
     
 @login_required
 def update_ticket_type(request, event_slug, ticket_type_id):
@@ -55,7 +58,7 @@ def update_ticket_type(request, event_slug, ticket_type_id):
     ticket = get_object_or_404(EventTicketTypeModel, event=event, id=ticket_type_id)
     
     if request.method == 'POST':
-        form = EventTicketTypeForm(instance=ticket, data=request.POST)
+        form = EventTicketTypeUpdateForm(instance=ticket, data=request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, f"Ticket type {ticket.title} was updated successfully")
@@ -64,7 +67,7 @@ def update_ticket_type(request, event_slug, ticket_type_id):
             messages.error(request, f"Ticket type {ticket.title} was not updated successfully. Fix errors below")
             return render(request, "events/ticket/update.html", {"form": form, "event": event })
 
-    form = EventTicketTypeForm(instance=ticket)
+    form = EventTicketTypeUpdateForm(instance=ticket)
     return render(request, "events/ticket/update.html", {"form": form, "event": event })
 
 @login_required

@@ -4,7 +4,7 @@
 {% block title %}Add Relative{% endblock title %}
 
 {% block accountblock %}
-<div class='w-full h-full'>
+<div class='w-full px-2 h-full'>
 
     <div class="w-full mx-auto bg-white">
         <div class="space-y-4 border-0 bg-white  w-full relative">
@@ -58,7 +58,7 @@
 
                             </div>
                         </div>
-                        <div class="w-full lg:w-6/12 md:px-4">
+                        <div class="w-full relative lg:w-6/12 md:px-4">
                             <div class="relative w-full mb-3">
                                 <label for="id_full_name"
                                     class="block text-custom-h font-semibold text-sm capitalize mb-2"
@@ -69,6 +69,12 @@
                                 <span
                                     class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.full_name.help_text}}</span>
 
+                            </div>
+
+                            <div data-relatives-data-url="{% url 'accounts:relatives-api' %}" id="search_results_container" class="absolute hidden w-full top-full left-1/2  -translate-x-1/2 z-30 h-fit bg-white shadow-lg">
+                                <div id="search_results_inner_container" class="w-full p-2">
+                                    
+                                </div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 md:px-4">
@@ -149,6 +155,30 @@
 
                             </div>
                         </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_date_of_birth" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    date of birth
+                                </label>
+                                {{form.date_of_birth}}
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.date_of_birth.help_text}}</span>
+                        
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_date_of_death" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    date of death
+                                </label>
+                                {{form.date_of_death}}
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.date_of_death.help_text}}</span>
+                        
+                            </div>
+                        </div>
                         <div class="w-full lg:w-12/12 md:px-4">
                             <div class="relative w-full mb-3">
                                 <label for="id_biography">
@@ -163,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <input type="hidden" id="id_relative_id" name="relative_id" />
                     <div class="text-center mt-6 inline-block h-12 bg-custom-h w-[150px] rounded-md cursor-pointer">
                         <input type="submit" value="submit"
                             class="text-white w-full h-full cursor-pointer text-sm font-semibold" />
@@ -182,7 +212,9 @@
 
 
 <script>
-
+    const id_full_name = document.querySelector("#id_full_name");
+    const search_results_inner_container = document.querySelector("#search_results_inner_container");
+    const search_results_container = document.querySelector("#search_results_container");
     const file_picker = document.querySelector("#id_profile_image"),
         pick_image = document.querySelector("#pick_image")
 
@@ -190,7 +222,74 @@
         file_picker.click()
     })
 
+    $("#id_full_name").on('keyup', function({e}){
+        $('#search_results_inner_container').empty();
+        
+        $.ajax({
+            type: "GET",
+            url: $("#search_results_container").data("relatives-data-url"),
+            data: {
+                search_value: $(this).val()
+            },
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            success: function (data) {
+                
+                if (data.success) {
+                    
+                    const relatives_data = JSON.parse(data.data);
+                    console.log(relatives_data)
+                    
+                    if(relatives_data.length === 0){
+                        
+                        if(search_results_container.classList.contains("block")){
+                            search_results_container.classList.remove("block");
+                            search_results_container.classList.add("hidden");
+                        }
+                        
+                    }else{
+                        search_results_container.classList.remove("hidden");
+                        search_results_container.classList.add("block");
+                        
+                        relatives_data.forEach((relative, index) => {
+                            const mess = displayRelatedRelatives(relative.fields.relative)
+                            const relative_id = relative.pk;
+                            $("#search_results_inner_container").append(`
+                                <div onClick="select_relative('${relative_id}')" data-id="${relative_id}" id="relative-${relative_id}" class="flex items-center space-x-10">
+                                            <div class="h-12 w-12 rounded-full">
+                                                
+                                                <img id="search_result_image-${relative_id}" src="/media/${relative.fields.profile_image}" alt="${relative.fields.title} ${relative.fields.full_name} ${relative.fields.surname}"
+                                                    class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                
+                                            </div>
+                                            <div class="space-y-1">
+                                                <h3 id="search_result_full_names" class="text-custom-h text-lg font-bold"><span id="${relative_id}-title">${relative.fields.title}</span> <span id="${relative_id}-full_name">${relative.fields.full_name}</span> <span id="${relative_id}-surname">${relative.fields.surname}</span> <span id="${relative_id}-maiden_name" class="hidden">${relative.fields.maiden_name}</span></h3>
+                                                <div class="hidden">
+                                                    <span id="${relative_id}-description">${relative.fields.description}</span>
+                                                    <span id="${relative_id}-gender">${relative.fields.gender}</span> <span id="${relative_id}-phone">${relative.fields.phone}</span> <span id="${relative_id}-relationship">${relative.fields.relationship}</span> <span id="${relative_id}-relative_side">${relative.fields.relative_side}</span>    
+                                                </div>
+                                                <p id="search_result_relations" class="text-gray-600 font-normal text-sm">${mess}</p>
+                                            </div>
+                                        </div>
+                            `);
+                        });
+                    }
+                    
 
+                } else {
+                    if (search_results_container.classList.contains("block")) {
+                        search_results_container.classList.remove("block");
+                        search_results_container.classList.add("hidden");
+                    }
+                }
+            },
+            error: function (error) {
+                
+            },
+        });
+    }
+)
     file_picker.onchange = ({target}) => {
         const no_image = document.querySelector("#no_image");
         const img_container = document.querySelector("#img_container")
@@ -231,6 +330,95 @@
         }
     })
 
-</script>
 
+    function displayRelatedRelatives(relatives) {
+
+            let message = "Also related to ";
+
+            if (relatives.length === 1) {
+                message += relatives[0];
+            } else if (relatives.length === 2) {
+                console.log(relatives.join(" & "))
+                message += relatives.join(" & ");
+            } else if (relatives.length > 2) {
+                const firstTwoNames = relatives.slice(0, 2).join(", ");
+                const remainingCount = relatives.length - 2;
+                message += `${firstTwoNames} & ${remainingCount}+ more`;
+            }
+
+            return message
+        }
+
+    function select_relative(relative_id){
+        if (search_results_container.classList.contains("block")) {
+            search_results_container.classList.remove("block");
+            search_results_container.classList.add("hidden");
+        }
+        $("#id_relative_id").val($(`#relative-${relative_id}`).data("id"))
+
+        const image = $(`#search_result_image-${relative_id}`).attr("src")
+        const title = $(`#${relative_id}-title`).text()
+        const description = $(`#${relative_id}-description`).text()
+        const full_name = $(`#${relative_id}-full_name`).text()
+        const surname = $(`#${relative_id}-surname`).text()
+        const maiden_name = $(`#${relative_id}-maiden_name`).text()
+        const gender = $(`#${relative_id}-gender`).text()
+        const phone = $(`#${relative_id}-phone`).text()
+        const relationship = $(`#${relative_id}-relationship`).text()
+        const relative_side = $(`#${relative_id}-relative_side`).text()
+
+        $("#id_title").val(title)
+        $("#id_full_name").val(full_name)
+        $("#id_surname").val(surname)
+        if(maiden_name !== "null"){
+            $("#id_maiden_name").val(maiden_name)
+        }
+        $("#id_profile_image").attr("src", image)
+        // $("#id_profile_image").val(image)
+        $("#id_gender").val(gender)
+        $("#id_relationship").val(relationship)
+        $("id_relative_side").val(relative_side)
+        $("#id_phone").val(phone)
+        $("#id_description").text(description)
+
+        const no_image = document.querySelector("#no_image");
+        const img_container = document.querySelector("#img_container")
+        const img = document.querySelector("#img")
+        const file = image
+        if (file) {
+            // console.log(no_image)
+            if (no_image) {
+                // console.log(img_container)
+
+                img_container.removeChild(no_image);
+                img_container.innerHTML += `
+                    <img
+                        src="${image}"
+                        alt="${full_name}"
+                        class="w-full h-full object-cover"
+                        id="img"
+                    />
+                `
+            } else {
+                img.src = image
+            }
+
+        }
+    }
+</script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+<script>
+
+    $(document).ready(function () {
+        // Initialize DateTimePicker for startDatetime
+        $('#id_date_of_birth').datepicker({
+            maxDate: 0,  // Set minimum date to the current date
+        });
+
+        // Initialize DateTimePicker for endDatetime
+        $('#id_date_of_death').datepicker({
+            maxDate: 0,  // Set minimum date to the current date
+        });
+    });
+</script>
 {% endblock js %}

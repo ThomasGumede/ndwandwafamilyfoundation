@@ -42,7 +42,7 @@ class QualificationUpdateForm(forms.ModelForm):
 class RelativeForm(forms.ModelForm):
     class Meta:
         model = RelativeModel
-        fields = ['title', 'surname', 'full_name', 'profile_image', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name', 'description']
+        fields = ['title', 'surname', 'full_name', 'profile_image', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name', 'description', 'date_of_birth', 'date_of_death']
 
         widgets = {
             'profile_image': forms.FileInput(attrs={"class": "w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute -z-[1]"}),
@@ -53,6 +53,8 @@ class RelativeForm(forms.ModelForm):
             'relationship': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
             'relative_side': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
             'gender': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
+            'date_of_birth': forms.DateInput(attrs={"type": "text", "class": "block relative_date p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150", "step": "any"}),
+            'date_of_death': forms.DateInput(attrs={"type": "text", "class": "block relative_date p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150", "step": "any"}),
         }
 
     def clean_relative_side(self):
@@ -87,9 +89,10 @@ class RelativeForm(forms.ModelForm):
     #     return clean
 
 class RelativeUpdateForm(forms.ModelForm):
+    relative_id = forms.UUIDField(required=False)
     class Meta:
         model = RelativeModel
-        fields = ['title', 'surname', 'full_name', 'profile_image', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name', 'description']
+        fields = ['title', 'surname', 'full_name', 'profile_image', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name', 'description', 'date_of_birth', 'date_of_death']
 
         widgets = {
             'title': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
@@ -99,6 +102,8 @@ class RelativeUpdateForm(forms.ModelForm):
             'relationship': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
             'relative_side': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
             'gender': forms.Select(attrs={"class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
+            'date_of_birth': forms.DateInput(attrs={"type": "text", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150", "step": "any"}),
+            'date_of_death': forms.DateInput(attrs={"type": "text", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150", "step": "any"}),
         }
 
     def clean_relative_side(self):

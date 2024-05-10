@@ -149,6 +149,30 @@
 
                             </div>
                         </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_date_of_birth" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    date of birth
+                                </label>
+                                {{form.date_of_birth}}
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.date_of_birth.help_text}}</span>
+                        
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 md:px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="id_date_of_death" class="block text-custom-h font-semibold text-sm capitalize mb-2"
+                                    htmlfor="grid-password">
+                                    date of death
+                                </label>
+                                {{form.date_of_death}}
+                                <span
+                                    class="text-[11px] text-custom-tertiary block font-normal lowercase">{{form.date_of_death.help_text}}</span>
+                        
+                            </div>
+                        </div>
                         <div class="w-full lg:w-12/12 md:px-4">
                             <div class="relative w-full mb-3">
                                 <label for="id_biography">
@@ -231,5 +255,19 @@
     })
 
 </script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+<script>
 
+    $(document).ready(function () {
+        // Initialize DateTimePicker for startDatetime
+        $('#id_date_of_birth').datepicker({
+            maxDate: 0,  // Set minimum date to the current date
+        });
+
+        // Initialize DateTimePicker for endDatetime
+        $('#id_date_of_death').datepicker({
+            maxDate: 0,  // Set minimum date to the current date
+        });
+    });
+</script>
 {% endblock js %}

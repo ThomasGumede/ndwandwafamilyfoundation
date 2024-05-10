@@ -57,6 +57,20 @@
                 </p>
               </div>
             </div>
+            <div class="flex w-full items-center justify-between mb-2">
+            
+              <div id="ticket_title">
+            
+                <h6 class="text-base">
+                  Tickets Type
+                </h6>
+              </div>
+              <div class=" rounded-md w-fit">
+                <p class="text-base font-normarl">
+                  {{max_forms}}
+                </p>
+              </div>
+            </div>
             
       
           </div>
@@ -65,7 +79,7 @@
       <div class="space-y-4 p-2 bg-white w-full relative">
         {% include "includes/errors.html" %}
         <div class="px-4">
-          <form method="post" enctype="multipart/form-data">
+          <form method="post" id="ticket_form" enctype="multipart/form-data">
             {% csrf_token %}
             
             <div>
@@ -88,20 +102,15 @@
               />
             </div>
             <div class="w-full grid bg-white gap-5">
-                <div class="flex w-full items-center justify-between">
+                <div class="">
                     <h6 class="text-custom-h w-fit text-base mt-3 mb-6 font-bold uppercase">
                         Add Ticket types
                     </h6>
-                    <div class="w-fit">
-                        <p id="add_ticket_type"
-                            class="border cursor-pointer py-3 px-5 rounded-md duration-500 hover:bg-white hover:text-custom-h border-custom-h outline-none text-white bg-custom-h">
-                            Add ticket type
-                        </p>
-                    </div>
+                    
                 </div>
              
               <div id="forms_container" data-max-forms="{{max_forms}}" class="grid bg-white gap-5 w-full">
-                {% for form in forms %}
+                
 
                 <div id="form_content_0" class="w-full mb-2 p-4 relative block">
                     <div class="flex flex-wrap gap-4">
@@ -126,13 +135,7 @@
                         <div class="w-full lg:w-4/12 md:px-4">
                             <div class="relative w-full mb-3">
                             <label for="{{form.price.id_for_label}}"> Price* </label>
-                            <input
-                                value=""
-                                id="{{form.price.id_for_label}}"
-                                name="{{form.price.html_name}}"
-                                type="number"
-                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
-                            />
+                            {{form.price}}
                             <span
                                 class="text-[11px] text-custom-tertiary block font-normal lowercase"
                                 >{{form.price.help_text}}</span
@@ -150,13 +153,7 @@
                             <label for="{{form.available_seats.id_for_label}}">
                                 total seats*
                             </label>
-                            <input
-                                id="{{form.available_seats.id_for_label}}"
-                                name="{{form.available_seats.html_name}}"
-                                type="number"
-                                min="0"
-                                class="block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
-                            />
+                            {{form.available_seats}}
                             <span
                                 class="text-[11px] text-custom-tertiary block font-normal lowercase"
                                 >{{form.available_seats.help_text}}</span
@@ -168,9 +165,7 @@
                             <label for="{{form.sale_start.id_for_label}}">
                               ticket sale start date*
                             </label>
-                            <input type="text" name="{{form.sale_start.html_name}}"
-                              class="block ticket_datetime p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
-                              maxlength="250" id="{{form.sale_start.id_for_label}}">
+                            {{form.sale_start}}
                             <span class="text-[11px] text-custom-tertiary block font-normal lowercase">Add ticket sale start date</span>
                         
                           </div>
@@ -180,26 +175,19 @@
                             <label for="{{form.sale_end.id_for_label}}">
                               ticket sale end date*
                             </label>
-                            <input type="text" name="{{form.sale_end.html_name}}"
-                              class="block ticket_datetime p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"
-                              maxlength="250" id="{{form.sale_end.id_for_label}}">
+                            {{form.sale_end}}
                             <span class="text-[11px] text-custom-tertiary block font-normal lowercase">Add ticket sale end date</span>
                         
                           </div>
                         </div>
                     </div>
-                    <div class="absolute top-4 right-4">
-                        <div data-formid="form_content_0" onclick="delete_ticket_form('form_content_0')" class="grid items-center delete_current_form group justify-center cursor-pointer">
-                            <i class="fa-solid fa-trash group-hover:scale-105 text-2xl text-custom-h"></i>
-                        </div>
-                    </div>
+                    
                 </div>
-                <hr class="mb-4 border-b-1 border-gray-300" />
-                {% endfor %}
                 
+                <input type="text" name="add_another" id="id_add_another" class="hidden">
                 </div>
             </div>
-            <div class="mt-3">
+            <div class="mt-3 flex items-center space-x-7">
               <div
                 class="text-center duration-500 group hover:bg-white border-2 border-custom-primary inline-block h-12 bg-custom-primary w-[150px] rounded-md cursor-pointer"
               >
@@ -209,7 +197,12 @@
                   class="text-white group-hover:text-custom-primary duration-500 w-full h-full cursor-pointer text-sm font-semibold"
                 />
               </div>
-              
+              <div id="add_another"
+                class="text-center duration-500 grid items-center group hover:bg-white border-2 border-custom-primary justify-center h-12 bg-custom-primary w-fit px-2 rounded-md cursor-pointer">
+                <p
+                  class="text-white group-hover:text-custom-primary duration-500 text-sm font-semibold">
+                  save and add another</p>
+              </div>
             </div>
           </form>
         </div>
@@ -229,11 +222,29 @@
     // Initialize DateTimePicker for startDatetime
     $(document).ready(function () {
       // Initialize DateTimePicker for startDatetime
-      $('.ticket_datetime').datetimepicker({
+      $('#id_sale_end').datetimepicker({
         format: 'Y-m-d H:i:s',
         minDate: 0,  // Set minimum date to the current date
         step: 15,   // Set the time step to 15 minutes (optional)
       });
+      $('#id_sale_start').datetimepicker({
+        format: 'Y-m-d H:i:s',
+        minDate: 0,  // Set minimum date to the current date
+        step: 15,   // Set the time step to 15 minutes (optional)
+      });
+    });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('add_another').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Add the value 'add another' to the hidden input field
+      document.getElementById('id_add_another').value = 'add another';
+
+      // Submit the form
+      document.getElementById('ticket_form').submit();
     });
   });
 </script>

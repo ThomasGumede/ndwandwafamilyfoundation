@@ -56,7 +56,12 @@
                 <div class="py-7 mb-4">
                     <article class="flex flex-col w-full gap-4 lg:flex-row lg:gap-7 h-full lg:h-60">
                         <div id="image_container" class="w-full lg:w-4/12 h-full rounded-md overflow-hidden">
-                            <img src="{{event.image.url}}" class="w-full h-full object-cover object-center" />
+                            {% if event.image %}
+                                <img src="{{event.image.url}}" class="w-full h-full object-cover object-center" />
+                            {% else %}
+                            <img src="{% static 'images/global/image-no.jpg' %}" class="w-full h-full object-cover object-center" />
+                            {% endif %}
+                            
                         </div>
                         <div id="order_content" class="w-full lg:w-8/12 h-full grid">
                             <div class="mb-4">

@@ -47,7 +47,7 @@ EVENT_CATEGORIES = (
     )
 class EventModel(AbstractCreate):
     category = models.ForeignKey(CategoryModel, on_delete=models.PROTECT, related_name="events", null=True, blank=True)
-    image = models.ImageField(help_text=_("Upload campaign image."), upload_to=handle_event_file_upload)
+    image = models.ImageField(help_text=_("Upload campaign image."), upload_to=handle_event_file_upload, null=True, blank=True)
     title = models.CharField(help_text=_("Enter title for your event"), max_length=150)
     slug = models.SlugField(max_length=250, blank=True, unique=True)
     organiser = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None, related_name="events")

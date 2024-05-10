@@ -4,7 +4,7 @@ from accounts.views.account import *
 from accounts.views.notification import subscribe, unsubscribe
 from accounts.views.password import password_reset_request, password_change, passwordResetConfirm, password_reset_sent
 from accounts.views.qualification import create_qualification, update_qualification, qualifications, delete_qualification
-from accounts.views.relative import create_relative, update_relative, relatives, relative, delete_relative
+from accounts.views.relative import create_relative, update_relative, relatives, relative, delete_relative, relatives_api
 
 
 app_name = "accounts"
@@ -38,7 +38,8 @@ urlpatterns = [
     path('qualification/create', create_qualification, name="create-qualification"),
 
     path('relatives', relatives, name="relatives"),
-    path('relatives/<uuid:id>', relative, name="relative"),
+    path('relatives/api', relatives_api, name="relatives-api"),
+    path('relatives/details/<uuid:id>', relative, name="relative"),
     path('relative/update/<uuid:id>', update_relative, name="update-relative"),
     path('relative/delete/<uuid:id>', delete_relative, name="delete-relative"),
     path('relative/create', create_relative, name="create-relative"),

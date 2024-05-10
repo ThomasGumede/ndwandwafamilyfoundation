@@ -50,6 +50,8 @@
                                     class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Events</a>
                                 <a href="{% url 'home:news' %}"
                                     class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Blog</a>
+                                    <a href="{% url 'home:search' %}"
+                                        class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Search</a>
                                     {% if request.user.is_authenticated %}
                                     <a href="{% url 'accounts:me' %}"
                                         class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors lg:hidden duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">{{request.user.get_full_name}}</a>

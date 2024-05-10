@@ -33,7 +33,7 @@
                 <div class="relative h-full block">
                     <div class="w-full h-full overflow-hidden relative block">
                         {% if campaign.image %}
-                        <img src="{{campaign.image.url}}" class="w-full h-full" />
+                        <img src="{{campaign.image.url}}" alt="{{campaign.title}}" class="w-full h-full" />
                         {% else %}
                         <img src="{% static 'images/global/image-no.jpg' %}" class="w-full h-full" />
                         {% endif %}
@@ -335,7 +335,7 @@
                             <li class="flex items-center ">
                                 <div class="pr-5 w-20 h-16 overflow-hidden">
                                     {% if campaign.image.url %}
-                                        <img src="{{campaign.image.url}}" alt="" class="w-full h-full object-cover">
+                                        <img src="{{campaign.image.url}}" alt="{{campaign.title}}" class="w-full h-full object-cover">
                                     {% else %}
                                         <div class="w-full h-full grid items-center justify-center bg-custom-h">
                                             <p class="text-white font-semibold">{{campaign.title.0}}</p>

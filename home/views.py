@@ -56,6 +56,9 @@ def search(request):
     form = SearchForm()
     query = request.GET.get("query", None)
     query_by = request.GET.get("search_by", None)
+    if not query:
+        return render(request, "home/search.html")
+    
     results_dic = {
         "campaigns" : CampaignModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
         "events": EventModel.objects.filter(Q(title__icontains=query)| Q(organiser__first_name__icontains=query)),
@@ -97,8 +100,8 @@ def search(request):
         
     
     context["form"] = form
-    template = "home/search.html"
-    return render(request, template, context=context)
+    
+    return render(request, "home/search.html", context=context)
 
 def news(request, category_slug=None):
     query = request.GET.get("query", None)

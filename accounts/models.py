@@ -53,7 +53,6 @@ class CompanyModel(AbstractCreate, AbstractProfile):
     def __str__(self):
         return "Ndwandwa Family Foundation"
     
-
 class WalletModel(AbstractCreate):
     name = models.CharField(max_length=250)
     balance = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)
@@ -174,6 +173,8 @@ class RelativeModel(AbstractCreate):
     full_name = models.CharField(help_text=_("Enter your relative's name"), max_length=300)
     maiden_name = models.CharField(help_text=_("Enter your relative's maiden name"), max_length=300, blank=True, null=True)
     surname = models.CharField(help_text=_("Enter your relative's surname"), max_length=300)
+    date_of_birth = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    date_of_death = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     relationship = models.CharField(max_length=300, choices=RelationShip.choices, default=RelationShip.OTHER)
     phone = models.CharField(help_text=_("Enter relative's cell phone number"), max_length=15,  validators=[PHONE_VALIDATOR], null=True, blank=True)
     relative = models.ForeignKey(CustomUserModel, related_name="relatives", on_delete=models.CASCADE)

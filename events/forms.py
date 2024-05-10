@@ -3,6 +3,7 @@ from events.models import EventModel, TicketOrderModel, EventTicketTypeModel, Ti
 from tinymce.widgets import TinyMCE
 
 class EventForm(forms.ModelForm):
+    
     class Meta:
         model = EventModel
         fields = ("image", "title", "category", "content", "venue_name", "tip", "event_address", "map_coordinates", "event_startdate", "event_enddate", "event_link")
@@ -42,6 +43,7 @@ class EventForm(forms.ModelForm):
         
         
 class EventTicketTypeForm(forms.ModelForm):
+    add_another = forms.CharField(max_length=100, required=False)
     class Meta:
         model = EventTicketTypeModel
         fields = ("title", "available_seats", "price", "sale_start", "sale_end")
@@ -67,9 +69,36 @@ class EventTicketTypeForm(forms.ModelForm):
                     }
                 ),
             
-            'sale_start': forms.DateTimeInput(attrs={"type": "datetime-local", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
-            'sale_end': forms.DateTimeInput(attrs={"type": "datetime-local", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
+            'sale_start': forms.DateTimeInput(attrs={"type": "text", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
+            'sale_end': forms.DateTimeInput(attrs={"type": "text", "class": "block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
             
+        }
+
+class EventTicketTypeUpdateForm(forms.ModelForm):
+    class Meta:
+        model = EventTicketTypeModel
+        fields = ("title", "available_seats", "price")
+
+        widgets = {
+            'title': forms.TextInput(
+                attrs={
+                    'type': 'text', 
+                    'class': 'block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150'
+                    }
+                ),
+            'available_seats': forms.NumberInput(
+                attrs={
+                    'type': 'number', 
+                    'class': 'block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150'
+                    }
+                ),
+            'price': forms.NumberInput(
+                attrs={
+                    'type': 'number',
+                    'step': '0.01',
+                    'class': 'block p-3 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150'
+                    }
+                ),   
         }
 
 class TicketOrderForm(forms.ModelForm):

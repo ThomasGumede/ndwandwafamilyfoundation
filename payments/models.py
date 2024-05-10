@@ -9,7 +9,11 @@ class NdwandwaBankModel(AbstractCreate):
 
 # celery -A ndwandwafam worker/beat -l info
     def __str__(self) -> str:
-        return "Ndwandwa bank"
+        return f"{self.order_id} - {self.received_at}"
+    
+    class Meta:
+        verbose_name = 'Ndwandwa Finance Information'
+        verbose_name_plural = 'Ndwandwa Finance Informations'
 
 class PaymentInformation(models.Model):
     id = models.CharField(max_length=300, unique=True, primary_key=True, db_index=True, editable=False)
