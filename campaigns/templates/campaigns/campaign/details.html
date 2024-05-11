@@ -9,8 +9,11 @@
 {% block twitter %}
 <meta name="twitter:title" content="{{campaign.title}}" />
 <meta name="twitter:description" content="{{campaign.details|truncatechars:157}}" />
-
+{% if campaign.image %}
 <meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{{campaign.image.url}}" />
+{% else %}
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/global/image-no.jpg' %}" />
+{% endif %}
 {% endblock twitter %}
 
 

@@ -4,7 +4,6 @@ from accounts.forms.profile_forms import SocialLinksForm
 from accounts.utils import StatusChoices, send_verification_email, send_email_confirmation_email
 from accounts.tokens import account_activation_token
 from accounts.decorators import user_not_authenticated
-from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -36,7 +35,7 @@ def activate(request, uidb64, token):
         
         user.is_active = True
         user.is_email_activated = True
-        wallet , created_wallet = WalletModel.objects.get_or_create(name=f"{user.username}-wallet", owner=user)
+        
         for group in MailingGroupModel.objects.all():
             subscribed, created = SubscribeModel.objects.get_or_create(user=user, mailinggroup=group)
             
@@ -120,6 +119,7 @@ def register(request):
                 user.identity_choice = cd['identity_choices']
                 user.identity_number = cd['identity_number']
             user.save()
+            wallet = WalletModel.objects.create(name=f"{user.username}-wallet", owner=user)
             sent = send_verification_email(user, request)
 
             if not sent:

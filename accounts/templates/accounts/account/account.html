@@ -42,6 +42,14 @@
                             </p>
                             {% endif %}
                         </div>
+                        <div class=" text-[#6e6d8f] mt-3">
+                            {% for qualification in user.qualifications.all %}
+                        
+                            <p class="text-sm lg:text-base font-normal text-[#6e6d8f]">
+                                <i class="fa-solid fa-user-graduate mr-1"></i> {{qualification.get_qualification}}
+                            </p>
+                            {% endfor %}
+                        </div>
                         <div class=" text-[#6e6d8f] mt-3 flex items-center space-x-5">
                             {% if user.facebook %}
                                 <div class="group transition-all duration-300">
@@ -65,6 +73,7 @@
                             </div>
                             {% endif %}
                         </div>
+                        
                     </div>
                     
                     
@@ -97,10 +106,7 @@
                             class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
                             <p>Relatives</p>
                         </div>
-                        <div data-category="qualification"
-                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
-                            <p>Qualifications</p>
-                        </div>
+                        
                         <div data-category="campaigns"
                             class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
                             <p>Campaigns</p>
@@ -160,66 +166,7 @@
                     </div>
 
                 </div>
-                <div id="qualification" class="hidden w-full user_nav_list">
-                    <div class="space-y-5 grid w-full">
-                        <h5 class="text-black text-2xl font-bold">Qualifications</h5>
-                        {% if user.qualifications.count == 0 %}
-
-                        <div class="">
-                            <div class="space-y-4 w-full">
-
-                                <p class="text-sm text-custom-tertiary font-normal">
-                                    {{user.first_name}} currently does not have qualifications
-                                </p>
-                            </div>
-                        </div>
-
-                        {% else %}
-                        <div class="overflow-x-auto">
-                            <div class="w-full overflow-x-auto">
-                                <div class="w-full overflow-x-auto">
-                                    <table class="w-full">
-                                        <thead>
-                                            <tr
-                                                class="text-sm font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                                <th class="px-4 py-3">Institution</th>
-                                                <th class="px-4 py-3">Name</th>
-                                                <th class="px-4 py-3">Type</th>
-                                                <th class="px-4 py-3">Year</th>
-                                                
-
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white">
-
-                                            {% for qualification in user.qualifications.all %}
-                                            <tr class="text-gray-700"></tr>
-                                            <td class="px-4 py-3 border">
-                                                <p class="text-xs text-gray-500">{{qualification.institution}}</p>
-                                            </td>
-                                            <td class="px-4 py-3 border">
-                                                <p class="text-xs text-gray-500">{{qualification.title}}</p>
-                                            </td>
-                                            <td class="px-4 py-3 border">
-                                                <p class="text-xs text-gray-500">{{qualification.qualification_type}}
-                                                </p>
-                                            </td>
-                                            <td class="px-4 py-3 border">
-                                                <p class="text-xs text-gray-500">{{qualification.year}}</p>
-                                            </td>
-                                            
-
-                                            </tr>
-                                            {% endfor %}
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
+                
                 <div id="next_of_kins" class="hidden w-full user_nav_list">
                     <div class="space-y-5 grid w-full">
                         <h5 class="text-black text-2xl font-bold ">Relatives & Spouse</h5>

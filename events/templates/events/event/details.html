@@ -12,8 +12,11 @@
 {% block twitter %}
 <meta name="twitter:title" content="{{event.title}}" />
 <meta name="twitter:description" content="{{event.content|truncatechars:157}}" />
-
+{% if event.image %}
 <meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{{event.image.url}}" />
+{% else %}
+<meta name="twitter:image" content="{{request.scheme}}://{{request.get_host}}{% static 'images/global/image-no.jpg' %}" />
+{% endif %}
 {% endblock twitter %}
 
 
@@ -22,7 +25,12 @@
 <meta property="og:type" content="business.business">
 <meta property="og:title" content="{{event.title|truncatechars:10}}">
 <meta property="og:url" content="https://ndwandwa.africa">
+{% if event.image %}
 <meta property="og:image" content="{{request.scheme}}://{{request.get_host}}{{event.image.url}}">
+{% else %}
+<meta name="og:image"
+    content="{{request.scheme}}://{{request.get_host}}{% static 'images/global/image-no.jpg' %}" />
+{% endif %}
 {% endblock OG %}
 
 {% block content %}
