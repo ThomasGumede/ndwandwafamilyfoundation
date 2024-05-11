@@ -41,7 +41,7 @@ class QualificationInline(admin.TabularInline):
 class RelativeInline(admin.TabularInline):
     model = RelativeModel
     exclude = ('description',)
-    readonly_fields =('title', 'surname', 'full_name', 'profile_image', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name')
+    readonly_fields =('title', 'surname', 'full_name', 'relationship', 'phone', 'gender', 'relative_side', 'maiden_name')
     empty_value_display = "Empty"
     
     extra = 0

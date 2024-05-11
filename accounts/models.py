@@ -168,7 +168,7 @@ class IdentityVerificationModel(AbstractCreate):
         return f"{self.user.get_full_name()} - Identity verification data"
 
 class RelativeModel(AbstractCreate):
-    profile_image = models.ImageField(help_text=_("Upload relative's profile image"), upload_to=handle_relativeprofile_upload, null=True, blank=True, default="images/global/no-image-available.webp")
+    profile_image = models.ImageField(help_text=_("Upload relative's profile image"), upload_to=handle_relativeprofile_upload, null=True, blank=True)
     title = models.CharField(max_length=30, choices=TITLE_CHOICES)
     full_name = models.CharField(help_text=_("Enter your relative's name"), max_length=300)
     maiden_name = models.CharField(help_text=_("Enter your relative's maiden name"), max_length=300, blank=True, null=True)
