@@ -211,6 +211,9 @@ class QualificationModel(AbstractCreate):
 
     def get_absolute_url(self):
         return reverse("accounts:update-qualification", kwargs={"id": self.id})
+    
+    def get_qualification(self):
+        return f"{self.title}({self.year}) - {self.institution}"
 
     class Meta:
         verbose_name = 'Qualification'
