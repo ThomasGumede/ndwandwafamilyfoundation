@@ -22,7 +22,7 @@ urlpatterns = [
 
     path("orders/all", ticket_orders, name="all-ticket-orders"),
     path("orders/all/<event_id>", ticket_orders, name="ticket-orders"),
-    path("order/manage/<slug:event_slug>/<uuid:order_id>", ticket_order, name="view-order"),
+    path("order/all/<slug:event_slug>/<uuid:order_id>", ticket_order, name="order"),
     path("order/generate/guest/<uuid:event_id>", generate_guest_list, name="generate-guest-list"),
     path("order/create/<slug:event_slug>", create_ticket_order, name="create-ticket-order"),
     path("order/cancel/<uuid:order_id>", cancel_ticket_order, name="cancel-ticket-order"),

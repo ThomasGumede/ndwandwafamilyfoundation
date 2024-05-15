@@ -17,7 +17,7 @@
 
                     <p class="text-sm text-gray-600 font-normal">
                         The order <strong>{{order.order_number}}</strong> was placed successfully, We are waiting for
-                        payment confirmation before sending tickets.
+                        payment confirmation.
                     </p>
                     {% endif %}
                     {% if order.paid == 'PAID' %}
@@ -87,14 +87,14 @@
                                         <h6 class="text-base lg:text-lg font-semibold">Billing address</h6>
                                         <div class="relative block">
                                             <p class="text-sm lg:text-base text-gray-500">
-                                                {{request.user.address.address_one}}
+                                                {{order.contributor.address_one}}
                                             </p>
                                             <p class="text-sm lg:text-base text-gray-500">
-                                                {{request.user.address.address_two}}
+                                                {{order.contributor.address_two}}
                                             </p>
                                             <p class="text-sm lg:text-base text-gray-500">
-                                                {{request.user.address.city}}, {{request.user.address.province}},
-                                                {{request.user.address.zipcode}}
+                                                {{order.contributor.city}}, {{order.contributor.province}},
+                                                {{order.contributor.zipcode}}
                                             </p>
                                         </div>
                                     </div>
@@ -102,13 +102,13 @@
                                         <h6 class="text-base lg:text-lg font-semibold">Contributor</h6>
                                         <div class="relative block">
                                             <p class="text-sm lg:text-base text-gray-500">
-                                                {{request.user.get_full_name}}
+                                                {{order.contributor.get_full_name}}
                                             </p>
                                             <p class="text-sm lg:text-base text-gray-500">
-                                                {{request.user.email}}
+                                                {{order.contributor.email}}
                                             </p>
                                             <p class="text-sm lg:text-base text-gray-500">
-                                                {{request.user.phone}}
+                                                {{order.contributor.phone}}
                                             </p>
                                         </div>
                                     </div>
