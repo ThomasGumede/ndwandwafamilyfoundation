@@ -28,21 +28,24 @@ def webhook(request):
 
             # Compare the signatures
             signature = headers.get('webhook-signature').split(' ')[0].split(',')[1]
-            
+            body_dict = json.loads(request.body.decode('utf-8'))
+            payload = body_dict["payload"]
+            metadata = payload["metadata"]
             if hmac.compare_digest(signature, expected_signature):
-                body_dict = json.loads(request.body.decode('utf-8'))
-                payload = body_dict["payload"]
-                metadata = payload["metadata"]
                 paymentinformation, created = PaymentInformation.objects.get_or_create(id=metadata["checkoutId"], data=json.dumps(body_dict))
                 if created or paymentinformation is not None:
                     return HttpResponse(status=200)
+                return HttpResponse(status=200)
             
+            paymentinformation, created = PaymentInformation.objects.get_or_create(id=metadata["checkoutId"], data=json.dumps(body_dict))
+            logger.error("Failed to verify signature")
             return HttpResponse(status=403)
         else:
+            
             logger.error(request.body)
             return HttpResponse(status=403)
     except Exception as err:
-
+        
         logger.error(f"Webhook - {err}")
         return HttpResponse(status=403)
 

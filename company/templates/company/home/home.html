@@ -1,0 +1,131 @@
+{% extends '_manage.html' %}
+{% load static %}
+
+{% block title %}Ndwandwa Admin{% endblock title %}
+
+{% block accountblock %}
+<section class="w-full bg-custom-bg py-10 relative block">
+    {% include "includes/messages.html" %}
+    <div class="">
+        <div class="relative overflow-hidden block">
+            <div class="grid items-center gap-7 mb-7 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{event_count}}</span>
+                        <span class="block text-gray-500">Events</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{campaigns_count}}</span>
+                        <span class="block text-gray-500">campaigns</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{user_count}}</span>
+                        <span class="block text-gray-500">Accounts</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div
+                        class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">R{{total}}</span>
+                        <span class="block text-gray-500">Earnings</span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full">
+                <div class="py-7 mb-4">
+                    <div class="p-2">
+                        <div class="bg-white p-4 rounded-md">
+                            <h2 class="text-gray-500 text-lg font-semibold pb-4">Latest Earnings</h2>
+                            <div class="my-1"></div>
+                            <table class="w-full text-left table-auto min-w-max">
+                                <thead>
+                                    <tr>
+                                        <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                            <p
+                                                class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                Order id(From)
+                                            </p>
+                                        </th>
+                                        <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                            <p
+                                                class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                Amount
+                                            </p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for earning in earnings %}
+                                    <tr>
+                                        <td class="p-2 border-b border-blue-gray-50">
+                                            <a href="{% url 'company:view-earning' earning.order_uuid %}"
+                                                class="flex items-center gap-3">
+                                                
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                                                    {{earning.order_id}}
+                                                </p>
+                                            </a>
+                                        </td>
+
+                                        <td class="p-2 border-b border-blue-gray-50">
+                                            <div class="w-max">
+                                                <div
+                                                    class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                                                    <span class="">{{earning.balance}}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table> 
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock accountblock %}

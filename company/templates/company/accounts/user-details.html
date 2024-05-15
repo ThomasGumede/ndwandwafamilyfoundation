@@ -1,0 +1,749 @@
+{% extends '_manage.html' %}
+{% load static %}
+{% block title %}{{user.username}}{% endblock title %}
+
+{% block content %}
+
+
+<section class="w-full font-sans py-20 px-0 bg-white">
+    <div class="container">
+        <div class="w-full">
+            <div class="flex w-fit flex-col lg:items-start md:flex-row gap-11 mx-auto">
+                <div class="w-28 h-28 md:w-44 md:h-44 mx-auto overflow-hidden rounded-full bg-custom-primary">
+                    {% if user.profile_image %}
+                    <img src="{{user.profile_image.url}}" alt="{{user.first_name}}"
+                        class="w-full h-full object-cover" />
+                    {% else %}
+                    <p class="text-white font-bold text-3xl md:text-6xl">{{user.first_name.0}}{{user.last_name.0}}</p>
+                    {% endif %}
+                </div>
+                <div class="space-y-3 text-center md:text-left md:w-[550px]">
+                    <div class="">
+                        <p class="text-3xl md:text-4xl font-bold text-black">
+                            {{user.title}} {{user.get_full_name}}
+                        </p>
+                        <p class="text-xl font-normal text-[#6e6d8f]"><span>{{user.occupation}}</span> |
+                            <span>{{user.professional_affiliations}}</span> | <span>R{{user.my_wallet.balance}}</span>
+                        </p>
+                    </div>
+
+                    <div class="">
+                        <div class="space-x-1 text-[#6e6d8f]">
+                            <p class="text-base inline font-normal">
+                                <i class="fa-solid fa-phone mr-1"></i> {{user.phone}} |
+                            </p>
+                            <p class="text-base inline font-normal">
+                                <i class="fa-solid fa-envelope mr-1"></i> {{user.email}}
+                            </p>
+                        </div>
+                        <div class="space-x-1 text-[#6e6d8f]">
+                            {% if user.address %}
+                            <p class="text-sm lg:text-base font-normal text-[#6e6d8f]">
+                                <i class="fa-solid fa-location-dot mr-1"></i> {{user.address}}
+                            </p>
+                            {% endif %}
+                        </div>
+                        <div class=" text-[#6e6d8f] mt-3">
+                            {% for qualification in user.qualifications.all %}
+
+                            <p class="text-sm lg:text-base font-normal text-[#6e6d8f]">
+                                <i class="fa-solid fa-user-graduate mr-1"></i> {{qualification.get_qualification}}
+                            </p>
+                            {% endfor %}
+                        </div>
+                        <div class=" text-[#6e6d8f] mt-3 flex items-center space-x-5">
+                            {% if user.facebook %}
+                            <div class="group transition-all duration-300">
+                                <a class="group-hover:animate-bounce" href="{{user.facebook}}" _blank><i
+                                        class="fa-brands fa-facebook text-2xl"></i></a>
+                            </div>
+                            {% endif %}
+                            {% if user.twitter %}
+                            <div class="group transition-all duration-300">
+                                <a class="group-hover:animate-bounce" href="{{user.twitter}}" _blank><i
+                                        class="fa-brands fa-x-twitter text-2xl"></i></a>
+                            </div>
+                            {% endif %}
+                            {% if user.instagram %}
+                            <div class="group transition-all duration-300">
+                                <a class="group-hover:animate-bounce" href="{{user.instagram}}" _blank><i
+                                        class="fa-brands fa-instagram text-2xl"></i></a>
+                            </div>
+                            {% endif %}
+
+                            {% if user.linkedIn %}
+                            <div class="group transition-all duration-300">
+                                <a class="group-hover:animate-bounce" href="{{user.linkedIn}}" _blank><i
+                                        class="fa-brands fa-linkedin text-2xl"></i></a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    {% if request.user.is_staff and request.user.is_superuser %}
+                    <div class="block space-y-3">
+
+                        <div>
+                            <p class="text-xl font-normal text-[#6e6d8f]"> <span>R{{user.my_wallet.balance}}</span>
+                            </p>
+                        </div>
+                        <form method="post" class="relative block">
+                            {% csrf_token %}
+                            <div class="flex flex-wrap gap-5">
+                                {{form.status}}
+                                <button type="submit" class="text-center p-2 rounded-md border outline-none text-black text-base">
+                                    Submit
+                                </button>
+                            </div>
+                        
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full bg-white mb-20 overflow-hidden">
+    <div class="container">
+        <div class="w-full space-y-5">
+            <div class="border w-full p-2 md:p-4">
+                <div class="w-fit mx-auto">
+                    <div class="flex flex-wrap items-center w-full gap-7">
+                        <div data-category="biography"
+                            class="bg-gray-300 cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-gray-900 font-medium text-sm md:text-lg">
+                            <p>Biography</p>
+                        </div>
+                        <div data-category="next_of_kins"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Relatives</p>
+                        </div>
+
+                        <div data-category="campaigns"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Campaigns</p>
+                        </div>
+                        <div data-category="events"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Events</p>
+                        </div>
+                        <div data-category="contributions"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Contributions</p>
+                        </div>
+                        <div data-category="orders"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Orders</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full p-4">
+                <div id="biography" class="block w-full user_nav_list">
+
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold">Biography</h5>
+
+
+                        <div class="flex flex-col md:flex-row items-start gap-9 w-full">
+                            <div class="space-y-4 w-full md:w-9/12">
+                                {% if user.biography == none %}
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.first_name}} currently does not have biography
+                                </p>
+                                {% else %}
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.biography}}
+                                </p>
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div id="next_of_kins" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Relatives & Spouse</h5>
+                        {% if user.relatives.count == 0 %}
+
+                        <div class="">
+                            <div class="space-y-4 w-full">
+
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.first_name}} currently does not have relative
+                                </p>
+                            </div>
+                        </div>
+
+                        {% else %}
+                        <div class="">
+                            <div class="w-full">
+                                    <div class="p-6 px-0 overflow-x-auto">
+                                        <table class="w-full text-left table-auto min-w-max">
+                                            <thead>
+                                                <tr>
+                                                    <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                        <p
+                                                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                            Relative
+                                                        </p>
+                                                    </th>
+                                                    <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                        <p
+                                                            class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                            Relationship
+                                                        </p>
+                                                    </th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for account in user.relatives.all %}
+                                                <tr>
+                                                    <td class="p-4 border-b border-blue-gray-50">
+                                                        <a href="{% url 'accounts:relative' account.id %}" class="flex items-center gap-3">
+                                                            {% if account.profile_image %}
+                                                            <img src="{{account.profile_image.url}}" alt="{{account.get_full_names}}"
+                                                                class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                            {% else %}
+                                                            <img src="{% static 'images/global/no-image-available.webp' %}" alt="{{account.get_full_names}}"
+                                                                class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                            {% endif %}
+                                                            <p class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                                    
+                                    
+                                                                {{account.get_full_names|truncatewords:4}}
+                                                            </p>
+                                                        </a>
+                                                    </td>
+                                                    <td class="p-4 border-b border-blue-gray-50">
+                                                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                            {{account.relationship}}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="campaigns" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Campaigns</h5>
+                        {% if user.campaigns.count == 0 %}
+                        <div class="relative block">
+                            <div class="space-y-4 w-full">
+
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.first_name}} currently does not have campaigns
+                                </p>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="w-full overflow-x-auto h-fit">
+                            <div class="p-6 px-0 overflow-x-auto">
+                                <table class="w-full text-left table-auto min-w-max">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Campaign
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Target
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Current
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Contributions
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Date
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Status
+                                                </p>
+                                            </th>
+                                            
+                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for campaign in user.campaigns.all %}
+                                        <tr>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'campaigns:campaign' campaign_slug=campaign.slug %}"
+                                                    class="flex items-center gap-3">
+                                                    {% if campaign.image %}
+                                                    <img src="{{campaign.image.url}}" alt="{{campaign.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% else %}
+                                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="{{campaign.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% endif %}
+                                                    <p class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                            
+                            
+                                                        {{campaign.title|truncatewords:4}}
+                                                    </p>
+                                                </a>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    R{{campaign.target}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    R{{campaign.current_amount}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{campaign.contributions.count}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{campaign.get_days}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <div class="w-max">
+                                                    <div
+                                                        class="relative grid items-center px-2 py-1 font-sans text-xs font-bold {% if campaign.status == 'APPROVED' %} bg-green-500/20 text-green-900{% elif campaign.status == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}  uppercase rounded-md select-none whitespace-nowrap ">
+                                                        <span class="">{{campaign.status}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            
+                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="events" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Events</h5>
+                        {% if user.events.count == 0 %}
+                        <div class="w-full relative block">
+                            <div class="space-y-4 w-full">
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.first_name}} currently does not have events
+                                </p>
+                            </div>
+
+                        </div>
+                        {% else %}
+                        <div class="w-full overflow-x-auto relative block">
+
+                            <div class="p-6 px-0 overflow-x-auto">
+                                <table class="w-full text-left table-auto min-w-max">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Event
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Tickets
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Sale
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Event Date
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Status
+                                                </p>
+                                            </th>
+                                            
+                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for event in user.events.all %}
+                                        <tr>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'events:event-details' event_slug=event.slug %}" class="flex items-center gap-3">
+                                                    {% if event.image %}
+                                                    <img src="{{event.image.url}}" alt="{{event.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% else %}
+                                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="{{event.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% endif %}
+                                                    <p class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                            
+                            
+                                                        {{event.title|truncatewords:4}}
+                                                    </p>
+                                                </a>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{event.tickettypes.count}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{event.ticket_orders.count}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{event.date_time_formatter}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <div class="w-max">
+                                                    <div
+                                                        class="relative grid items-center px-2 py-1 font-sans text-xs font-bold {% if event.status == 'APPROVED' %} bg-green-500/20 text-green-900{% elif event.status == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}  uppercase rounded-md select-none whitespace-nowrap ">
+                                                        <span class="">{{event.status}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            
+                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="contributions" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Contributions</h5>
+                        {% if user.contributions.count == 0 %}
+                        <div class="w-full relative block">
+                            <div class="space-y-4 w-full">
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.first_name}} currently does not have contributions
+                                </p>
+                            </div>
+                
+                        </div>
+                        {% else %}
+                        <div class="w-full overflow-x-auto relative block">
+                
+                            <div class="p-6 px-0 overflow-x-auto">
+                                <table class="w-full text-left table-auto min-w-max">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Transaction
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Amount
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Date
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Status
+                                                </p>
+                                            </th>
+                                            
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                </p>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in user.contributions.all %}
+                                        <tr>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'campaigns:campaign' campaign_slug=order.campaign.slug %}"
+                                                    class="flex items-center gap-3">
+                                                    {% if order.campaign.image %}
+                                                    <img src="{{order.campaign.image.url}}" alt="{{order.campaign.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% else %}
+                                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="{{order.campaign.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% endif %}
+                                                    <p class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                            
+                            
+                                                        {{order.campaign.title|truncatewords:4}}
+                                                    </p>
+                                                </a>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    R{{order.total_amount}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{order.created}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <div class="w-max">
+                                                    <div
+                                                        class="relative grid items-center px-2 py-1 font-sans text-xs font-bold {% if order.paid == 'PAID' %} bg-green-500/20 text-green-900{% elif order.paid == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}  uppercase rounded-md select-none whitespace-nowrap ">
+                                                        <span class="">{{order.paid}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'campaigns:manage-contribution' contribution_id=order.id %}"
+                                                    class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                                    type="button">
+                                                    <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                                            aria-hidden="true" class="w-4 h-4">
+                                                            <path
+                                                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="orders" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Tickets</h5>
+                        {% if user.ticketorders.count == 0 %}
+                        <div class="w-full relative block">
+                            <div class="space-y-4 w-full">
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{user.first_name}} currently does not have Tickets orders
+                                </p>
+                            </div>
+                
+                        </div>
+                        {% else %}
+                        <div class="w-full overflow-x-auto relative block">
+                
+                            <div class="p-6 px-0 overflow-x-auto">
+                                <table class="w-full text-left table-auto min-w-max">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Transaction
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Amount
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Date
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Status
+                                                </p>
+                                            </th>
+                                            
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                </p>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in user.ticketorders.all %}
+                                        <tr>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'events:event-details' event_slug=order.event.slug %}"
+                                                    class="flex items-center gap-3">
+                                                    {% if order.event.image %}
+                                                    <img src="{{order.event.image.url}}" alt="{{order.event.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% else %}
+                                                    <img src="{% static 'images/global/no-image-available.webp' %}" alt="{{order.event.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% endif %}
+                                                    <p class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+                            
+                            
+                                                        {{order.event.title|truncatewords:4}}
+                                                    </p>
+                                                </a>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    R{{order.total_price}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{order.created}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <div class="w-max">
+                                                    <div
+                                                        class="relative grid items-center px-2 py-1 font-sans text-xs font-bold {% if order.paid == 'PAID' %} bg-green-500/20 text-green-900{% elif order.paid == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}  uppercase rounded-md select-none whitespace-nowrap ">
+                                                        <span class="">{{order.paid}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'events:manage-ticket-order' order.id %}"
+                                                    class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                                    type="button">
+                                                    <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                                            aria-hidden="true" class="w-4 h-4">
+                                                            <path
+                                                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    const navToggler = document.querySelectorAll(".user_nav_item");
+    const navbarList = document.querySelectorAll(".user_nav_list");
+    const campaign_percentage_w = document.getElementsByClassName("campaign_percentage_w");
+
+    window.onload = () => {
+        for (let index = 0; index < campaign_percentage_w.length; index++) {
+            const element = campaign_percentage_w[index];
+            element.style.width = `${element.getAttribute("data-style")}%`
+        }
+
+    }
+
+
+    navToggler.forEach(ele => {
+        ele.addEventListener("click", function () {
+            for (let i = 0; i < navToggler.length; i++) {
+                navToggler[i].classList.remove("active");
+                navToggler[i].classList.remove("bg-gray-300");
+                navToggler[i].classList.remove("text-gray-900");
+                navToggler[i].classList.add("bg-custom-primary");
+                navToggler[i].classList.add("text-white");
+
+            }
+            let dataAttrib = ele.getAttribute("data-category");
+
+
+            loadData(dataAttrib);
+
+            ele.classList.add("active");
+            ele.classList.add("bg-gray-300");
+            ele.classList.add("text-gray-900");
+            ele.classList.remove("bg-custom-primary");
+            ele.classList.remove("text-white");
+
+        })
+    })
+
+    function loadData(idAttrib) {
+        let data = document.getElementById(idAttrib);
+        for (let i = 0; i < navbarList.length; i++) {
+            if (navbarList[i].classList.contains("block")) {
+                navbarList[i].classList.remove("block");
+                navbarList[i].classList.add("hidden");
+            }
+
+        }
+        if (data.classList.contains("hidden")) {
+            data.classList.remove("hidden");
+            data.classList.add("block");
+        }
+
+    }
+
+</script>
+{% endblock js %}

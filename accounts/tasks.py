@@ -22,6 +22,7 @@ def send_email_to_subscribers(mail_message_id, domain, protocol):
             "protocol": protocol,
             "domain": domain,
             "message": mail_message.message,
+            
             "facebook": COMPANY.facebook,
             "twitter": COMPANY.twitter,
             "linkedIn": COMPANY.linkedIn,

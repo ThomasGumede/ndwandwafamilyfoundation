@@ -115,7 +115,39 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% if request.user.is_staff and request.user.is_superuser %}
+                                  
+                                
+                                <div
+                                    class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
+                                    <div
+                                        class="duration-500  group-hover:text-custom-h rounded flex justify-between w-full items-center text-white font-normal text-sm">
+                                        <div>
+                                            <span class="text-base font-normal whitespace-nowrap">Admin</span>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-chevron-down text-base group-hover:rotate-180  mr-auto"></i>
+                                        </div>
+                                
+                                    </div>
+                                
+                                    <div class="rounded mt-2">
+                                        <div class="nav__dropdown-content grid px-4">
+                                            <a href="{% url 'company:all-accounts' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">Accounts</a>
+                                            <a href="{% url 'company:all-campaigns' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Campaigns</a>
+                                            <a href="{% url 'company:all-events' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">Events</a>
+                                
+                                            <a href="{% url 'company:all-contributions' %}"
+                                                class="text-sm font-normal text-custom-h duration-500 py-2">Contributions</a>
+                                            <a href="{% url 'company:all-ticket-orders' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Ticket orders</a>
+                                            <a href="{% url 'company:earnings' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Earnings</a>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                {% endif %}
                                 <a href="{% url 'accounts:subscribe' %}"
                                     class="px-4 py-2 duration-500 hover:bg-gray-50 hover:text-custom-h rounded flex items-center text-white font-normal text-base">
 

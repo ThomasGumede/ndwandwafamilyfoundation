@@ -1,10 +1,12 @@
+import uuid
 from django.db import models
 from accounts.models import AbstractCreate
 
 class NdwandwaBankModel(AbstractCreate):
     balance = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)
+    order_uuid = models.UUIDField(null=True, blank=True)
     order_id = models.CharField(max_length=300)
-    tip = models.CharField(max_length=200)
+    tip = models.CharField(max_length=200, null=True, blank=True)
     received_at = models.DateTimeField(auto_now_add=True)
 
 # celery -A ndwandwafam worker/beat -l info

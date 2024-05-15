@@ -118,7 +118,7 @@ def send_contribution_confirm_email(order: ContributionModel, request, status):
             
     return True
 
-def update_wallet(user, amount, tip, order_number):
+def update_wallet(user, amount, tip, order_number, order_uuid):
     try:
         wallet, created = WalletModel.objects.get_or_create(owner = user)
         if wallet:
@@ -128,7 +128,7 @@ def update_wallet(user, amount, tip, order_number):
             wallet.balance += amount
             wallet.save(update_fields=['balance'])
         
-        NdwandwaBankModel.objects.get_or_create(balance=tip, order_id=order_number)
+        NdwandwaBankModel.objects.get_or_create(balance=tip, order_id=order_number, order_uuid=order_uuid)
         return True
 
     except WalletModel.DoesNotExist:
@@ -154,7 +154,7 @@ def update_payment_status_ticket_order(data, request,  ticket_order: TicketOrder
         payment_status = PaymentStatus.PAID
         admin_cost = ticket_order.calculate_total_admin_cost()
         organiser_profit = ticket_order.calculate_actual_profit()
-        wallet_updated = update_wallet(ticket_order.event.organiser, organiser_profit, admin_cost, ticket_order.order_number)
+        wallet_updated = update_wallet(ticket_order.event.organiser, organiser_profit, admin_cost, ticket_order.order_number, ticket_order.id)
         if not wallet_updated:
             logger.error("Failed to update wallet")
     else:
@@ -175,7 +175,7 @@ def update_payment_status_contribution_order(data, request, contribution: Contri
         contribution.campaign.current_amount += contribution.amount
         contribution.campaign.save(update_fields=['current_amount'])
         tip = contribution.total_amount - contribution.amount
-        wallet_updated = update_wallet(contribution.campaign.organiser, contribution.amount, tip, contribution.order_number)
+        wallet_updated = update_wallet(contribution.campaign.organiser, contribution.amount, tip, contribution.order_number, contribution.id)
         if not wallet_updated:
             logger.error("Wallet not updated")
     else:

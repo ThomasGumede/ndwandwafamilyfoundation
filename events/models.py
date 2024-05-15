@@ -186,7 +186,7 @@ class TicketOrderModel(AbstractCreate, AbstractPayment):
         return self.order_number
     
     def get_absolute_url(self):
-        return reverse("events:view-order", kwargs={"order_id": self.id, "event_slug": self.event.slug})
+        return reverse("events:order", kwargs={"order_id": self.id, "event_slug": self.event.slug})
     
 
     def save(self, *args, **kwargs):

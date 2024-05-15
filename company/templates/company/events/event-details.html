@@ -1,0 +1,409 @@
+{% extends '_manage.html' %}
+{% load static %}
+{% block title %}{{user.username}}{% endblock title %}
+
+{% block content %}
+
+{% include "includes/messages.html" %}
+<section class="w-full font-sans py-20 px-0 bg-white">
+
+    <div class="container">
+        <div class="w-full">
+            <div class="flex w-full flex-col lg:items-start md:flex-row gap-11 mx-auto">
+                <div class="w-28 h-28 md:w-52 md:h-52 mx-auto overflow-hidden rounded-full bg-custom-primary">
+                    {% if event.image %}
+                    <img src="{{event.image.url}}" alt="{{event.title}}" class="w-full h-full object-cover" />
+                    {% else %}
+                    <img src="{% static 'images/global/image-no.jpg' %}" alt="{{event.title}}"
+                        class="w-full h-full object-cover" />
+                    {% endif %}
+                </div>
+                <div class="space-y-3 w-full text-center md:text-left md:w-[550px]">
+                    <div class="space-y-1">
+                        <p class="text-xl font-normal text-[#6e6d8f]"><span>{{event.category.label}}</span> | <span
+                                class="p-1 rounded-sm {% if event.status == 'APPROVED' %} bg-green-500/20 text-green-900{% elif event.status == 'Completed' %}bg-green-500/20 text-green-900{% elif event.status == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}">{{event.status}}</span>
+                        </p>
+                        <p class="text-3xl md:text-4xl font-bold text-black">
+                            {{event.title}}
+                        </p>
+                        <p class="text-md font-normal text-[#6e6d8f]">{{event.date_time_formatter}}</p>
+                    </div>
+
+                    <div class="">
+                        <ul class="flex flex-wrap border border-[#f2f7f7] items-center">
+                            <li class="w-full pl-0 max-w-[33.333333%] relative text-center flex-[0_0_33.333333%]">
+                                <div class="block relative p-[19px_0_15px]">
+                                    <h3 class="text-2xl mb-1 font-bold text-custom-h p-0">R{{sales}}
+                                    </h3>
+                                    <p class="text-sm font-normal">Sales</p>
+                                </div>
+                            </li>
+                            <li
+                                class="w-full pl-0 max-w-[33.333333%] before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[1px] before:bg-[#f2f7f7] relative text-center flex-[0_0_33.333333%]">
+                                <div class="block relative p-[19px_0_15px]">
+                                    <h3 class="text-2xl mb-1 font-bold text-custom-h p-0">
+                                        {{total_seats}}
+                                    </h3>
+                                    <p class="text-sm font-normal">Sold Tickets</p>
+                                </div>
+                            </li>
+                            <li
+                                class="w-full pl-0 max-w-[33.333333%] before:absolute before:top-0 before:left-0 before:bottom-0 before:w-[1px] before:bg-[#f2f7f7] relative text-center flex-[0_0_33.333333%]">
+                                <div class="block relative p-[19px_0_15px]">
+                                    <h3 class="text-2xl mb-1 font-bold text-custom-h p-0">{{event.sales_days_left}}</h3>
+                                    <p class="text-sm font-normal">left</p>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <p class="text-base text-custom-primary font-bold ">
+                            <span class="text-custom-h">Unsold seats: </span>{{unsold_seats}}
+                        </p>
+
+                    </div>
+                    {% if request.user.is_staff and request.user.is_superuser %}
+                    <form method="post" class="relative block">
+                        {% csrf_token %}
+                        <div class="flex flex-wrap gap-5">
+                            {{form.status}}
+                            <button type="submit"
+                                class="text-center p-2 rounded-md border outline-none text-black text-base">
+                                Submit
+                            </button>
+                        </div>
+
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full bg-white mb-20 overflow-hidden">
+    <div class="container">
+        <div class="w-full space-y-5">
+            <div class="border w-full p-2 md:p-4">
+                <div class="w-fit mx-auto">
+                    <div class="flex flex-wrap items-center w-full gap-7">
+                        <div data-category="biography"
+                            class="bg-gray-300 cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-gray-900 font-medium text-sm md:text-lg">
+                            <p>Details</p>
+                        </div>
+                        <div data-category="tickets"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Ticket Types</p>
+                        </div>
+                        <div data-category="orders"
+                            class="bg-custom-primary cursor-pointer transition-all w-fit duration-500 py-2 px-3 user_nav_item text-center text-white font-medium text-sm md:text-lg">
+                            <p>Orders</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="w-full p-4">
+                <div id="biography" class="block w-full user_nav_list">
+
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold">Event Details</h5>
+
+
+                        <div class="flex flex-col md:flex-row items-start gap-9 w-full">
+                            <div class="space-y-4 w-full">
+                                <div class="block">
+                                    <p class="text-lg text-black font-bold">Created: {{event.created}}</p>
+                                </div>
+                                <div class="relative block">
+                                    {{event.content|safe}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div id="tickets" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Ticket Types</h5>
+                        {% if event.tickettypes.count == 0 %}
+
+                        <div class="">
+                            <div class="space-y-4 w-full">
+
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{event.title}} currently does not have Tickets
+                                </p>
+                            </div>
+                        </div>
+
+                        {% else %}
+                        <div class="">
+                            <div class="w-full">
+                                <div class="w-full relative block overflow-auto">
+                                    <div class="align-middle inline-block min-w-full overflow-hidden bg-white px-4 pt-3 rounded-bl-lg rounded-br-lg">
+                                        <table class="border-collapse w-full">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                        Type</th>
+                                                    <th
+                                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                        Seats</th>
+                                                    <th
+                                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                        Price</th>
+                                                    <th
+                                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                        Trans costs</th>
+                                                    <th
+                                                        class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                                                        Sold</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                    
+                                            <tbody>
+                                                {% for ticket in event.tickettypes.all %}
+                                                <tr
+                                                    class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                                                    <td
+                                                        class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                                        <span
+                                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Type</span>
+                                                        {{ticket.title}}
+                                                    </td>
+                                                    <td
+                                                        class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                                        <span
+                                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Seats</span>
+                                                        {{ticket.available_seats}}
+                                                    </td>
+                                                    <td
+                                                        class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                                        <span
+                                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Price</span>
+                                                        R{{ticket.total_price}}
+                                                    </td>
+                                                    <td
+                                                        class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                                        <span
+                                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Trans
+                                                            Cost</span>
+                                                        R{{ticket.transaction_cost}}
+                                                    </td>
+                                                    <td
+                                                        class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                                                        <span
+                                                            class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Sold</span>
+                                                        {{ticket.tickets.count}}
+                                                    </td>
+                                    
+                                                   
+                                                </tr>
+                                    
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="orders" class="hidden w-full user_nav_list">
+                    <div class="space-y-5 grid w-full">
+                        <h5 class="text-black text-2xl font-bold ">Orders</h5>
+                        {% if event.ticket_orders.count == 0 %}
+                        <div class="w-full relative block">
+                            <div class="space-y-4 w-full">
+                                <p class="text-sm text-custom-tertiary font-normal">
+                                    {{event.title}} currently does not have Orders
+                                </p>
+                            </div>
+
+                        </div>
+                        {% else %}
+                        <div class="w-full overflow-x-auto relative block">
+
+                            <div class="p-6 px-0 overflow-x-auto">
+                                <table class="w-full text-left table-auto min-w-max">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Transaction
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Amount
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Date
+                                                </p>
+                                            </th>
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                    Status
+                                                </p>
+                                            </th>
+
+                                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                                                </p>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in event.ticket_orders.all %}
+                                        <tr>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'events:event-details' event_slug=order.event.slug %}"
+                                                    class="flex items-center gap-3">
+                                                    {% if order.event.image %}
+                                                    <img src="{{order.event.image.url}}"
+                                                        alt="{{order.event.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% else %}
+                                                    <img src="{% static 'images/global/no-image-available.webp' %}"
+                                                        alt="{{order.event.title}}"
+                                                        class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
+                                                    {% endif %}
+                                                    <p
+                                                        class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
+
+
+                                                        {{order.event.title|truncatewords:4}}
+                                                    </p>
+                                                </a>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    R{{order.total_price}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <p
+                                                    class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                                    {{order.created}}
+                                                </p>
+                                            </td>
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <div class="w-max">
+                                                    <div
+                                                        class="relative grid items-center px-2 py-1 font-sans text-xs font-bold {% if order.paid == 'PAID' %} bg-green-500/20 text-green-900{% elif order.paid == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}  uppercase rounded-md select-none whitespace-nowrap ">
+                                                        <span class="">{{order.paid}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td class="p-4 border-b border-blue-gray-50">
+                                                <a href="{% url 'company:order' order.id %}"
+                                                    class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                                    type="button">
+                                                    <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                                                            class="w-4 h-4">
+                                                            <path
+                                                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                {% if order.paid == 'PAID' %}
+                                                {% else %}
+                                                <a href="{% url 'company:cancel-ticket-order' order.id %}"
+                                                    class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                                    type="button">
+                                                    <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                                        <i class="fa-solid fa-trash text-xl"></i>
+                                                
+                                                    </span>
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    const navToggler = document.querySelectorAll(".user_nav_item");
+    const navbarList = document.querySelectorAll(".user_nav_list");
+    const campaign_percentage_w = document.getElementsByClassName("campaign_percentage_w");
+
+    window.onload = () => {
+        for (let index = 0; index < campaign_percentage_w.length; index++) {
+            const element = campaign_percentage_w[index];
+            element.style.width = `${element.getAttribute("data-style")}%`
+        }
+
+    }
+
+
+    navToggler.forEach(ele => {
+        ele.addEventListener("click", function () {
+            for (let i = 0; i < navToggler.length; i++) {
+                navToggler[i].classList.remove("active");
+                navToggler[i].classList.remove("bg-gray-300");
+                navToggler[i].classList.remove("text-gray-900");
+                navToggler[i].classList.add("bg-custom-primary");
+                navToggler[i].classList.add("text-white");
+
+            }
+            let dataAttrib = ele.getAttribute("data-category");
+
+
+            loadData(dataAttrib);
+
+            ele.classList.add("active");
+            ele.classList.add("bg-gray-300");
+            ele.classList.add("text-gray-900");
+            ele.classList.remove("bg-custom-primary");
+            ele.classList.remove("text-white");
+
+        })
+    })
+
+    function loadData(idAttrib) {
+        let data = document.getElementById(idAttrib);
+        for (let i = 0; i < navbarList.length; i++) {
+            if (navbarList[i].classList.contains("block")) {
+                navbarList[i].classList.remove("block");
+                navbarList[i].classList.add("hidden");
+            }
+
+        }
+        if (data.classList.contains("hidden")) {
+            data.classList.remove("hidden");
+            data.classList.add("block");
+        }
+
+    }
+
+</script>
+{% endblock js %}
