@@ -33,7 +33,7 @@ SECRET_KEY='django-insecure-1=5*x6y@4v9_%91v$@183ri9hrw84)-353z8u2c@!!q5^+i)nk'
 ADMINS = [('admin@ndwandwa.africa'),( 'support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
 MANAGERS = [('admin@ndwandwa.africa'), ('support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
 
-CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1', 'https://localhost', 'https://ndwandwafam.africa', 'https://www.ndwandwafam.africa', 'https://dashboard.ndwandwafam.africa']
+CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1', 'https://localhost', 'https://ndwandwafam.africa', 'https://www.ndwandwafam.africa', 'https://dashboard.ndwandwafam.africa', 'https://aa49-41-144-33-248.ngrok-free.app']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
@@ -45,19 +45,16 @@ EMAIL_HOST_PASSWORD = config('SENDGRIND_API')
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-
-if YOCO_TEST_MODE == 1:
-    # Yoco
-    YOCO_WEBHOOK_KEY = config('YOCO_TEST_WEBHOOK_KEY')
-    YOCO_API_KEY = config('YOCO_TEST_API_KEY')
-else:
-    YOCO_WEBHOOK_KEY = config('YOCO_LIVE_WEBHOOK_KEY')
-    YOCO_API_KEY = config('YOCO_LIVE_API_KEY')
+   
 
 if DEBUG:
+    YOCO_WEBHOOK_KEY = 'sk_test_b0d0f98f34r4Gxg9a12418dacf0d'
+    YOCO_API_KEY = 'whsec_MUVBOUVCRTVBN0YzRkREN0IwNDlERDE3N0Q1RDEzRDU='
     ALLOWED_HOSTS=['*']
 
 else:
+    YOCO_WEBHOOK_KEY = config('YOCO_LIVE_WEBHOOK_KEY')
+    YOCO_API_KEY = config('YOCO_LIVE_API_KEY')
     ALLOWED_HOSTS=config("ALLOWED_HOSTS",cast=Csv())
 
     # SSL SETTINGS
@@ -92,6 +89,7 @@ INSTALLED_APPS = [
     'campaigns.apps.CampaignsConfig',
     'events.apps.EventsConfig',
     'payments.apps.PaymentsConfig',
+    'company.apps.CompanyConfig',
     
     'tailwind',
     'theme',
