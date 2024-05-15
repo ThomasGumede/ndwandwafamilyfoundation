@@ -54,9 +54,8 @@ def create_ticket(forms, order: TicketOrderModel, request: HttpRequest) -> bool:
     for form in forms:
         quantity = form.cleaned_data["quantity"]
         ticket_type: EventTicketTypeModel = form.cleaned_data["ticket_type"]
-        enddate = ticket_type.sale_end  - timezone.now()
-
-        if enddate.days <= 0:
+        
+        if ticket_type.sale_end == timezone.now():
             messages.error(request, f"Sorry this ticket <b>{ticket_type.title}</b> sale has ended")
             return False
         
