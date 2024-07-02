@@ -1,6 +1,7 @@
 from django.urls import path
 from accounts.views.wallet import my_wallet
 from accounts.views.account import *
+from accounts.views.subscriptions import choose_package
 from accounts.views.notification import subscribe, unsubscribe
 from accounts.views.password import password_reset_request, password_change, passwordResetConfirm, password_reset_sent
 from accounts.views.qualification import create_qualification, update_qualification, qualifications, delete_qualification
@@ -43,5 +44,7 @@ urlpatterns = [
     path('relative/update/<uuid:id>', update_relative, name="update-relative"),
     path('relative/delete/<uuid:id>', delete_relative, name="delete-relative"),
     path('relative/create', create_relative, name="create-relative"),
+
+    path('subscribe', choose_package, name="choose-package")
 
 ]

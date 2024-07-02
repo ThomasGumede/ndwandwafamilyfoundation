@@ -1,0 +1,536 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block description %}
+<meta name="description" content="{{listing.details|truncatechars:157}}">
+{% endblock description %}
+
+
+<!-- ==================================== TWITTER =================================== -->
+{% block twitter %}
+<meta name="twitter:title" content="{{listing.title}}" />
+<meta name="twitter:description" content="{{listing.details|truncatechars:157}}" />
+{% if listing.background_image %}
+<meta name="twitter:background_image"
+    content="{{request.scheme}}://{{request.get_host}}{{listing.background_image.url}}" />
+{% else %}
+<meta name="twitter:image"
+    content="{{request.scheme}}://{{request.get_host}}{% static 'images/global/image-no.jpg' %}" />
+{% endif %}
+{% endblock twitter %}
+
+
+<!-- ==================================== OG =================================== -->
+{% block OG %}
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="{{listing.title|truncatechars:157}}">
+<meta property="og:url" content="https://ndwandwafam.org">
+{% endblock OG %}
+
+{% block title %}{{listing.title}}{% endblock title %}
+
+{% block content %}
+<section class="w-full font-sans relative block bg-white mb-20">
+    <div class="group overflow-hidden">
+        <div class="w-full h-full absolute top-0 left-0 bg-custom-h z-50 opacity-50"></div>
+        <div class="relative overflow-hidden block">
+            <div class="img_box overflow-hidden relative block">
+                <div
+                    class="overflow-hidden h-96 md:h-[460px] bg-custom-h relative block transition-all duration-500 ease-in">
+                    {% if listing.background_image %}
+                    <img src="{{listing.background_image.url}}"
+                        alt="{{listing.title}} background_image by {{listing.owner.get_full_name}}"
+                        class="absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 w-full transition-all duration-500 ease-in group-hover:scale-105 opacity-50 object-cover">
+                    {% else %}
+                    <img src="{% static 'images/global/image-no.jpg' %}" alt="{{listing.title}}"
+                        class="absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 w-full transition-all duration-500 ease-in group-hover:scale-105 opacity-50 object-cover">
+                    {% endif %}
+                </div>
+                <div class="absolute bottom-8 z-50 w-8/12 left-1/2 -translate-y-8 -translate-x-1/2">
+                    <div class="w-full h-full">
+                        <div class="flex items-center w-full flex-wrap gap-4 justify-between">
+                            <div class="space-y-1 ">
+                                <div class="w-20 h-20 md:h-36 md:w-36 rounded-lg relative overflow-hidden">
+                                    {% if listing.logo %}
+                                    <img src="{{listing.logo.url}}"
+                                        alt="{{listing.title}} logo by {{listing.owner.get_full_name}}"
+                                        class="absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 w-full transition-all duration-500 ease-in object-cover">
+                                    {% else %}
+                                    <img src="{% static 'images/global/image-no.jpg' %}" alt="{{listing.title}}"
+                                        class="absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 w-full transition-all duration-500 ease-in object-cover">
+                                    {% endif %}
+                                </div>
+                                <div class="text-white w-max">
+                                    <h1 class="text-xl md:text-3xl font-bold">{{listing.title}}</h1>
+                                    <p class="text-xs md:text-base">{{listing.slogan}}</p>
+                                    <div class="py-2 space-y-1">
+                                        <div class="relative flex items-center">
+                                            <div class="text-sm text-custom-primary">
+                                                <i class="fa-solid fa-location-dot fa-lg font-bold"></i>
+                                            </div>
+                                            <div class="ml-2">
+                                                <p class="text-sm font-normal">{{listing.get_full_location}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center w-full space-x-5">
+                                            <div class="relative flex items-center">
+                                                <div class="text-sm text-custom-primary">
+                                                    <i class="fa-regular fa-star fa-lg font-bold"></i>
+                                                </div>
+                                                <div class="ml-2">
+                                                    <p class="text-sm font-normal"><span class="text-green-500">4.5
+                                                            Good</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="relative flex items-center">
+                                                <div class="text-sm text-custom-primary">
+                                                    <i class="fa-regular fa-comments fa-lg font-bold"></i>
+                                                </div>
+                                                <div class="ml-2">
+                                                    <p class="text-sm font-normal"><span>{{listing.reviews.count}}
+                                                            Reviews</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="block">
+                                <div class="flex items-center md:gap-5 flex-wrap gap-4">
+                                    <div
+                                        class="border cursor-pointer hover:bg-custom-primary hover:border-custom-primary border-white text-center text-white border-solid py-2 md:py-3 px-4 md:px-6">
+                                        <div class="relative flex items-center">
+                                            <div class="text-sm">
+                                                <i class="fa-solid fa-share fa-xl font-bold"></i>
+                                            </div>
+                                            <div class="ml-2">
+                                                <p class="text-base font-regular">Share</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="border cursor-pointer hover:bg-custom-primary hover:border-custom-primary border-white text-center text-white border-solid py-2 md:py-3 px-4 md:px-6">
+                                        <div class="relative flex items-center">
+                                            <div class="text-sm">
+                                                <i class="fa-solid fa-phone fa-xl font-bold"></i>
+                                            </div>
+                                            <div class="ml-2">
+                                                <p class="text-base font-regular">Call</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="border group hover:bg-custom-primary hover:border-custom-primary transition-colors duration-300 cursor-pointer border-white text-center text-white border-solid py-2 md:py-3 px-4 md:px-6">
+                                        <div class="relative flex items-center">
+                                            <div class="text-sm">
+                                                <i class="fa-solid fa-search fa-xl font-bold"></i>
+                                            </div>
+                                            <div class="ml-2">
+                                                <p class="text-base font-regular">Website</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="relative font-sans w-full">
+    <div class="px-6">
+        <div class="flex flex-col lg:flex-row items-start -mx-4">
+            <div class="w-full max-w-full px-4 flex-shrink-0 md:w-7/12 lg:w-8/12 h-full">
+                <div class="w-full space-y-5 relative block">
+                    <div class="border w-full p-2 lg:p-4">
+                        <div class="w-fit mx-auto">
+                            <div class="flex lg:items-center flex-wrap w-full gap-2 lg:gap-4">
+                                <div data-category="full_description"
+                                    class="bg-gray-300 cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-gray-900 font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Description</p>
+                                </div>
+
+                                <div data-category="reviews"
+                                    class="bg-custom-primary cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-white font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Reviews</p>
+                                </div>
+                                <div data-category="updates"
+                                    class="bg-custom-primary cursor-pointer transition-all duration-500 py-2 lg:py-3 px-3 campaign_navbar lg:px-4 text-center text-white font-medium text-sm lg:text-xl">
+                                    <p class="text-white">Gallery</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full p-4 relative block max-w-full overflow-hidden">
+                        <div id="full_description"
+                            class="w-12/12 relative block campaign_data transition-all duration-500">
+                            <div class="relative block">
+                                {{listing.details|safe}}
+                            </div>
+                        </div>
+
+                        <div id="reviews" class="w-full hidden campaign_data transition-all duration-500">
+                            <div class="w-full space-y-7">
+
+                                <div class="w-full space-y-4">
+                                    {% for review in listing.reviews.all %}
+                                    {% if review.comment %}
+                                    <div id="review_1" class="w-full p-2 space-y-3">
+                                        <div class="flex items-center space-x-3">
+                                            {% if review.commenter == none %}
+                                            <div class="w-11 h-11 rounded-full overflow-hidden">
+
+                                                <img alt="{{review.commenter.get_full_name}} avatar"
+                                                    src="{% static 'images/global/image-no.jpg' %}"
+                                                    class="w-full h-full object-cover object-center" />
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-lg text-black">
+                                                    {{review.commenter_full_names}}</p>
+                                                <p class="text-gray-500 text-sm font-normal">{{review.created}}</p>
+                                            </div>
+                                            {% else %}
+                                            <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                {% if review.commenter.profile_image %}
+                                                <img alt="{{review.commenter.get_full_name}} avatar"
+                                                    src="{{review.commenter.profile_image.url}}"
+                                                    class="w-full h-full object-cover object-center" />
+                                                {% else %}
+                                                <img alt="{{review.commenter.get_full_name}} avatar"
+                                                    src="{% static 'images/global/image-no.jpg' %}"
+                                                    class="w-full h-full object-cover object-center" />
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-lg text-black">
+                                                    {{review.commenter.get_full_name}}</p>
+                                                <p class="text-gray-500 text-sm font-normal">{{review.created}}</p>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="text-gray-500 text-sm font-normal">
+                                            <p>
+                                                {{review.comment}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="updates" class="w-full hidden campaign_data transition-all duration-500">
+                            <div class="w-full relative block mx-auto">
+                                <div class="p-5 sm:p-8">
+                                    <div
+                                        class="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-8">
+                                        {% for content in listing.images.all %}
+                                        <img src="{{content.image.url}}" alt="{{listing.title}}">
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full max-w-full flex-shrink-0 px-4 md:w-5/12 lg:w-4/12">
+                <div class="relative space-y-5">
+
+                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <div class="space-y-5">
+                            <h3 class="text-base md:text-lg font-bold">Owner info</h3>
+                            <p class="text-base text-custom-h md:text-lg font-medium">
+                                {{listing.owner.full_names}}</p>
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-location-dot"></i></span>
+                                <span>{{listing.owner.address}}</span>
+                            </div>
+
+                            {% if listing.owner.phone %}
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-phone"></i></span>
+                                <span>{{listing.owner.phone}}</span>
+                            </div>
+                            {% endif %}
+                            {% if listing.owner.email %}
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-envelope"></i></span>
+                                <span>{{listing.owner.email}}</span>
+                            </div>
+                            {% endif %}
+                            {% if listing.owner.website %}
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-globe"></i></span>
+                                <span>{{listing.owner.website}}</span>
+                            </div>
+                            {% endif %}
+                            <div class="space-y-2">
+                                <h4 class="text-lg font-bold text-black">Owner social</h4>
+                                <div class="flex items-center w-full gap-5">
+                                    {% if listing.owner.facebook %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.owner.facebook}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-facebook"></i></a>
+                                    </div>
+                                    {% endif %}
+                                    {% if listing.owner.twitter %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.owner.twitter}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-twitter"></i></a>
+                                    </div>
+                                    {% endif %}
+                                    {% if listing.owner.instagram %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.owner.instagram}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-instagram"></i></a>
+                                    </div>
+                                    {% endif %}
+                                    {% if listing.owner.linkedin %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.owner.linkedin}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-linkedin"></i></a>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <div class="space-y-5">
+                            <h3 class="text-base md:text-lg font-bold">Listing info</h3>
+
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-location-dot"></i></span>
+                                <span>{{listing.get_full_location}}</span>
+                            </div>
+
+                            {% if listing.phone %}
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-phone"></i></span>
+                                <span>{{listing.phone}}</span>
+                            </div>
+                            {% endif %}
+                            {% if listing.email %}
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-envelope"></i></span>
+                                <span>{{listing.email}}</span>
+                            </div>
+                            {% endif %}
+                            {% if listing.website %}
+                            <div class="text-sm text-gray-500 md:text-base font-medium flex items-center gap-4">
+                                <span
+                                    class="w-8 h-8 grid items-center justify-center rounded-full border border-solid"><i
+                                        class="fa-solid fa-sm text-custom-primary fa-globe"></i></span>
+                                <span>{{listing.website}}</span>
+                            </div>
+                            {% endif %}
+                            <div class="space-y-2">
+                                <h4 class="text-lg font-bold text-black">Follow us</h4>
+                                <div class="flex items-center w-full gap-5">
+                                    {% if listing.facebook %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.facebook}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-facebook"></i></a>
+                                    </div>
+                                    {% endif %}
+                                    {% if listing.twitter %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.twitter}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-twitter"></i></a>
+                                    </div>
+                                    {% endif %}
+                                    {% if listing.instagram %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.instagram}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-instagram"></i></a>
+                                    </div>
+                                    {% endif %}
+                                    {% if listing.linkedin %}
+                                    <div
+                                        class="w-8 h-8 grid items-center justify-center rounded-full border border-solid">
+                                        <a href="{{listing.linkedin}}"><i
+                                                class="fa-brands fa-sm text-custom-primary fa-linkedin"></i></a>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% if listing.map_coordinates %}
+                    <div class="relative block overflow-hidden h-[400px] bg-[#f2f7f7]">
+                        <div class="w-full h-full" id="gmp-map">
+
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="relative block overflow-hidden space-y-2 p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <h3 class="text-lg mb-1 font-extrabold">Business Hours</h3>
+                        {% if listing.operation == "OPEN" %}
+                        <ul class="space-y-4">
+
+                            <li class="flex items-center">
+                                <p class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">Open
+                                    24/7</p>
+                            </li>
+
+                        </ul>
+                        {% else %}
+                        <ul class="space-y-4">
+                            {% for hour in listing.business_hours.all %}
+                            <li class="flex items-center justify-between">
+                                <p class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">
+                                    {{hour.get_day_display}}</p>
+                                {% if hour.operating %}
+                                <div class="gap-3 flex items-center">
+                                    <p class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">
+                                        {{hour.open_time}}</p>
+                                    <span class="text-sm font-normal text-gray-500">-</span>
+                                    <p class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">
+                                        {{hour.close_time}}</p>
+                                </div>
+                                {% else %}
+                                <p class="text-sm font-normal text-red-500 duration-500 group-hover:text-custom-h">
+                                    Closed</p>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                    </div>
+                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
+                        <h3 class="text-lg mb-1 font-extrabold">Categories</h3>
+                        <ul class="gap-4 flex flex-wrap">
+                            {% for category in categories %}
+                            <li class="flex items-center py-2 px-3 bg-transparent duration-500 group hover:bg-white">
+                                <a href="{% url 'campaigns:campaign-by-category' category.slug %}"
+                                    class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">{{category.label}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block js %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1vMyd0KzU7mTn_AkMW3zd2V4cJC9w31I&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cAC"
+    async defer></script>
+<script>
+
+
+    function initMap() {
+        // Retrieve the coordinates from the hidden input field on the previous page
+        const coordinatesInput = '{{listing.map_coordinates}}';
+        const coordinates = coordinatesInput.split(',');
+        const latitude = parseFloat(coordinates[0]);
+        const longitude = parseFloat(coordinates[1]);
+
+        // Create a map centered on the stored coordinates
+        const map = new google.maps.Map(document.getElementById('gmp-map'), {
+            center: {lat: latitude, lng: longitude},
+            zoom: 12,  // You can adjust the zoom level as needed
+        });
+
+        // Optionally, you can add a marker at the stored coordinates
+        new google.maps.Marker({
+            position: {lat: latitude, lng: longitude},
+            map: map
+        });
+    }
+
+
+
+</script>
+<script>
+    let navbarcampaign_toggler = document.querySelectorAll(".campaign_navbar");
+    let campaign_data = document.querySelectorAll(".campaign_data")
+    navbarcampaign_toggler.forEach(ele => {
+        ele.addEventListener("click", (e) => {
+            for (let i = 0; i < navbarcampaign_toggler.length; i++) {
+                navbarcampaign_toggler[i].classList.remove("active");
+                navbarcampaign_toggler[i].classList.remove("bg-gray-300");
+                navbarcampaign_toggler[i].classList.remove("text-gray-900");
+                navbarcampaign_toggler[i].classList.add("bg-custom-primary");
+                navbarcampaign_toggler[i].classList.add("text-custom-h");
+
+            }
+            let dataAttrib = ele.getAttribute("data-category");
+
+
+            loadData(dataAttrib);
+
+            ele.classList.add("active");
+            ele.classList.add("bg-gray-300");
+            ele.classList.add("text-gray-900");
+            ele.classList.remove("bg-custom-primary");
+            ele.classList.remove("text-custom-h");
+        })
+    })
+
+    var campaign_percentage_w = document.getElementsByClassName("campaign_percentage_w");
+
+    window.onload = () => {
+        for (let index = 0; index < campaign_percentage_w.length; index++) {
+            const element = campaign_percentage_w[index];
+            element.style.width = `${element.getAttribute("data-style")}%`
+
+        }
+
+    }
+
+    function loadData(idAttrib) {
+        let data = document.getElementById(idAttrib);
+        for (let i = 0; i < campaign_data.length; i++) {
+            if (campaign_data[i].classList.contains("block")) {
+                campaign_data[i].classList.remove("block");
+                campaign_data[i].classList.add("hidden");
+            }
+
+        }
+        if (data.classList.contains("hidden")) {
+            data.classList.remove("hidden");
+            data.classList.add("block");
+        }
+
+    }
+
+
+</script>
+
+{% endblock js %}

@@ -1,13 +1,13 @@
 {% extends '_manage.html' %}
 {% load static %}
 
-{% block title %}All Campaigns{% endblock title %}
+{% block title %}All Blog Posts{% endblock title %}
 
 {% block accountblock %}
 <div class="relative block bg-white">
     {% include "includes/messages.html" %}
     <div class=" py-2 overflow-x-auto">
-        
+
 
         <div class="relative flex flex-col w-full h-full text-gray-700 bg-white">
             <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
@@ -15,15 +15,16 @@
                     <div>
                         <h5
                             class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                            All Campaigns
+                            All Blogs
                         </h5>
                         <p class="block mt-1 font-sans text-base antialiased font-normal leading-relaxed text-gray-700">
-                            These are details of all campaigns listed
+                            These are details of all blogs listed
                         </p>
                     </div>
                     <div class="flex w-full gap-2 shrink-0 md:w-max">
                         <div class="w-full md:w-72">
-                            <form method="get" action="{% url 'company:all-campaigns' %}" class="relative h-10 w-full min-w-[200px]">
+                            <form method="get" action="{% url 'company:all-blogs' %}"
+                                class="relative h-10 w-full min-w-[200px]">
                                 <div
                                     class="absolute grid w-5 h-5 top-2/4 right-3 -translate-y-2/4 place-items-center text-blue-gray-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -53,23 +54,15 @@
                             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                                 <p
                                     class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                                    Campaign
+                                    Title
                                 </p>
                             </th>
+                            
+                            
                             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                                 <p
                                     class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                                    Target
-                                </p>
-                            </th>
-                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                                    Current
-                                </p>
-                            </th>
-                            <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                                    Contributions
+                                    Category
                                 </p>
                             </th>
                             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
@@ -78,100 +71,108 @@
                                     Date
                                 </p>
                             </th>
+                            
                             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                                 <p
                                     class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                                    Status
+                                    Author
                                 </p>
                             </th>
                             <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                                 <p
                                     class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                                    organiser
                                 </p>
                             </th>
                             
+
                         </tr>
                     </thead>
                     <tbody>
-                        {% for campaign in campaigns %}
+                        {% for blog in blogs %}
                         <tr>
                             <td class="p-4 border-b border-blue-gray-50">
-                                <a href="{% url 'company:campaign-details' campaign_slug=campaign.slug %}"
+                                {% comment %} {% url 'company:blog-details' blog_slug=blog.slug %} {% endcomment %}
+                                <a href=""
                                     class="flex items-center gap-3">
-                                    {% if campaign.image %}
-                                    <img src="{{campaign.image.url}}" alt="{{campaign.title}}"
+                                    {% if blog.image %}
+                                    <img src="{{blog.image.url}}" alt="{{blog.title}}"
                                         class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
                                     {% else %}
                                     <img src="{% static 'images/global/no-image-available.webp' %}"
-                                        alt="{{campaign.title}}"
+                                        alt="{{blog.title}}"
                                         class="relative inline-block h-12 w-12 !rounded-full border border-blue-gray-50 bg-blue-gray-50/50 object-contain object-center p-1" />
                                     {% endif %}
                                     <p
                                         class="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
 
 
-                                        {{campaign.title|truncatewords:4}}
+                                        {{blog.title|truncatewords:4}}
                                     </p>
                                 </a>
                             </td>
+                            
                             <td class="p-4 border-b border-blue-gray-50">
                                 <p
                                     class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                    R{{campaign.target}}
-                                </p>
-                            </td>
-                            <td class="p-4 border-b border-blue-gray-50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                    R{{campaign.current_amount}}
-                                </p>
-                            </td>
-                            <td class="p-4 border-b border-blue-gray-50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                    {{campaign.contributions.count}}
+                                    {{blog.category.label}}
                                 </p>
                             </td>
                             <td class="p-4 border-b border-blue-gray-50">
                                 <p
                                     class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                    {{campaign.get_days}}
+                                    {{blog.created}}
                                 </p>
-                            </td>
-                            <td class="p-4 border-b border-blue-gray-50">
-                                <div class="w-max">
-                                    <div
-                                        class="relative grid items-center px-2 py-1 font-sans text-xs font-bold {% if campaign.status == 'APPROVED' %} bg-green-500/20 text-green-900{% elif campaign.status == 'PENDING' %}bg-amber-500/20 text-amber-900 {% else %}bg-red-500/20 text-red-900{% endif %}  uppercase rounded-md select-none whitespace-nowrap ">
-                                        <span class="">{{campaign.status}}</span>
-                                    </div>
-                                </div>
                             </td>
                             <td class="p-4 border-b border-blue-gray-50">
                                 <div class="flex items-center gap-3">
-                                    <a href="{% url 'accounts:user' username=campaign.organiser.username %}"
+                                    <a href="{% url 'accounts:user' username=blog.author.username %}"
                                         class="w-12 p-1 border rounded-md h-9 border-blue-gray-50">
-                                        {% if campaign.organiser.profile_image %}
-                                        <img src="{{campaign.organiser.profile_image.url}}"
-                                            alt="{{campaign.organiser.get_full_name}}"
+                                        {% if blog.author.profile_image %}
+                                        <img src="{{blog.author.profile_image.url}}"
+                                            alt="{{blog.author.get_full_name}}"
                                             class="relative inline-block h-full w-full !rounded-none  object-contain object-center p-1" />
                                         {% else %}
                                         <img src="{% static 'images/global/no-image-available.webp' %}"
-                                            alt="{{campaign.organiser.get_full_name}}"
+                                            alt="{{blog.author.get_full_name}}"
                                             class="relative inline-block h-full w-full !rounded-none  object-contain object-center p-1" />
                                         {% endif %}
                                     </a>
                                     <div class="flex flex-col">
                                         <p
                                             class="block font-sans text-sm antialiased font-normal leading-normal capitalize text-blue-gray-900">
-                                            {{campaign.organiser.get_full_name}}
+                                            {{blog.author.get_full_name}}
                                         </p>
                                         <p
                                             class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                                            {{campaign.organiser.occupation}}
+                                            {{blog.author.occupation}}
                                         </p>
                                     </div>
                                 </div>
                             </td>
-                            
+                            <td class="p-4 border-b border-blue-gray-50">
+                                <a href=""
+                                    class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    type="button">
+                                    <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            aria-hidden="true" class="w-4 h-4">
+                                            <path
+                                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
+                                            </path>
+                                        </svg>
+                                    </span>
+                                </a>
+                                
+                                <a href=""
+                                    class="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    type="button">
+                                    <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                        <i class="fa-solid fa-trash text-xl"></i>
+                                
+                                    </span>
+                                </a>
+                                
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -241,7 +242,7 @@
                 </button>
             </div>
         </div>
-        
+
     </div>
 </div>
 {% endblock accountblock %}

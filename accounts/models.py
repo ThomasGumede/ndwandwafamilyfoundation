@@ -14,6 +14,8 @@ from accounts.utils import (TITLE_CHOICES, WALLET_STATUS, Gender, RelationshipSi
                             validate_twitter_link, validate_fcbk_link, validate_in_link, validate_insta_link)
 from tinymce.models import HTMLField
 
+from campaigns.utils import PaymentStatus
+
 
 PHONE_VALIDATOR = verify_rsa_phone()
 
@@ -41,6 +43,21 @@ class AbstractCreate(models.Model):
 
     class Meta:
         abstract = True
+
+class SubscriptionPackage(AbstractCreate):
+    title = models.CharField(max_length=250, help_text=_("Enter subscription package title"))
+    amount = models.DecimalField(default=0.0, max_digits=1000, decimal_places=2, help_text=_("Enter package price"))
+    details = HTMLField(help_text=_("Enter package details"))
+    max_businesses = models.IntegerField(default=1)
+    max_services_per_business = models.IntegerField(default=5)
+    max_products_per_business = models.IntegerField(default=5)
+
+    def __str__(self) -> str:
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Package'
+        verbose_name_plural = 'Packages'
 
 class CompanyModel(AbstractCreate, AbstractProfile):
     support_email = models.EmailField(max_length=254, unique=True)
@@ -86,8 +103,10 @@ class CustomUserModel(AbstractUser, AbstractProfile):
     identity_number = models.CharField(unique=True, max_length=13, null=True, blank=True)
     verification_status = models.CharField(max_length=100, choices=StatusChoices.choices, default=StatusChoices.NOT_APPROVED)
     hobbies = TaggableManager(blank=True)
+    subscription = models.ForeignKey(SubscriptionPackage, related_name="subscribers", on_delete=models.SET_NULL, null=True, blank=True)
     is_technical = models.BooleanField(default=False)
     is_email_activated = models.BooleanField(default=False)
+    is_paid = models.CharField(max_length=40, choices=PaymentStatus.choices, default=PaymentStatus.NOT_PAID)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

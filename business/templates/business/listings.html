@@ -1,0 +1,151 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Businesses{% endblock title %}
+{% block description %}
+<meta name="description"
+    content="From educational initiatives to healthcare support, our campaigns are a testament to the transformative impact of unity">
+{% endblock description %}
+
+{% block content %}
+
+
+<section class="w-full relative block bg-white mb-20">
+    {% include "includes/messages.html" %}
+    <div class="container font-sans">
+        <div class="w-full overflow-hidden py-20 mx-auto space-y-8">
+            <div
+                class="w-full flex flex-col items-center justify-center md:flex-row gap-5 self-center justify-self-center">
+                <div class="relative block w-full md:w-6/12">
+                    <form method="get" action="">
+                        <div class="relative w-full">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search" name="query" {% if query %}value="{{query}}" {% endif %}
+                                class="block p-3 pl-10 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Search e.g Fundraising" required>
+                            <button type="submit"
+                                class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="relative block rounded-md">
+                    <div class="md:hidden w-11/12 overflow-x-auto flex items-center gap-5 p-2">
+                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
+                            <a href="" role="menuitem" tabindex="-1"
+                                class="text-gray-700 block text-sm">All</a>
+                        </div>
+                        {% for category in categories %}
+                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
+                            <a href="{% url 'campaigns:campaign-by-category' category_slug=category.slug %}"
+                                role="menuitem" tabindex="-1" class="text-gray-700 block text-sm">{{category.label}}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="rounded-md hidden md:block">
+                        <div class="relative mb-2 rounded-md flex items-center justify-between">
+                            <div id class="relative self-end bg-custom-primary z-40 py-3 px-3">
+
+                                <p id="category_button" aria-haspopup="true" aria-expanded="true"
+                                    class="text-white text-sm cursor-pointer">
+                                    {% if category != none %}{{category.label}}{% else %}Category{% endif %}</p>
+                                <div id="category_menu" role="menu" aria-orientation="vertical"
+                                    aria-labelledby="menu-button"
+                                    class="absolute  hidden right-0 z-20 mt-2 duration-500 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div class="py-1 z-40">
+                                        <a href="{% url 'campaigns:campaigns' %}" role="menuitem" tabindex="-1"
+                                            class="text-gray-700 block px-4 py-2 text-sm">All</a>
+                                        {% for category in categories %}
+                                        <a href="{% url 'campaigns:campaign-by-category' category_slug=category.slug %}"
+                                            role="menuitem" tabindex="-1"
+                                            class="text-gray-700 block px-4 py-2 text-sm">{{category.label}}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-2  w-full">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-7 flex-wrap">
+                    {% for listing in listings %}
+                    <div class="group overflow-hidden shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)] rounded-lg">
+                        <div class="relative overflow-hidden block">
+                            <div class="img_box overflow-hidden relative block">
+                                <div class="overflow-hidden h-44 bg-custom-h relative block transition-all duration-500 ease-in">
+                                    {% if listing.background_image %}
+                                    <img src="{{listing.background_image.url}}" alt="{{listing.title}} background_image by {{listing.owner.get_full_name}}"
+                                        class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
+                                    {% else %}
+                                    <img src="{% static 'images/global/image-no.jpg' %}" alt="{{listing.title}}"
+                                        class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
+                                    {% endif %}
+                                </div>
+                                <div class="absolute bottom-3 left-3">
+                                    <div class="py-1 px-2 bg-custom-primary">
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <i class="fa-regular text-white fa-xs fa-star"></i>
+                                            <p class="text-white text-xs p-0 font-semibold">3.5</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block text-center space-y-6 bg-white ">
+                                <div class="space-y-1 pt-5 px-5">
+                                    <h3 class="text-custom-h m-0 transition-all duration-500 text-xl font-bold">
+                                        <a href="{{listing.get_absolute_url}}"
+                                            class="text-custom-h transition-all duration-500 ease-in group-hover:text-custom-primary">{{listing.title|truncatewords:3}}</a>
+                                    </h3>
+                                    <p class="text-gray-500 text-sm">
+                                        {{listing.slogan}}
+                                    </p>
+                                </div>
+                                
+                                <div class="relative px-5 flex justify-between items-center">
+                                    <div class="">
+                                        <p class="text-xs text-gray-500 font-normal">{{listing.get_location}}</p>
+                                    </div>
+                                    <div class="">
+                                        <p class="text-xs text-gray-500 font-normal">{{listing.phone}}</p>
+                                    </div>
+                                </div>
+                                <div class="relative block border-t py-2 px-5  border-solid">
+                                    <div class="relative flex justify-between items-center">
+                                        <div class="relative space-x-2 flex justify-center w-min items-center">
+                                            <div class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
+                                                <i class="fa-solid fa-tag font-bold p-0 m-0 text-sm"></i>
+                                            </div>
+                                            <div class="">
+                                                <a href="{% url 'business:get-listings-by-category' category=listing.category.slug %}" class="text-xs text-gray-500 font-normal">{{listing.category.label}}</a>
+                                            </div>
+                                            <div class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
+                                                <p class="font-light p-0 m-0 text-xs">+{{listing.category.businesses.count}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <p class="text-xs text-gray-500 font-normal">{% if listing.is_open %}<span class="p-1 rounded-sm text-white bg-green-400">open</span>{% else %}<span class="p-1 text-white rounded-sm bg-red-400">close</span>{% endif %}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+
+{% endblock js %}

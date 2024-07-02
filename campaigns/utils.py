@@ -20,6 +20,11 @@ def handle_campaign_file_upload(instance, filename):
     filename = '{}.{}'.format(uuid.uuid4().hex, ext)
     return f"campaign/{filename}"
 
+def handle_business_file_upload(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format(uuid.uuid4().hex, ext)
+    return f"business/{filename}"
+
 def generate_order_number(model) -> str:
     order_id_start = f'NFRF{timezone.now().year}{timezone.now().month}'
     queryset = model.objects.filter(order_number__iexact=order_id_start).count()

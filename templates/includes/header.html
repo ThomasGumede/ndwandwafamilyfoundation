@@ -48,8 +48,8 @@
                                     class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Campaigns</a>
                                 <a href="{% url 'events:events' %}"
                                     class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Events</a>
-                                <a href="{% url 'home:news' %}"
-                                    class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Blog</a>
+                                <a href="{% url 'business:listings' %}"
+                                    class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Listings</a>
                                     <a href="{% url 'home:search' %}"
                                         class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Search</a>
                                     {% if request.user.is_authenticated %}
@@ -146,6 +146,10 @@
                                         <a href="{% url 'events:create-event' %}"
                                             class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                             Add Event
+                                        </a>
+                                        <a href="{% url 'business:add-listing' %}"
+                                            class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
+                                            Add Listing
                                         </a>
                                         <hr class="border-gray-200  ">
 

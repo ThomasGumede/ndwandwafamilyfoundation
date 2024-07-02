@@ -1,11 +1,13 @@
 from django.urls import path
 
 from company.views.accounts import all_accounts, get_account_detals
+from company.views.blogs import all_blogs
 from company.views.campaigns import all_campaigns, campaign_details
 from company.views.contributions import all_contributions, delete_contribution, contribution_details
 from company.views.events import all_events, event_details
 from company.views.home import earnings, view_order
 from company.views.ticket_orders import all_ticket_orders, ticket_order_details, delete_ticket_order
+from company.views.listings import get_listing, all_listings
 
 
 app_name = "company"
@@ -26,4 +28,7 @@ urlpatterns = [
     path("ticket-orders", all_ticket_orders, name="all-ticket-orders"),
     path("ticket-orders/<order_id>", ticket_order_details, name="order"),
     path("ticket-orders/delete/<uuid:order_id>", delete_ticket_order, name="cancel-ticket-order"),
+    path("blogs", all_blogs, name="all-blogs"),
+    path("listings", all_listings, name="all-listings"),
+    path("listings/<slug:listing_slug>", get_listing, name="get-listing"),
 ]

@@ -52,7 +52,7 @@ module.exports = {
         "custom-bg": "#FCFCFC",
       },
       fontFamily: {
-        sans: ["DM Sans", 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
       },
     },
     screens: {

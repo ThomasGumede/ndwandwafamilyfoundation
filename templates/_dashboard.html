@@ -17,6 +17,11 @@
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
     <script defer src="{% static 'js/alpinejs.min.js' %}"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     
     {% block cloak %}
         <style>
@@ -78,6 +83,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% if request.user.subscription %}
+                                <div
+                                    class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
+                                    <div
+                                        class="duration-500  group-hover:text-custom-h rounded flex justify-between w-full items-center text-white font-normal text-sm">
+                                        <div>
+                                            <span class="text-base font-normal whitespace-nowrap">Business</span>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-chevron-down text-base group-hover:rotate-180  mr-auto"></i>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="rounded mt-2">
+                                        <div class="nav__dropdown-content grid px-4">
+                                            <a href="{% url 'business:manage-listings' %}"
+                                                class="nav__dropdown-item text-sm py-2 font-normal text-text-custom-h duration-500 text-custom-h rounded">My
+                                                Listings</a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
                                 <div
                                     class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
                                     <div
@@ -133,26 +161,27 @@
                                 
                                     <div class="rounded mt-2">
                                         <div class="nav__dropdown-content grid px-4">
+                                            <a href="{% url 'company:earnings' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Earnings</a>
                                             <a href="{% url 'company:all-accounts' %}"
                                                 class="text-sm font-normal text-custom-h duration-500 py-2">Accounts</a>
                                             <a href="{% url 'company:all-campaigns' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Campaigns</a>
                                             <a href="{% url 'company:all-events' %}"
                                                 class="text-sm font-normal text-custom-h duration-500 py-2">Events</a>
-                                
+                                            <a href="{% url 'company:all-listings' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Listings</a>
                                             <a href="{% url 'company:all-contributions' %}"
                                                 class="text-sm font-normal text-custom-h duration-500 py-2">Contributions</a>
                                             <a href="{% url 'company:all-ticket-orders' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Ticket orders</a>
-                                            <a href="{% url 'company:earnings' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Earnings</a>
+                                            {% comment %} <a href="{% url 'company:all-blogs' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Blog</a> {% endcomment %}
                                         </div>
                                     </div>
                                 </div>
 
                                 {% endif %}
-                                <a href="{% url 'accounts:subscribe' %}"
+                                {% comment %} <a href="{% url 'accounts:subscribe' %}"
                                     class="px-4 py-2 duration-500 hover:bg-gray-50 hover:text-custom-h rounded flex items-center text-white font-normal text-base">
 
                                     <span class="text-base font-normal whitespace-nowrap">Notifications</span>
-                                </a>
+                                </a> {% endcomment %}
                                 <a href="{% url 'accounts:accounts' %}"
                                     class="px-4 py-2 duration-500 hover:bg-gray-50 hover:text-custom-h rounded flex items-center text-white font-normal text-base">
                                 
@@ -189,86 +218,87 @@
                                         <div x-data="{ isOpen: false }" class="relative inline-block ">
                                             <!-- Dropdown toggle button -->
                                             <button @click="isOpen = !isOpen"
-                                                class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
+                                                class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40  focus:ring-blue-300  focus:ring  focus:outline-none">
                                                 <span class="mx-1">{{request.user.get_full_name}}</span>
                                                 <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
                                                         fill="currentColor"></path>
                                                 </svg>
                                             </button>
-                                    
+                                        
                                             <!-- Dropdown menu -->
                                             <div x-cloak x-show="isOpen" @click.away="isOpen = false" x-transition:enter="transition ease-out duration-100"
                                                 x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
                                                 x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
                                                 x-transition:leave-end="opacity-0 scale-90"
-                                                class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
+                                                class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl ">
                                                 <a href="{% url 'accounts:user' request.user.username %}"
-                                                    class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform  hover:bg-gray-100 ">
                                                     {% if request.user.profile_image %}
-                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-                                                        src="{{request.user.profile_image.url}}" alt="{{request.user.get_full_name}} avatar">
+                                                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src="{{request.user.profile_image.url}}"
+                                                        alt="{{request.user.get_full_name}} avatar">
                                                     {% else %}
                                                     <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-                                                        src="{% static 'images/global/no-image-available.webp' %}"
-                                                        alt="{{request.user.get_full_name}} avatar">
+                                                        src="{% static 'images/global/no-image-available.webp' %}" alt="{{request.user.get_full_name}} avatar">
                                                     {% endif %}
                                                     <div class="mx-1 w-full">
-                                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                                        <h5 class="text-sm font-semibold text-gray-700 ">
                                                             {{request.user.get_full_name}}</h5>
-                                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                        <p class="text-sm text-gray-500 ">
                                                             {{request.user.get_username}}
                                                         </p>
                                                     </div>
                                                 </a>
-                                    
-                                                <hr class="border-gray-200 dark:border-gray-700 ">
-                                    
+                                        
+                                                <hr class="border-gray-200  ">
+                                        
                                                 <a href="{% url 'accounts:me' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                    view profile
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
+                                                    Dashboard
                                                 </a>
-                                    
+                                                <a href="{% url 'accounts:relatives' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
+                                                    Relatives
+                                                </a>
+                                        
                                                 <a href="{% url 'accounts:contact-update' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
                                                     Settings
                                                 </a>
-                                    
-                                    
+                                        
+                                        
                                                 {% if request.user.is_superuser or request.user.is_staff %}
-                                    
+                                        
                                                 <a href="{% url 'admin:index' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                                     Admin
                                                 </a>
                                                 {% endif %}
-                                                {% if request.user.is_superuser %}
-                                    
-                                                <a href="{% url 'payments:create_webhook' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                    Request webhook
-                                                </a>
-                                                {% endif %}
-                                    
-                                                <hr class="border-gray-200 dark:border-gray-700 ">
-                                    
+                                        
+                                        
+                                                <hr class="border-gray-200  ">
+                                        
                                                 <a href="{% url 'campaigns:create-campaign' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                                     Add Campaign
                                                 </a>
-                                    
+                                        
                                                 <a href="{% url 'events:create-event' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                                     Add Event
                                                 </a>
-                                                <hr class="border-gray-200 dark:border-gray-700 ">
-                                    
+                                                <a href="{% url 'business:add-listing' %}"
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
+                                                    Add Listing
+                                                </a>
+                                                <hr class="border-gray-200  ">
+                                        
                                                 <a href="{% url 'home:help' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                                     Help
                                                 </a>
                                                 <a href="{% url 'accounts:logout' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                                     Sign Out
                                                 </a>
                                             </div>
