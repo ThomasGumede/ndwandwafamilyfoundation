@@ -53,7 +53,6 @@ class Category(AbstractCreate):
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
 
-
 class Business(AbstractProfile, AbstractCreate):
     background_image = models.ImageField(help_text=_("Upload company/business background image."), upload_to=handle_business_file_upload, blank=True, null=True)
     logo = models.ImageField(help_text=_("Upload company/business logo."), upload_to=handle_business_file_upload, blank=True, null=True)
@@ -152,6 +151,9 @@ class BusinessHour(AbstractCreate):
         verbose_name = 'Business Hour'
         verbose_name_plural = 'Business Hours'
 
+class Product(AbstractCreate):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="products")
+    name = models.CharField(max_length=300)
 # class BusinessProduct(AbstractCreate):
 #     product_image = models.ImageField()
 #     description = HTMLField(help_text=_("Decribe your product or service"))
