@@ -26,6 +26,8 @@ BBBEE_RATINGS = [
     ("BEL4", "BEE Level 4"),
     ("BEL5", "BEE Level 5"),
     ("BEL6", "BEE Level 6"),
+    ("BEL7", "BEE Level 7"),
+    ("NOT", "Not sure"),
     ("NC", "Non-compliance")
     ]
 
