@@ -51,12 +51,17 @@ def manage_listing(request, listing_slug):
     return render(request, "business/get_listing.html", {"listing": listing})
 
 def get_listings(request, category=None):
+    query = request.GET.get("query", None)
     listings = Business.objects.all()
+    categories = Category.objects.all()
     if category:
-        category = get_object_or_404(Category, slug=category)
+        category = get_object_or_404(categories, slug=category)
         listings = listings.filter(category=category)
+    
+    if query:
+        listings = listings.filter(Q(title__icontains=query) | Q(category__label__icontains=query) | Q(slogan__icontains=query))
 
-    return render(request, "business/listings.html", {"listings": listings})
+    return render(request, "business/listings.html", {"listings": listings, "lcategories": categories})
 
 
 def get_listing(request, listing_slug):

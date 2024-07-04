@@ -14,9 +14,9 @@
     <div class="container font-sans">
         <div class="w-full overflow-hidden py-20 mx-auto space-y-8">
             <div
-                class="w-full flex flex-col items-center justify-center md:flex-row gap-5 self-center justify-self-center">
-                <div class="relative block w-full md:w-6/12">
-                    <form method="get" action="">
+                class="w-full flex flex-col items-center  gap-5 self-center justify-self-center">
+                <div class="relative block mx-auto w-full md:w-6/12">
+                    <form method="get" action="{% url 'business:listings' %}">
                         <div class="relative w-full">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
@@ -33,45 +33,25 @@
                         </div>
                     </form>
                 </div>
-                <div class="relative block rounded-md">
-                    <div class="md:hidden w-11/12 overflow-x-auto flex items-center gap-5 p-2">
-                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
-                            <a href="" role="menuitem" tabindex="-1"
+                <div class="relative mx-auto w-full block rounded-md">
+                    <div class="w-full overflow-x-auto flex items-center justify-center gap-5 p-2">
+                        <div class="border-2 border-gray-400  rounded-lg border-solid py-1 cursor-pointer transition-all duration-300 px-3 text-center">
+                            <a href="{% url 'business:listings' %}" role="menuitem" tabindex="-1"
                                 class="text-gray-700 block text-sm">All</a>
                         </div>
-                        {% for category in categories %}
-                        <div class="border-2 border-gray-400  rounded-lg border-solid py-2 px-3 text-center">
-                            <a href="{% url 'campaigns:campaign-by-category' category_slug=category.slug %}"
+                        {% for category in lcategories %}
+                        <div class="border-2 border-gray-400  rounded-lg border-solid py-1 cursor-pointer transition-all duration-300 px-3 text-center">
+                            <a href="{% url 'business:get-listings-by-category' category.slug %}"
                                 role="menuitem" tabindex="-1" class="text-gray-700 block text-sm">{{category.label}}</a>
                         </div>
                         {% endfor %}
+                        
                     </div>
-                    <div class="rounded-md hidden md:block">
-                        <div class="relative mb-2 rounded-md flex items-center justify-between">
-                            <div id class="relative self-end bg-custom-primary z-40 py-3 px-3">
-
-                                <p id="category_button" aria-haspopup="true" aria-expanded="true"
-                                    class="text-white text-sm cursor-pointer">
-                                    {% if category != none %}{{category.label}}{% else %}Category{% endif %}</p>
-                                <div id="category_menu" role="menu" aria-orientation="vertical"
-                                    aria-labelledby="menu-button"
-                                    class="absolute  hidden right-0 z-20 mt-2 duration-500 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <div class="py-1 z-40">
-                                        <a href="{% url 'campaigns:campaigns' %}" role="menuitem" tabindex="-1"
-                                            class="text-gray-700 block px-4 py-2 text-sm">All</a>
-                                        {% for category in categories %}
-                                        <a href="{% url 'campaigns:campaign-by-category' category_slug=category.slug %}"
-                                            role="menuitem" tabindex="-1"
-                                            class="text-gray-700 block px-4 py-2 text-sm">{{category.label}}</a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="space-y-2  w-full">
+                {% if listings.count > 0 %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-7 flex-wrap">
                     {% for listing in listings %}
                     <div class="group overflow-hidden shadow-[0px_10px_30px_0px_rgba(0,_0,_0,_0.07)] rounded-lg">
@@ -79,7 +59,8 @@
                             <div class="img_box overflow-hidden relative block">
                                 <div class="overflow-hidden h-44 bg-custom-h relative block transition-all duration-500 ease-in">
                                     {% if listing.background_image %}
-                                    <img src="{{listing.background_image.url}}" alt="{{listing.title}} background_image by {{listing.owner.get_full_name}}"
+                                    <img src="{{listing.background_image.url}}"
+                                        alt="{{listing.title}} background_image by {{listing.owner.get_full_name}}"
                                         class="w-full transition-all duration-500 ease-in group-hover:scale-105 group-hover:opacity-50 h-full object-cover">
                                     {% else %}
                                     <img src="{% static 'images/global/image-no.jpg' %}" alt="{{listing.title}}"
@@ -92,7 +73,7 @@
                                             <i class="fa-regular text-white fa-xs fa-star"></i>
                                             <p class="text-white text-xs p-0 font-semibold">3.5</p>
                                         </div>
-                                        
+                
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +87,7 @@
                                         {{listing.slogan}}
                                     </p>
                                 </div>
-                                
+                
                                 <div class="relative px-5 flex justify-between items-center">
                                     <div class="">
                                         <p class="text-xs text-gray-500 font-normal">{{listing.get_location}}</p>
@@ -118,27 +99,38 @@
                                 <div class="relative block border-t py-2 px-5  border-solid">
                                     <div class="relative flex justify-between items-center">
                                         <div class="relative space-x-2 flex justify-center w-min items-center">
-                                            <div class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
+                                            <div
+                                                class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
                                                 <i class="fa-solid fa-tag font-bold p-0 m-0 text-sm"></i>
                                             </div>
                                             <div class="">
-                                                <a href="{% url 'business:get-listings-by-category' category=listing.category.slug %}" class="text-xs text-gray-500 font-normal">{{listing.category.label}}</a>
+                                                <a href="{% url 'business:get-listings-by-category' category=listing.category.slug %}"
+                                                    class="text-xs text-gray-500 font-normal">{{listing.category.label}}</a>
                                             </div>
-                                            <div class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
+                                            <div
+                                                class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
                                                 <p class="font-light p-0 m-0 text-xs">+{{listing.category.businesses.count}}</p>
                                             </div>
                                         </div>
                                         <div class="">
-                                            <p class="text-xs text-gray-500 font-normal">{% if listing.is_open %}<span class="p-1 rounded-sm text-white bg-green-400">open</span>{% else %}<span class="p-1 text-white rounded-sm bg-red-400">close</span>{% endif %}</p>
+                                            <p class="text-xs text-gray-500 font-normal">{% if listing.is_open %}<span
+                                                    class="p-1 rounded-sm text-white bg-green-400">open</span>{% else %}<span
+                                                    class="p-1 text-white rounded-sm bg-red-400">close</span>{% endif %}</p>
                                         </div>
                                     </div>
                                 </div>
-                                
+                
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
+                {% else %}
+                <div class="grid items-center justify-center">
+                    <p class="text-3xl font-normal">No Listings currently available</p>
+                </div>
+                {% endif %}
+                
             </div>
         </div>
     </div>
@@ -147,5 +139,20 @@
 {% endblock content %}
 
 {% block js %}
+<script>
+    
+    const categoryBtn = document.getElementById("category_button");
+    const categoryMenu = document.getElementById("category_menu");
+    
 
+    categoryBtn.addEventListener("click", function () {
+        if (categoryMenu.classList.contains("hidden")) {
+            categoryMenu.classList.remove("hidden")
+            categoryMenu.classList.add("block")
+        } else {
+            categoryMenu.classList.remove("block")
+            categoryMenu.classList.add("hidden")
+        }
+    })
+</script>
 {% endblock js %}
