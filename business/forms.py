@@ -9,7 +9,7 @@ class BusinessForm(forms.ModelForm):
             "title", "background_image", "logo", 
             "details", "slogan", "category", "bbbee_level", 
             "map_coordinates", "phone", "website", "email",
-            "operation", "address_one", "address_two", 
+             "address_one", "address_two", 
             "city", "province", "zipcode",
             "facebook", "twitter", "instagram", "linkedIn"
         )
@@ -22,7 +22,6 @@ class BusinessForm(forms.ModelForm):
             'slogan': forms.TextInput(attrs={"class": "block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"}),
             'email': forms.EmailInput(attrs={"class": "block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"}),
             'category': forms.Select(attrs={"class": "block p-2 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
-            'operation': forms.HiddenInput(attrs={"value": "CUSTOM"}),
             'bbbee_level': forms.Select(attrs={"class": "block p-2 md:text-base w-full text-sm text-custom-h outline-none placeholder:text-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary focus:border-custom-primary ease-linear transition-all duration-150"}),
             'title': forms.TextInput(attrs={"class": "block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"}),
             'address_one': forms.TextInput(attrs={"class": "block p-2 md:text-base w-full text-sm text-gray-900 outline-none bg-gray-50 rounded-lg border border-gray-300 focus:ring-custom-primary placeholder:text-gray-400 focus:border-custom-primary ease-linear transition-all duration-150"}),

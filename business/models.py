@@ -67,7 +67,7 @@ class Business(AbstractProfile, AbstractCreate):
     website = models.URLField(blank=True, null=True)
     email = models.URLField(_("Enter your business website"), max_length=250, blank=True, null=True)
     bbbee_level = models.CharField(max_length=100, choices=BBBEE_RATINGS, default=BBBEE_RATINGS[1])
-    operation = models.CharField(max_length=100, choices=OperatingChoices.choices, default=OperatingChoices.OPEN)
+    
     status = models.CharField(max_length=50, choices=StatusChoices.choices, default=StatusChoices.NOT_APPROVED)
 
     class Meta:
@@ -101,7 +101,7 @@ class Business(AbstractProfile, AbstractCreate):
 
     def is_open(self):
 
-        if self.operation == "CUSTOM":
+        
             now = timezone.now()
             current_day = now.strftime('%a').upper()[:2]
             current_time = now.time()
@@ -115,11 +115,6 @@ class Business(AbstractProfile, AbstractCreate):
                         return False
                 else:
                     return False
-        elif self.operation == "OPEN":
-            return True
-
-        else:
-            return False
 
 class BusinessContent(AbstractCreate):
     image = models.ImageField(help_text=_("Upload company/business images."), upload_to=handle_business_file_upload, blank=True, null=True)
@@ -151,9 +146,9 @@ class BusinessHour(AbstractCreate):
         verbose_name = 'Business Hour'
         verbose_name_plural = 'Business Hours'
 
-class Product(AbstractCreate):
-    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="products")
-    name = models.CharField(max_length=300)
+# class Product(AbstractCreate):
+#     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="products")
+#     name = models.CharField(max_length=300)
 # class BusinessProduct(AbstractCreate):
 #     product_image = models.ImageField()
 #     description = HTMLField(help_text=_("Decribe your product or service"))
