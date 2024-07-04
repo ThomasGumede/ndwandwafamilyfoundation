@@ -88,9 +88,9 @@
                                                 class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
                                                 <i class="fa-solid fa-tag font-bold p-0 m-0 text-sm"></i>
                                             </div>
-                                            <div class="">
+                                            <div class="w-full">
                                                 <a href="{% url 'business:get-listings-by-category' category=listing.category.slug %}"
-                                                    class="text-xs text-gray-500 font-normal">{{listing.category.label}}</a>
+                                                    class="text-xs text-gray-500 font-normal">{{listing.category.label|truncatewords:1}}</a>
                                             </div>
                                             <div
                                                 class="text-sm rounded-full border border-solid h-7 w-7 grid items-center justify-center text-custom-primary">
