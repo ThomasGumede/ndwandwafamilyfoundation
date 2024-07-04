@@ -33,22 +33,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="relative mx-auto w-full block rounded-md">
-                    <div class="w-full overflow-x-auto flex items-center justify-center gap-5 p-2">
-                        <div class="border-2 border-gray-400  rounded-lg border-solid py-1 cursor-pointer transition-all duration-300 px-3 text-center">
-                            <a href="{% url 'business:listings' %}" role="menuitem" tabindex="-1"
-                                class="text-gray-700 block text-sm">All</a>
-                        </div>
-                        {% for category in lcategories %}
-                        <div class="border-2 border-gray-400  rounded-lg border-solid py-1 cursor-pointer transition-all duration-300 px-3 text-center">
-                            <a href="{% url 'business:get-listings-by-category' category.slug %}"
-                                role="menuitem" tabindex="-1" class="text-gray-700 block text-sm">{{category.label}}</a>
-                        </div>
-                        {% endfor %}
-                        
-                    </div>
-                    
-                </div>
+                
             </div>
             <div class="space-y-2  w-full">
                 {% if listings.count > 0 %}
