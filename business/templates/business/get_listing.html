@@ -458,49 +458,15 @@
                     <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
                         <h3 class="text-lg mb-1 font-extrabold">Categories</h3>
                         <ul class="gap-4 flex flex-wrap">
-                            {% for category in categories %}
+                            {% for category in lcategories %}
                             <li class="flex items-center py-2 px-3 bg-transparent duration-500 group hover:bg-white">
-                                <a href="{% url 'campaigns:campaign-by-category' category.slug %}"
+                                <a href="{% url 'business:get-listings-by-category' category.slug %}"
                                     class="text-sm font-normal text-gray-500 duration-500 group-hover:text-custom-h">{{category.label}}</a>
                             </li>
                             {% endfor %}
                         </ul>
                     </div>
 
-                    <div class="relative block overflow-hidden p-[46px_30px_30px] bg-[#f2f7f7]">
-                        <h3 class="text-lg mb-1 font-extrabold">Recent Campaigns</h3>
-                        <ul class="space-y-4">
-                            {% for campaign in recent_campaigns %}
-                            <li class="flex items-center ">
-                                <div class="pr-5 w-20 h-16 overflow-hidden">
-                                    {% if campaign.image.url %}
-                                    <img src="{{campaign.image.url}}" alt="{{campaign.title}}"
-                                        class="w-full h-full object-cover">
-                                    {% else %}
-                                    <div class="w-full h-full grid items-center justify-center bg-custom-h">
-                                        <p class="text-white font-semibold">{{campaign.title.0}}</p>
-                                    </div>
-                                    {% endif %}
-
-                                </div>
-                                <div class="relative top-[-3px]">
-                                    <h3 class="text-lg m-0 text-custom-h">
-                                        <span class="text-sm font-normal !text-gray-500">
-                                            <i
-                                                class="fa-solid fa-clock text-base pr-1 text-custom-primary before:content-['\f017']"></i>
-                                            {{campaign.start_date}} - {{campaign.end_date}}
-                                        </span>
-                                        <a href="{{campaign.get_absolute_url}}"
-                                            class="block text-base text-black font-extrabold">
-                                            {{campaign.title}}
-                                        </a>
-                                    </h3>
-                                </div>
-                            </li>
-                            {% endfor %}
-
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>

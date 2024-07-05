@@ -67,6 +67,7 @@ def get_listings(request, category=None):
 def get_listing(request, listing_slug):
     queryset = Business.objects.all().select_related("category").prefetch_related("business_hours", "reviews", "images")
     listing = get_object_or_404(queryset, slug=listing_slug)
+    categories = Category.objects.all()
     form = BusinessReviewForm()
 
     if request.method == "POST":
@@ -83,7 +84,7 @@ def get_listing(request, listing_slug):
         messages.error(request, "Error trying to add your review")
         return render(request, "business/get_listing.html", {"listing": listing, "form": form})
 
-    return render(request, "business/get_listing.html", {"listing": listing, "form": form})
+    return render(request, "business/get_listing.html", {"listing": listing, "form": form, "lcategories": categories})
 
 @login_required
 def add_listing(request):

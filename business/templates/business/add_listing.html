@@ -685,7 +685,7 @@
 
         if (img_container_1.getAttribute("data-background-image")) {
 
-            img_container_1.removeChild(no_background_image);
+            img_container_1.innerHTML = '';
             img_container_1.innerHTML += `
                     <img
                         src="${img_container_1.getAttribute("data-background-image")}"
@@ -707,7 +707,7 @@
                 // console.log(no_background_image)
                 if (no_background_image) {
 
-                    img_container_1.removeChild(no_background_image);
+                    img_container_1.innerHTML = '';
                     img_container_1.innerHTML += `
                     <img
                         src="${window.URL.createObjectURL(file)}"
