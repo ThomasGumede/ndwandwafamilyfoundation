@@ -83,29 +83,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% if request.user.subscription %}
-                                <div
-                                    class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
-                                    <div
-                                        class="duration-500  group-hover:text-custom-h rounded flex justify-between w-full items-center text-white font-normal text-sm">
-                                        <div>
-                                            <span class="text-base font-normal whitespace-nowrap">Business</span>
-                                        </div>
-                                        <div>
-                                            <i class="fa-solid fa-chevron-down text-base group-hover:rotate-180  mr-auto"></i>
-                                        </div>
-                                    </div>
                                 
-                                    <div class="rounded mt-2">
-                                        <div class="nav__dropdown-content grid px-4">
-                                            <a href="{% url 'business:manage-listings' %}"
-                                                class="nav__dropdown-item text-sm py-2 font-normal text-text-custom-h duration-500 text-custom-h rounded">My
-                                                Listings</a>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endif %}
                                 <div
                                     class="px-4 py-1 w-full group hover:max-h-full rounded hover:bg-gray-50 overflow-hidden max-h-7 duration-500 ease-in-out">
                                     <div
@@ -167,7 +145,7 @@
                                             <a href="{% url 'company:all-campaigns' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Campaigns</a>
                                             <a href="{% url 'company:all-events' %}"
                                                 class="text-sm font-normal text-custom-h duration-500 py-2">Events</a>
-                                            <a href="{% url 'company:all-listings' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Listings</a>
+                                            
                                             <a href="{% url 'company:all-contributions' %}"
                                                 class="text-sm font-normal text-custom-h duration-500 py-2">Contributions</a>
                                             <a href="{% url 'company:all-ticket-orders' %}" class="text-sm font-normal text-custom-h duration-500 py-2">Ticket orders</a>
@@ -287,10 +265,7 @@
                                                     class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
                                                     Add Event
                                                 </a>
-                                                <a href="{% url 'business:add-listing' %}"
-                                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100">
-                                                    Add Listing
-                                                </a>
+                                                
                                                 <hr class="border-gray-200  ">
                                         
                                                 <a href="{% url 'home:help' %}"

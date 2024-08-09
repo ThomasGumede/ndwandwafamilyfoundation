@@ -11,7 +11,6 @@ urlpatterns = [
     path("events/", include("events.urls", namespace="events")),
     path("payments/", include("payments.urls", namespace="payments")),
     path("company/", include("company.urls", namespace="company")),
-    path("listings/", include("business.urls", namespace="business")),
     path('tinymce/', include('tinymce.urls')),
 ]
 

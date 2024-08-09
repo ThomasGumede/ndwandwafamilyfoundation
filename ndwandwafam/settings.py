@@ -55,7 +55,7 @@ if DEBUG:
 else:
     YOCO_WEBHOOK_KEY = config('YOCO_LIVE_WEBHOOK_KEY')
     YOCO_API_KEY = config('YOCO_LIVE_API_KEY')
-    ALLOWED_HOSTS=config("ALLOWED_HOSTS",cast=Csv())
+    ALLOWED_HOSTS=["ndwandwa.africa", "www.ndwandwa.africa"]
 
     # SSL SETTINGS
     
@@ -90,7 +90,6 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'payments.apps.PaymentsConfig',
     'company.apps.CompanyConfig',
-    'business.apps.BusinessConfig',
     
     'tailwind',
     'theme',

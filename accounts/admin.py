@@ -1,14 +1,11 @@
 from django.contrib import admin
-from accounts.models import CompanyModel, SubscriptionPackage, CustomUserModel, MailMessageModel, QualificationModel, RelativeModel, MailingGroupModel, IdentityVerificationModel, WalletModel, SubscribeModel
+from accounts.models import CompanyModel, CustomUserModel, MailMessageModel, QualificationModel, RelativeModel, MailingGroupModel, IdentityVerificationModel, WalletModel, SubscribeModel
 from events.models import EventModel
 from campaigns.models import CampaignModel
 from django.utils import timezone
 from django.contrib.sites.shortcuts import get_current_site
 from accounts.tasks import send_notification_mail_to_subscribers, send_email_to_subscribers
 
-@admin.register(SubscriptionPackage)
-class SubscriptionPackageAdmin(admin.ModelAdmin):
-    pass
 
 
 class EventInline(admin.TabularInline):

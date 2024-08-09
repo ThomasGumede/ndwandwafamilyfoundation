@@ -7,7 +7,6 @@ from company.views.contributions import all_contributions, delete_contribution, 
 from company.views.events import all_events, event_details
 from company.views.home import earnings, view_order
 from company.views.ticket_orders import all_ticket_orders, ticket_order_details, delete_ticket_order
-from company.views.listings import get_listing, all_listings
 
 
 app_name = "company"
@@ -29,6 +28,4 @@ urlpatterns = [
     path("ticket-orders/<order_id>", ticket_order_details, name="order"),
     path("ticket-orders/delete/<uuid:order_id>", delete_ticket_order, name="cancel-ticket-order"),
     path("blogs", all_blogs, name="all-blogs"),
-    path("listings", all_listings, name="all-listings"),
-    path("listings/<slug:listing_slug>", get_listing, name="get-listing"),
 ]
