@@ -28,7 +28,7 @@ django-tailwind==3.6.0
 django-timezone-field==6.0.1
 django-tinymce==3.6.1
 et-xmlfile==1.1.0
-fonttools==4.43.1
+fonttools==4.47.2
 greenlet==3.0.0
 gunicorn==21.2.0
 html5lib==1.1
