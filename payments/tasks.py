@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.template.loader import get_template
 from weasyprint import HTML
 
-COMPANIES = CompanyModel.objects.all()
+COMPANIES = 0
 COMPANY = None
 if COMPANIES.count() > 0:
     COMPANY = COMPANIES[0]
