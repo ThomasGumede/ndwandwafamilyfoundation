@@ -1,16 +1,16 @@
 from celery import shared_task
 import logging
-# from accounts.models import CompanyModel
+from accounts.models import CompanyModel
 from events.models import TicketOrderModel, EventModel
 from campaigns.tasks import update_status_email
 from django.utils import timezone
 from accounts.utils import StatusChoices
 from campaigns.utils import PaymentStatus
 
-# COMPANIES = CompanyModel.objects.all()
+COMPANIES = CompanyModel.objects.all()
 COMPANY = None
-# if COMPANIES.count() > 0:
-#     COMPANY = COMPANIES[0]
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
     
 logger = logging.getLogger("tasks")
 

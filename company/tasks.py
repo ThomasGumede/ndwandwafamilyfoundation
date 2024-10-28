@@ -1,17 +1,17 @@
 from celery import shared_task
 from django.contrib.auth import get_user_model
 from accounts.utils import custom_send_email
-# from accounts.models import CompanyModel
+from accounts.models import CompanyModel
 from django.template.loader import render_to_string
 import logging
 
 task_logger = logging.getLogger("tasks")
 campaigns_logger = logging.getLogger("campaigns")
 
-# COMPANIES = CompanyModel.objects.all()
+COMPANIES = CompanyModel.objects.all()
 COMPANY = None
-# if COMPANIES.count() > 0:
-#     COMPANY = COMPANIES[0]
+if COMPANIES.count() > 0:
+    COMPANY = COMPANIES[0]
 
 def update_status_email(user, content, domain = 'ndwandwa.africa', protocol = 'https'):
     message = render_to_string("company/emails/wallet_update.html", {

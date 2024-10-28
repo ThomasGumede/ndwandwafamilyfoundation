@@ -10,9 +10,9 @@ from django.template.loader import render_to_string
 from django.template.loader import get_template
 from weasyprint import HTML
 
-COMPANIES = 0
+COMPANIES = CompanyModel.objects.all()
 COMPANY = None
-if COMPANIES > 0:
+if COMPANIES.count() > 0:
     COMPANY = COMPANIES[0]
 
 logger = logging.getLogger("tasks")

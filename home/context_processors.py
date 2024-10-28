@@ -1,13 +1,13 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 
-# from accounts.models import CompanyModel
+from accounts.models import CompanyModel
 from home.models import CategoryModel
 
-# COMPANIES = CompanyModel.objects.all()
+COMPANIES = CompanyModel.objects.all()
 company = None
-# if COMPANIES.count() > 0:
-#     company = COMPANIES[0]
+if COMPANIES.count() > 0:
+    company = COMPANIES[0]
 def global_context(request):
     PROTOCOL = "https" if request.is_secure() else "http"
     DOMAIN = get_current_site(request).domain
