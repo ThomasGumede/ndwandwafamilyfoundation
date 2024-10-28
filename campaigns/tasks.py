@@ -3,7 +3,7 @@ from campaigns.models import CampaignModel, CampaignUpdateModel, ContributionMod
 from accounts.utils import StatusChoices, custom_send_email
 from django.utils import timezone
 from campaigns.utils import PaymentStatus
-from accounts.models import CompanyModel
+# from accounts.models import CompanyModel
 from django.template.loader import render_to_string
 from django.db.models import Q
 from django.db.models import Prefetch
@@ -12,10 +12,10 @@ import logging
 task_logger = logging.getLogger("tasks")
 campaigns_logger = logging.getLogger("campaigns")
 
-COMPANIES = CompanyModel.objects.all()
+# COMPANIES = CompanyModel.objects.all()
 COMPANY = None
-if COMPANIES.count() > 0:
-    COMPANY = COMPANIES[0]
+# if COMPANIES.count() > 0:
+#     COMPANY = COMPANIES[0]
 
 def update_status_email(model_name, model, domain = 'ndwandwa.africa', protocol = 'https'):
     message = render_to_string("global/emails/status_change_email.html", {
