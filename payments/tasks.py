@@ -12,7 +12,7 @@ from weasyprint import HTML
 
 COMPANIES = 0
 COMPANY = None
-if COMPANIES.count() > 0:
+if COMPANIES > 0:
     COMPANY = COMPANIES[0]
 
 logger = logging.getLogger("tasks")
