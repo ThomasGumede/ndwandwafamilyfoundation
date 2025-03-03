@@ -33,7 +33,7 @@ SECRET_KEY='django-insecure-1=5*x6y@4v9_%91v$@183ri9hrw84)-353z8u2c@!!q5^+i)nk'
 ADMINS = [('admin@ndwandwa.africa'),( 'support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
 MANAGERS = [('admin@ndwandwa.africa'), ('support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
 
-CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1', 'https://localhost', 'https://ndwandwa.africa', 'https://www.ndwandwa.africa', 'https://dashboard.ndwandwa.africa']
+CSRF_TRUSTED_ORIGINS = ['https://ndwandwa.africa', 'https://www.ndwandwa.africa', 'https://dashboard.ndwandwa.africa']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'

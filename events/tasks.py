@@ -7,10 +7,7 @@ from django.utils import timezone
 from accounts.utils import StatusChoices
 from campaigns.utils import PaymentStatus
 
-COMPANIES = CompanyModel.objects.all()
-COMPANY = None
-if COMPANIES.count() > 0:
-    COMPANY = COMPANIES[0]
+COMPANY = CompanyModel.objects.first()
     
 logger = logging.getLogger("tasks")
 
