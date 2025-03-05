@@ -40,14 +40,7 @@ def send_tickets_email(status, order: TicketOrderModel, protocol, domain):
                     "domain": domain,
                     "user": order.buyer.get_full_name(),
                     "order": order,
-                    "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
+                    
                 }
         if status == "payment.succeeded" or status == PaymentStatus.PAID:
 
@@ -100,14 +93,7 @@ def send_contribution_confirm_email(order: ContributionModel, protocol, domain, 
                         "domain": domain,
                         "user": order.contributor.get_full_name(),
                         "order": order,
-                        "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
+                        
                     }
 
         if status == "payment.succeeded" or status == PaymentStatus.PAID:

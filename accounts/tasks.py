@@ -20,14 +20,6 @@ def send_email_to_subscribers(mail_message_id, domain, protocol):
             "domain": domain,
             "message": mail_message.message,
             
-            "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
         })
 
         for subcriber in mail_message.mailing_group.subscribers.all():
@@ -49,14 +41,7 @@ def send_notification_mail_to_subscribers(mailing_group_id, domain, protocol):
             "title": mailing_group.title,
             "describe": mailing_group.description,
             "name": "Contributor/Organisor",
-            "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
+            
         })
 
         

@@ -83,14 +83,7 @@ def update_contributors(update_id, domain, protocol):
             "protocol": protocol,
             "domain": domain,
             "name": "Contributor/Organisor",
-            "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
+            
         })
         for contribution in campaign.contributions.all():
             email = contribution.contributor.email

@@ -17,14 +17,7 @@ def update_status_email(user, content, domain = 'ndwandwa.africa', protocol = 'h
         "name": f"{user.title} {user.get_full_name()}",
         "message": content,
         
-        "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
+        
     })
     
     sent = custom_send_email(user.email, f"Wallet Status update", message)
