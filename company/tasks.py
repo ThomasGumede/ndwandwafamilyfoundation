@@ -8,7 +8,7 @@ import logging
 task_logger = logging.getLogger("tasks")
 campaigns_logger = logging.getLogger("campaigns")
 
-COMPANY = CompanyModel.objects.first()
+
 
 def update_status_email(user, content, domain = 'ndwandwa.africa', protocol = 'https'):
     message = render_to_string("company/emails/wallet_update.html", {

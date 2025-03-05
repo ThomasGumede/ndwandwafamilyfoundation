@@ -12,7 +12,7 @@ import logging
 task_logger = logging.getLogger("tasks")
 campaigns_logger = logging.getLogger("campaigns")
 
-COMPANY = CompanyModel.objects.first()
+
 
 def update_status_email(model_name, model, domain = 'ndwandwa.africa', protocol = 'https'):
     message = render_to_string("global/emails/status_change_email.html", {
@@ -22,14 +22,7 @@ def update_status_email(model_name, model, domain = 'ndwandwa.africa', protocol 
         "task": f'{model.title} {model_name}',
         "status": f'{model.status}',
         
-        "facebook": COMPANY.facebook if COMPANY else '',
-            "twitter": COMPANY.twitter if COMPANY else '',
-            "linkedIn": COMPANY.linkedIn if COMPANY else '',
-            "company_support": COMPANY.phone if COMPANY else '',
-            "company_support_mail": COMPANY.support_email if COMPANY else '', 
-            "company_street_address_1": COMPANY.address_one if COMPANY else '',
-            "company_city": COMPANY.city if COMPANY else '',
-            "company_state": COMPANY.province if COMPANY else ''
+        
     })
     
     sent = custom_send_email(model.organiser.email, f"{model_name} Status update", message)

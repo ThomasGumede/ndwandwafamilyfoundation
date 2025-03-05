@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 task_logger = logging.getLogger("tasks")
 accounts_logger = logging.getLogger("accounts")
 
-COMPANY = CompanyModel.objects.first()
+# COMPANY = CompanyModel.objects.first()
 
 @shared_task
 def send_email_to_subscribers(mail_message_id, domain, protocol):
