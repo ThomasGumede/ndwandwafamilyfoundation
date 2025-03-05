@@ -7,7 +7,7 @@ from django.utils import timezone
 from accounts.utils import StatusChoices
 from campaigns.utils import PaymentStatus
 
-COMPANY = CompanyModel.objects.first()
+
     
 logger = logging.getLogger("tasks")
 
