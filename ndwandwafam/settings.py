@@ -27,8 +27,8 @@ AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 LOGIN_URL = 'accounts:login'
 
 YOCO_TEST_MODE = config('YOCO_TEST_MODE')
-DEBUG=False
-SECRET_KEY='django-insecure-1=5*x6y@4v9_%91v$@183ri9hrw84)-353z8u2c@!!q5^+i)nk'
+DEBUG = config('DEBUG_BOOL', default=False, cast=bool)
+SECRET_KEY = config('SECRET_KEY', 'django-insecure-^o8sk%36a@45k##tsmt!d4q917m7$azq223#w29h@79-$ufo4+')
 
 ADMINS = [('admin@ndwandwa.africa'),( 'support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
 MANAGERS = [('admin@ndwandwa.africa'), ('support@ndwandwa.africa'), ('gumedethomas12@gmail.com') ]
@@ -55,7 +55,7 @@ if DEBUG:
 else:
     YOCO_WEBHOOK_KEY = config('YOCO_LIVE_WEBHOOK_KEY')
     YOCO_API_KEY = config('YOCO_LIVE_API_KEY')
-    ALLOWED_HOSTS = ['ndwandwa.africa', 'www.ndwandwa.africa']
+    ALLOWED_HOSTS = ['ndwandwa.africa', 'www.ndwandwa.africa', 'localhost']
 
 
     # SSL SETTINGS
